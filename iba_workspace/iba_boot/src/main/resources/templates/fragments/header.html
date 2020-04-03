@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<div th:fragment="header" class="header container-fluid" style="background-color: #1B67A6;	text-align: left;	color: white; padding:10px;">
+    <div class="row">
+        <div class="col-md-8" style=" display: inline;">
+            <img alt="IBA LOGO" th:src="@{/images/unknown_user.png}" style="border-radius: 50%; height: 50px; display: inline;">
+            <h2 style="display: inline;">IBA</h2>
+        </div>
+        <div class="col-md-1" style="padding-right: 0px; text-align: right">
+            <img alt="Default-user" th:src="@{/images/unknown_user.png}" style="border-radius: 50%; height: 50px;">
+        </div>
+        <div class="col-md-3">
+            <p th:utext="${userName}" style="font-weight: 600; font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol; font-size:15px;"></p>
+            <form th:action="@{/logout}" method="get">
+                <button class="btn btn-md btn-danger" name="registration"
+                        type="Submit">Logout
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

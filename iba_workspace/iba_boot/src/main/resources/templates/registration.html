@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>IBA - Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/iba.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
+</head>
+<body>
+
+<div class="outer" style="background-color: #337ab7;">
+    <div class="container content" style="width: 50%;" >
+        <br>
+        <div class="row">
+            <div class="col-md login-box">
+                <div class="row" style="justify-content:center;">
+                    <div style="font-size:3em; color: #93C9F5">
+                        <i class="fas fa-pen-square"></i><span style="color: #1B67A6; margin-top: 0px;">&nbsp;Sign up now</span>
+                    </div>
+
+                </div>
+
+                <div class="row" style="justify-content:center;">
+                    <p>Fill in the form below to request access:</p>
+                </div>
+                <form 	autocomplete="off"
+                         action="#"
+                         th:action="@{/registration}"
+                         th:object="${user}"
+                         method="post"
+                         class="form-horizontal"
+                         role="form">
+                    <div class="row register-input">
+                        <div class="col-md-3" style="font-size:2em; color:#2e6da4; text-align:right;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="col-md-7 form-group ${status.error ? 'has-error' : ''}">
+                            <input type="text" th:field="*{firstName}" placeholder="First Name" class="form-control" />
+                            <label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="validation-message input-error"></label>
+                        </div>
+                    </div>
+                    <div class="row register-input">
+                        <div class="col-md-3" style="font-size:2em; color:#2e6da4; text-align:right;">
+                            &nbsp;
+                        </div>
+
+                        <div class="col-md-7 form-group ${status.error ? 'has-error' : ''}">
+                            <input type="text" th:field="*{lastName}" placeholder="Last Name" class="form-control" />
+                            <label	th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="validation-message input-error"></label>
+                        </div>
+                    </div>
+                    <div class="row register-input">
+                        <div class="col-md-3" style="font-size:2em; color:#2e6da4; text-align:right;">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="col-md-7 form-group ${status.error ? 'has-error' : ''}">
+                            <input type="text" th:field="*{email}" placeholder="Email"
+                                   class="form-control" />
+                            <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                   class="validation-message input-error"></label>
+                        </div>
+                    </div>
+                    <div class="row register-input">
+                        <div class="col-md-3" style="font-size:2em; color:#2e6da4; text-align:right;">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <div class="col-md-7 form-group ${status.error ? 'has-error' : ''}">
+                            <input type="password" th:field="*{password}"
+                                   placeholder="Password" class="form-control" />
+                            <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                   class="validation-message  input-error"></label>
+                        </div>
+                    </div>
+                    <div class="row register-input" style="justify-content:center;">
+                        <button class="btn btn-primary" type="submit">Register</button>
+                        <br>
+                    </div>
+                    <div class="row input-success" style="justify-content:center;">
+                        <h5><span class="text-success" th:utext="${successMessage}"></span></h5>
+                    </div>
+                </form>
+                <div class="row">
+                    <br>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <form th:action="@{/}" method="get">
+                            <button class="btn btn-md btn-warning btn-block" type="Submit">Return to Login Page</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div th:fragment="footer"></div>
+</body>
+</html>

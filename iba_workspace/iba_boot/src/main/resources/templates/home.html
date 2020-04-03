@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Home Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header"/>
+<div th:replace="fragments/menu :: menu"/>
+<div class="container">
+    <div class="panel-group" style="margin-top:40px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span th:utext="${userName}"></span>
+            </div>
+
+            <div class="panel-body">
+                <table class="table">
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Active</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr th:each="user: ${users}">
+                        <form action="#" th:action="@{/update}" th:object="${user}" method="post">
+                            <td>
+                                <input type="text" th:value="*{firstName}" class="form-control" id="firstName" placeholder="First Name">
+                            </td>
+                            <td th:value="*{lastName}"></td>
+                            <td th:value="*{email}"></td>
+                            <td><input type="text" th:value="*{email}" class="form-control" id="email" placeholder="Email"></td>
+                            <!--
+                                                        <td th:if="${user.active}">
+                                                            True
+                                                        </td>
+                                                        <td th:unless="${user.active}">
+                                                            False
+                                                        </td>
+                                                        -->
+                            <td>
+                                <input type="checkbox" th:checked="${user.active}" />
+                            </td>
+                            <td>
+                                <input type="submit" class="btn btn-primary" value="Update">
+                            </td>
+                        </form>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div th:replace="fragments/footer :: footer" />
+</body>
+</html>

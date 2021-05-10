@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link  rel="stylesheet" type="text/css"th:href="@{/css/bootstrap/bootstrap.min.css}" />	
+	<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome/fontawesome.min.css}" />	
+	<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome/regular.min.css}" />	
+	<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome/all.css}" />	
+	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/game.css}" />
+    <title>Jeopardy</title>
+</head>
+<body>
+	<div class="container-fluid">
+		<br />
+		<input type="hidden" id="teamSelect" value="none">
+		<div class="row">
+			<div class="col-4">
+				<h1>Juegos Bíblicos</h1>
+			</div>
+			<div class="col-8 text-centered">
+				<h1 th:text="${game.game.description}"></h1>
+			</div>
+		</div>
+		<div class="row">
+			<div th:class="'score col-' + ${teamCol}" th:id="${team.teamId}" th:each="team : ${teams}" > 
+				<div class="header-score header-default">
+					<span th:id="${team.name}" th:text="${team.name}"></span>
+				</div>
+				<div class="content-score content-default">
+					<span th:text="${team.score}"></span>
+				</div>
+			</div>
+		</div>
+		<br /><br />
+	</div>
+	<div class="container-fluid" th:each="round : ${game.rounds}">
+		<div class="row">
+			<div class="col-2 box-header" th:each="category : ${categories}" th:text="${category.description}"></div>
+		</div>
+		<br />
+		<div class="row header" th:each="quizz : ${round.quizzes}">
+			<div class="col-2" th:each="question : ${quizz.questions}" style="padding: 0px;">
+				<div th:if="${question.completed == 0}" class="option box">
+					<form action="#" th:id="'question_' + ${question.questionId}"
+						th:action="@{/question}" method="post">
+						<div th:onclick="'javascript:submit(question_' + ${question.questionId} + ')'"
+							 th:with="tmp = 200, var = ${question.quizz * tmp}">
+							<input type="hidden" name="questionId"
+								th:value="${question.questionId}"> <input type="hidden"
+								name="teamId" th:value="${question.teamId}">
+							<span th:text="${var}"></span>
+						</div>
+					</form>
+				</div>
+				<div th:if="${question.completed == 1}" class="no-option box">
+					<div th:with="tmp = 200, var = ${question.quizz * tmp}">
+						<span th:text="${var}"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script type="text/javascript" th:src="@{/js/jquery-3.4.1.slim.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+	<script>
+		function submit(id) {
+			if ($("#teamSelect").val() == "none") {
+				alert("Please select a team");
+			} else {
+				$(id).submit();
+			}
+		}
+		
+
+		$(document).ready(function() {
+			$(".score").click(function() {
+				$(this).parent().find(".content-score").removeClass("content-selected");
+				$(this).parent().find(".header-score").removeClass("header-selected");
+								
+				$(this).children(".content-score").addClass("content-selected");
+				$(this).children(".header-score").addClass("header-selected");
+				
+				$("#teamSelect").val("selected");
+				$("input[name=teamId]").val($(this).attr("id"));
+			});
+
+		});
+	</script>
+</body>
+</html>

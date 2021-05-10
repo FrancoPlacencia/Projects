@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/fontawesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/regular.min.css" rel="stylesheet" type="text/css" />
+	
+    <title>Game - Edit</title>
+    <style>
+    
+    	body {
+    		background-color: #424242;
+    	}
+        
+
+        h1 {
+            text-align: center;
+            font-size: 60px;
+            color: white;
+        }
+        
+        h2 {
+        	font-size: 40px;
+            color: white;
+        }
+        
+        h3 {
+        	color: white;
+        }
+        
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+	<br/><br/><br/>
+    <div class="row round-block">
+    	<div class="col-8 offset-2">
+    	<form action="#" th:action="@{/admin/question/update}" th:object="${question}" method="post">
+    		
+    		<input type="hidden" th:field="*{questionId}">
+    		<h1 th:text="'Round ' + ${question.round}"></h1>
+    		<h2 th:text="${category.description}"></h2>
+    		<h3 th:with="tmp = 200, var = ${question.quizz * tmp}" th:text="'Score ' + ${var}"></h3>
+    		
+	    	<input class="form-control form-control-lg" type="text" placeholder="Question" th:field="*{questionContent}" required/>
+	    	
+	    	<br/>
+			<input type="text" class="form-control form-control-lg" id="validationAnswer" placeholder="Answer" th:field="*{answer}"  required/>
+			<br/>
+	        <p>
+	        	<button class="btn btn-success btn-lg" type="submit"><i class='fas fa-edit'></i>&nbsp;&nbsp;&nbsp;Submit</button>
+	        	<button class="btn btn-primary btn-lg" type="reset"><i class="fas fa-broom"></i>&nbsp;&nbsp;&nbsp;Clear</button>
+	        </p>
+    	</form>
+    	</div>
+    </div>
+    
+    
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+<script>
+
+
+jQuery('#editBtn').click(function(){
+	var option = $("#dropGame option:selected").val();
+	console.log(option);
+	if(option == "none") {
+		alert("Please select a game to edit");
+		return false;
+	} else {
+		$("#gameValue").val(option);
+		$("#edit").submit();
+		return true;
+	}
+	
+});
+    
+    
+    
+</script>
+    <script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
+</body>
+</html>

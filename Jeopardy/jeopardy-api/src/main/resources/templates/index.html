@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<!-- External CSS -->
+	<link  rel="stylesheet" type="text/css"th:href="@{/css/bootstrap/bootstrap.min.css}" />	
+	<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome/fontawesome.min.css}" />	
+	<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome/regular.min.css}" />	
+	<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome/all.min.css}" />	
+	<!-- Internal CSS -->
+	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+	<title>Jeopardy Bíblico</title>
+</head>
+<body>
+	<div class="container">
+		<br />
+		<div class="row text-center">
+			<div class="col">
+				<br /><br />
+				<h1>Juegos Bíblicos</h1>
+			</div>
+		</div>
+		<br/><br/>
+		<div class="row">
+			<div class="col-6">
+                <form id="game" action="#" th:action="@{/game}" method="get">
+			    	<input type="hidden" id="gameId" name="gameId" value="0">
+			    	<button  id="gameSelectBtn" type="button" class="btn btn-success btn-block btn-lg custom-btn">
+						<i class="fas fa-gamepad"></i>&nbsp;&nbsp;&nbsp;Juego
+					</button>
+					<br />
+				    <select class="form-control custom-selector" id="dropGame" required>
+					    <option value="none">Selecciona un juego</option>
+					    <option th:each="game : ${games}" th:value="${game.gameId}" th:text="${game.description}"></option>
+				    </select>
+			    </form>
+			</div>
+			<div class="col-6">
+				<form method="get" th:action="@{/admin}">
+					<button type="submit"
+						class="btn btn-danger btn-block btn-lg custom-btn">
+						<i class="fas fa-user-cog"></i>&nbsp;&nbsp;&nbsp;Admin
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script type="text/javascript" th:src="@{/js/jquery-3.4.1.slim.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/main.js}"></script>	
+    <footer class="page-footer font-small gray">
+      <div class="footer-copyright text-center py-3">
+          Made by Francisco Placencia on 2020
+      </div>
+    </footer>
+</body>
+</html>

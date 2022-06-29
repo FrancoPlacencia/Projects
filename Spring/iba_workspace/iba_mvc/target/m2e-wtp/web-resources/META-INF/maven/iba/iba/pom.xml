@@ -13,7 +13,7 @@
 		<logback.version>1.1.3</logback.version>
 		<jcl.slf4j.version>1.7.12</jcl.slf4j.version>
 		<servletapi.version>3.1.0</servletapi.version>
-		<apache.poi.version>3.17</apache.poi.version>
+		<apache.poi.version>4.1.1</apache.poi.version>
 		<jasypt.version>1.9.2</jasypt.version>
 	</properties>
 

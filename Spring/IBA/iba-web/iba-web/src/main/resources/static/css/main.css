@@ -1,0 +1,276 @@
+@font-face {
+	font-family: jeopardyFont;
+	src: url("../font/gyparody_hv.ttf");
+}
+
+@font-face {
+	font-family: lcdFont;
+	src: url("../font/lcd.ttf");
+}
+
+@font-face {
+	font-family: questionFont;
+	src: url("../font/question.ttf");
+}
+
+@font-face {
+	font-family: headerFont;
+	src: url("../font/header.ttf");
+}
+
+@font-face {
+	font-family: robotFont;
+	src: url("../font/robot.ttf");
+}
+
+@font-face {
+	font-family: gameFont;
+	src: url("../font/games.ttf");
+}
+
+* {
+
+}
+
+html {
+    height: 100%;
+}
+
+body {
+	background-color:	#a1aafb;
+	background-image: linear-gradient(#a1aafb, #e0e2f8);
+	height: 100%;
+}
+
+h1 {
+    font-family: jeopardyFont;
+	font-size: 4rem;
+    color: white;
+    display: inline;
+}
+
+h2 {
+    font-family: jeopardyFont;
+    font-size: 3rem;
+    display: inline;
+}
+
+h4 {
+    font-family: jeopardyFont;
+    color: white;
+    display: inline;
+}
+
+.game-score {
+    font-family: lcdFont;
+    color: white;
+    font-size: 2.5rem;
+}
+.game-team {
+    font-family: robotFont;
+    color: white;
+    font-size: 2.5rem;
+}
+
+
+.title {
+    font-family: gameFont;
+    color: white;
+    font-size: 6em;
+    text-shadow: -2px 0 #975a00, 0 2px #975a00, 2px 0 #975a00, 0 -2px #975a00;
+}
+.sub-title {
+    font-family: 'Brush Script MT', cursive;
+    color: #e3b35f;
+    font-size: 4em;
+}
+.game-input-xl {
+	font-size: 3rem;
+}
+.game-input-lg {
+	font-size: 2rem;
+}
+.game-input-md {
+	font-size: 1.5rem;
+}
+.game-input-sm {
+	font-size: 1rem;
+}
+
+.game-font {
+    font-family: jeopardyFont;
+}
+.game-btn-xl {
+    font-family: jeopardyFont;
+    font-size: 3rem;
+}
+.game-btn-lg {
+    font-family: jeopardyFont;
+    font-size: 2rem;
+}
+.game-btn-md {
+    font-family: jeopardyFont;
+    font-size: 1.5rem;
+}
+.game-btn-sm {
+    font-family: jeopardyFont;
+    font-size: 1rem;
+}
+
+.box {
+    font-family: jeopardyFont;
+    height: 6vw;
+    border: 2px solid white;
+    font-size: 2rem;
+    text-align: center;
+    padding-top: 5px;
+    color: white;
+}
+
+.question-box {
+	border-style: solid;
+	border-width: 4px;
+	border-radius: 1px;
+	border-color: #eeebf2;
+	background-color: #061125;
+	padding: 20px;
+}
+
+.box-0 {
+    background-color: #c03728;
+}
+.box-1 {
+    background-color: #398035;
+}
+.box-2 {
+    background-color: #cdc353;
+}
+.box-2 {
+    background-color: #cdc353;
+}
+.box-3 {
+    background-color: #df7d34;
+}
+.box-4 {
+    background-color: #2c4a6e;
+}
+
+.box-0x {
+    background-color: #862419;
+}
+.box-1x {
+    background-color: #1b3c2b;
+}
+.box-2x {
+    background-color: #897629;
+}
+.box-3x {
+    background-color: #aa5211;
+}
+.box-home {
+    background-color: white;
+    color: #105149;
+}
+.box-player {
+    font-size: 1rem;
+}
+.box-border-left-top {
+    border-radius: 50px 0px 0px 0px;
+}
+.box-border-right-top {
+    border-radius: 0px 50px 0px 0px;
+}
+.box-border-right-bottom {
+    border-radius: 0px 0px 50px 0px;
+}
+.box-border-left-bottom {
+    border-radius: 0px 0px 0px 50px;
+}
+
+.return-btn {
+    font-size: 1.25em;
+    color: #FF8000;
+    /*text-shadow: -2px 0 #975a00, 0 2px #975a00, 2px 0 #975a00, 0 -2px #975a00;*/
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+}
+
+.team-1 {
+    color:red;
+    font-size: 1.5em;
+}
+
+.team-2 {
+    color:blue;
+    font-size: 1.5em;
+}
+.team-3 {
+    color:green;
+    font-size: 1.5em;
+}
+.team-4 {
+    color:purple;
+    font-size: 1.5em;
+}
+
+.team-5 {
+    color:white;
+    font-size: 1.5em;
+}
+.team-6 {
+    color:black;
+    font-size: 1.5em;
+}
+
+.line-down {
+    border-bottom: 15px solid white;
+}
+
+.category {
+	color: #ffc835;
+	text-transform: uppercase;
+	font-size: 4rem;
+}
+
+.question {
+	color: white;
+	text-shadow: 2px 2px gray;
+	font-size: 3rem;
+}
+
+.answer {
+	font-size: 3rem;
+	color: #ffc835;
+	text-transform: uppercase;
+}
+
+footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: black;
+   color: white;
+   text-align: center;
+}
+
+.btn-orange {
+     color: #ffffff;
+     background-color: #FF8000;
+     border-color: #FFFFFF;
+}
+ .btn-orange:hover, .btn-orange:focus, .btn-orange:active, .btn-orange.active, .open .dropdown-toggle.btn-orange {
+     color: #ffffff;
+     background-color: #D66E07;
+     border-color: #FFFFFF;
+}
+ .btn-orange:active, .btn-orange.active, .open .dropdown-toggle.btn-orange {
+     background-image: none;
+}
+ .btn-orange.disabled, .btn-orange[disabled], fieldset[disabled] .btn-orange, .btn-orange.disabled:hover, .btn-orange[disabled]:hover, fieldset[disabled] .btn-orange:hover, .btn-orange.disabled:focus, .btn-orange[disabled]:focus, fieldset[disabled] .btn-orange:focus, .btn-orange.disabled:active, .btn-orange[disabled]:active, fieldset[disabled] .btn-orange:active, .btn-orange.disabled.active, .btn-orange[disabled].active, fieldset[disabled] .btn-orange.active {
+     background-color: #FF8000;
+     border-color: #FFFFFF;
+}
+ .btn-orange .badge {
+     color: #FF8000;
+     background-color: #ffffff;
+}

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome/fontawesome.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome/regular.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome/all.min.css}"/>
+    <!-- Internal CSS -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
+    <title>IBA</title>
+</head>
+<body>
+<div class="container">
+    <br/>
+    <div class="row text-left">
+        <div class="col-6 white-box">
+            <br/><br/>
+            <form th:action="@{/login}">
+                <img th:src="@{/img/logo.png}" alt="..." class="img" style="width:20%;"><br>
+                <h3 th:text="#{login.login}"></h3>
+
+                <p th:text="#{login.authentication}"></p>
+                <i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;<label for="email" th:text="#{login.email}"></label>
+                <input type="email" id="email" class="form-control" placeholder="email">
+                <br/>
+                <i class="fa-solid fa-key"></i>&nbsp;&nbsp;<label for="password" th:text="#{login.password}"></label>
+                <input type="password" id="password" class="form-control" placeholder="password">
+                <br/>
+                <button th:text="#{login.loginBtn}" class="btn btn-primary" type="submit"></button>
+                <br/>
+                <label th:text="#{login.register}"></label>&nbsp;<a th:text="#{login.create}"></a>
+                <br/><br/>
+            </form>
+
+        </div>
+        <div class="col-6 blue-box">
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script type="text/javascript" th:src="@{/js/jquery-3.6.0,js}"></script>
+    <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+</body>
+</html>

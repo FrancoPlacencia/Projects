@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>{{message.title}}</h2>
+<mat-dialog-content>
+    My favorite animal is:
+    <ul>
+        <li>
+            @if (message.icon === 'panda') {
+            <span>&#10003;</span>
+            } Panda
+        </li>
+        <li>
+            @if (message.icon === 'unicorn') {
+            <span>&#10003;</span>
+            } Unicorn
+        </li>
+        <li>
+            @if (message.icon === 'lion') {
+            <span>&#10003;</span>
+            } Lion
+        </li>
+    </ul>
+    @if (message.title === 'otro') {
+    <p>OTRO {{message.title}}</p>
+    }
+    @else {
+    <p>OTRO {{message.title}}</p>
+    }
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

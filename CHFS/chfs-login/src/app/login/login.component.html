@@ -1,0 +1,63 @@
+
+
+<div class="outer" style="background-color: #337ab7;">
+    <div class="container content" style="width: 90%;" >
+        <br>
+        <div class="row">
+            <div class="col-md-7">
+                <div class="row" style="padding-top: 100px; padding-rigth: 50px;">
+                    <div class="col-md">
+                        <h1 style="font-size: 50px; color: white; font-weight: 500;">CHFS Application</h1>
+                        <h4 style="color: hsla(0,0%,100%,.6);">
+                            Is a private application, registration will be validated, please make sure you need to request access to this application before registration.<br/><br/>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md login-box">
+                <div class="row" style="justify-content:center; padding-bottom: 20px;">
+                    <h3 style="color: #1B67A6;">Autentication Required</h3>
+                </div>
+                <div class="row" style="justify-content:center; padding-bottom: 20px" >
+                    <i style="font-size:5em; color: #93C9F5" class="fas fa-user-circle"></i>
+                </div>
+                <div class="row" style="justify-content:center;">
+                    <p>Enter email and password to log on:</p>
+                </div>
+                {{email + "," + password}}
+                <form method="POST" >
+                    <div class="row general-input">
+                        <div class="col-md-2" style="font-size:2em; color:#2e6da4; text-align:right;">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="col-md-9 form-group">
+                            <input [(ngModel)]="email" name="email" type="email" placeholder="Email" required/>
+                        </div>
+                    </div>
+                    <div class="row general-input">
+                        <div class="col-md-2" style="font-size:2em; color:#2e6da4; text-align:right;">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <div class="col-md-9 form-group">
+                            <input [(ngModel)]="password" name="password" type="password" placeholder="Password" />
+                        </div>
+                    </div>
+                    <div aling="center" th:if="${param.error}">
+                        <p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>
+                    </div>
+                    <br />
+                    <div class="row general-input">
+                        <div class="col-md" style="justify-content:center;">
+                            <button (click)="login()" class="btn btn-success login-button" type="submit" >Login</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="row general-input">
+                    <div class="col-md login-button">
+                        <a href="../registration">Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

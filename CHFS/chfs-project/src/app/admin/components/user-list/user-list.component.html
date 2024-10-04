@@ -1,0 +1,54 @@
+@if (dataLoaded) {
+<div class="container top-center-flex">
+  <div class="wrapper almost-full">
+    <header>
+      <h1><mat-icon>person</mat-icon>Manage and Edit Users</h1>
+    </header>
+    <div class="table-filter-button">
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+      </mat-form-field>
+    </div>
+    <main class="start-center-flex">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="user">
+          <th mat-header-cell *matHeaderCellDef> First Name </th>
+          <td mat-cell *matCellDef="let element">
+            <div>
+              <h3>{{element.firstName}} {{element.lastName}}</h3>{{element.email}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef> Title </th>
+          <td mat-cell *matCellDef="let element"> {{element.title | titlecase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdOn">
+          <th mat-header-cell *matHeaderCellDef> Created On </th>
+          <td mat-cell *matCellDef="let element"> {{element.createdOn | date:"mediumDate" }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let element">
+            <div>
+              <button mat-raised-button color="warn" type="button" (click)="delete(element)"
+                [disabled]="isProcessing"><mat-icon>delete_outline</mat-icon>Delete</button>
+              &nbsp;
+              <button mat-raised-button color="primary" type="button" routerLink='../user'
+                [queryParams]="{email: element.email}" [disabled]="isProcessing"><mat-icon>edit</mat-icon>Edit</button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsHeader"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsHeader;"></tr>
+      </table>
+    </main>
+  </div>
+</div>
+} @else {
+<h1>Loading...</h1>
+}

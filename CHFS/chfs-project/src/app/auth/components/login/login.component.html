@@ -1,0 +1,37 @@
+<form [formGroup]="formGroup" (ngSubmit)="submit()">
+  <p>
+    <mat-form-field floatLabel="always" class="full">
+      <mat-label>Email</mat-label>
+      <mat-icon matTextPrefix>mail</mat-icon>
+      <input matInput placeholder="name@example.com" formControlName="email" type="email" required>
+      @if(formGroup.controls['email'].errors?.['required']){
+      <mat-error>Email is required.</mat-error>
+      }
+      @if(formGroup.controls['email'].errors?.['email']){
+      <mat-error>Email has bad format.</mat-error>
+      }
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field floatLabel="always" class="full">
+      <mat-label>Password</mat-label>
+      <mat-icon matTextPrefix>lock</mat-icon>
+      <input matInput placeholder="Password" formControlName="password" [type]="viewPassword ? 'text' :'password'"
+        required>
+      <mat-icon (click)="togglePassword()" matSuffix>{{visibility}}</mat-icon>
+      @if(formGroup.controls['password'].errors?.['required']){
+      <mat-error>Password is required.</mat-error>
+      }
+    </mat-form-field>
+  </p>
+  <p class="forgot-password">
+    <a mat-button href="../auth/forgot-password" [disabled]="isProcessing">Forgot Password?</a>
+  </p>
+  <p>
+    <button mat-raised-button color="primary" type="submit" [disabled]="isProcessing">Login</button>
+  </p>
+  <p class="color-gray">
+    Doesn't have an account?
+    <a mat-stroked-button href="../auth/register" [disabled]="isProcessing">Register</a>
+  </p>
+</form>

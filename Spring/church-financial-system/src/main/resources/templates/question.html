@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"
+	rel="stylesheet" type="text/css" />
+<link th:href="@{css/main.css}" rel="stylesheet" type="text/css" />
+<title>Question</title>
+<style>
+* {
+	font-family: jeopardyFont;
+}
+
+html, body {
+	height: 100%;
+}
+
+.board {
+	height: 90%;
+}
+
+.box {
+	border-style: solid;
+	border-width: 4px;
+	border-radius: 1px;
+	border-color: #eeebf2;
+	background-color: #061125;
+	padding: 20px;
+	height: 100%;
+}
+
+.category {
+	text-align: center;
+	font-size: 70px;
+	color: #ffc835;
+	text-transform: uppercase;
+}
+
+.question {
+	text-align: justify;
+	font-size: 60px;
+	color: white;
+	text-shadow: 2px 2px gray;
+	padding: 50px;
+}
+
+.answer {
+	text-align: center;
+	font-size: 60px;
+	color: #ffc835;
+	text-transform: uppercase;
+	padding: 50px;
+}
+
+.custom {
+	font-size: 30px;
+}
+</style>
+</head>
+<body>
+	<div class="container-fluid board">
+		<br>
+		<div class="col-10 offset-1">
+			<div class="container-fluid box">
+				<div class="row" style="text-align: center;">
+					<div class="col">
+						<h1 class="category" th:text="${category.description}"></h1>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<h2 class="question" th:text="${question.questionContent}"></h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<h3 class="answer" style="display: none;" id="answer"
+							th:text="${question.answer}"></h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row empty">
+			<div class="col-4">
+				<button id="reveal" type="button"
+					class="btn btn-primary btn-block btn-lg  custom">
+					<i class="fas fa-eye"></i>&nbsp;&nbsp;&nbsp;Reveal
+				</button>
+			</div>
+			<div class="col-4">
+				<form action="#" th:action="@{/answer/correct}" method="post">
+					<input type="hidden" name="questionId" th:value="${question.questionId}">
+					<button id="correct" type="submit" class="btn btn-success btn-block btn-lg custom" disabled>
+						<i class="fas fa-check-circle"></i>&nbsp;&nbsp;&nbsp;Correct
+					</button>
+				</form>
+			</div>
+			<div class="col-4">
+				<form action="#" th:action="@{/answer/incorrect}" method="post">
+					<input type="hidden" name="questionId" th:value="${question.questionId}">
+					<button id="incorrect" type="submit" class="btn btn-danger btn-block btn-lg  custom" disabled>
+						<i class="fas fa-times-circle"></i>&nbsp;&nbsp;&nbsp;Incorrect
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+		crossorigin="anonymous"></script>
+	<script>
+		$(document).ready(function() {
+			$("#reveal").click(function() {
+				$("#answer").show("10000");
+				$("#correct").prop("disabled", false);
+				$("#incorrect").prop("disabled", false);
+				$("#reveal").prop("disabled", true);
+			});
+
+		});
+	</script>
+</body>
+</html>

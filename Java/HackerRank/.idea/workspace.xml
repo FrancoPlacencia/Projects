@@ -5,9 +5,331 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d8e7d90c-5d07-457a-b9ef-eebfcfe94628" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Java/TestCMD.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HackerRank/Java/Strings.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HackerRank/Java/Strings.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__antlr_antlr_2_7_7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_2_11.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__ch_qos_logback_logback_core_1_2_11.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__com_fasterxml_classmate_1_5_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_13_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_13_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_13_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jdk8_2_13_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jsr310_2_13_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__com_fasterxml_jackson_module_jackson_module_parameter_names_2_13_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__com_jayway_jsonpath_json_path_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__com_sun_activation_jakarta_activation_1_2_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__com_sun_istack_istack_commons_runtime_3_0_12.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__com_zaxxer_HikariCP_4_0_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__jakarta_activation_jakarta_activation_api_1_2_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__jakarta_annotation_jakarta_annotation_api_1_3_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__jakarta_persistence_jakarta_persistence_api_2_2_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__jakarta_transaction_jakarta_transaction_api_1_3_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__jakarta_xml_bind_jakarta_xml_bind_api_2_3_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__net_bytebuddy_byte_buddy_1_12_10.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__net_bytebuddy_byte_buddy_agent_1_12_10.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__net_minidev_accessors_smart_2_4_8.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__net_minidev_json_smart_2_4_8.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_17_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_apache_logging_log4j_log4j_to_slf4j_2_17_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_9_0_63.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_el_9_0_63.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_websocket_9_0_63.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_1_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_aspectj_aspectjweaver_1_9_7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_assertj_assertj_core_3_22_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_glassfish_jaxb_jaxb_runtime_2_3_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_glassfish_jaxb_txw2_2_3_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_hamcrest_hamcrest_2_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_hibernate_common_hibernate_commons_annotations_5_1_2_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_hibernate_hibernate_core_5_6_9_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_jboss_jandex_2_4_2_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_4_3_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_5_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_params_5_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_mariadb_jdbc_mariadb_java_client_1_5_7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_mockito_mockito_core_4_5_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_mockito_mockito_junit_jupiter_4_5_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_objenesis_objenesis_3_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_opentest4j_opentest4j_1_2_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_ow2_asm_asm_9_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_projectlombok_lombok_1_18_24.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_skyscreamer_jsonassert_1_5_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_slf4j_jul_to_slf4j_1_7_36.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_36.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_boot_spring_boot_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_boot_spring_boot_devtools_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_aop_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_data_jpa_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_jdbc_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_json_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_test_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_tomcat_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_web_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_autoconfigure_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_data_spring_data_commons_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_data_spring_data_jpa_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_spring_aop_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_spring_aspects_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_spring_beans_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_spring_context_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_spring_core_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_spring_expression_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_spring_jcl_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_spring_jdbc_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_spring_orm_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_spring_test_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_spring_tx_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_spring_web_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_springframework_spring_webmvc_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_xmlunit_xmlunit_core_2_9_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/libraries/Maven__org_yaml_snakeyaml_1_30.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/iba-api/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/iba-api/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/iba-api/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/iba-api/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/iba-api/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/iba-api/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/iba-api/src/main/java/org/fp/ibaapi/IbaApiApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/iba-api/src/main/java/org/fp/ibaapi/model/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/iba-api/src/main/java/org/fp/ibaapi/model/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/iba-api/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-api/iba-api/src/test/java/org/fp/ibaapi/IbaApiApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__antlr_antlr_2_7_7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_2_11.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__ch_qos_logback_logback_core_1_2_11.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__com_fasterxml_classmate_1_5_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_13_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_13_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_13_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jdk8_2_13_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jsr310_2_13_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__com_fasterxml_jackson_module_jackson_module_parameter_names_2_13_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__com_jayway_jsonpath_json_path_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__com_sun_activation_jakarta_activation_1_2_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__com_sun_istack_istack_commons_runtime_3_0_12.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__com_zaxxer_HikariCP_4_0_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__jakarta_activation_jakarta_activation_api_1_2_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__jakarta_annotation_jakarta_annotation_api_1_3_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__jakarta_persistence_jakarta_persistence_api_2_2_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__jakarta_transaction_jakarta_transaction_api_1_3_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__jakarta_xml_bind_jakarta_xml_bind_api_2_3_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__net_bytebuddy_byte_buddy_1_12_10.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__net_bytebuddy_byte_buddy_agent_1_12_10.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__net_minidev_accessors_smart_2_4_8.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__net_minidev_json_smart_2_4_8.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_17_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_apache_logging_log4j_log4j_to_slf4j_2_17_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_9_0_63.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_el_9_0_63.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_websocket_9_0_63.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_1_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_aspectj_aspectjweaver_1_9_7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_assertj_assertj_core_3_22_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_attoparser_attoparser_2_0_5_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_glassfish_jaxb_jaxb_runtime_2_3_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_glassfish_jaxb_txw2_2_3_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_hamcrest_hamcrest_2_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_hibernate_common_hibernate_commons_annotations_5_1_2_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_hibernate_hibernate_core_5_6_9_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_jboss_jandex_2_4_2_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_4_3_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_5_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_params_5_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_mariadb_jdbc_mariadb_java_client_1_5_7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_mockito_mockito_core_4_5_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_mockito_mockito_junit_jupiter_4_5_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_objenesis_objenesis_3_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_opentest4j_opentest4j_1_2_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_ow2_asm_asm_9_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_projectlombok_lombok_1_18_24.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_skyscreamer_jsonassert_1_5_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_slf4j_jul_to_slf4j_1_7_36.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_36.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_boot_spring_boot_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_boot_spring_boot_devtools_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_aop_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_data_jpa_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_jdbc_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_json_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_test_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_thymeleaf_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_tomcat_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_web_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_autoconfigure_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_data_spring_data_commons_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_data_spring_data_jpa_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_spring_aop_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_spring_aspects_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_spring_beans_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_spring_context_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_spring_core_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_spring_expression_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_spring_jcl_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_spring_jdbc_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_spring_orm_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_spring_test_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_spring_tx_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_spring_web_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_springframework_spring_webmvc_5_3_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_thymeleaf_extras_thymeleaf_extras_java8time_3_0_4_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_thymeleaf_thymeleaf_3_0_15_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_thymeleaf_thymeleaf_spring5_3_0_15_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_unbescape_unbescape_1_1_6_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_xmlunit_xmlunit_core_2_9_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/libraries/Maven__org_yaml_snakeyaml_1_30.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/java/org/fp/ibaweb/IbaWebApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/java/org/fp/ibaweb/Model/Category.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/java/org/fp/ibaweb/Model/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/java/org/fp/ibaweb/Model/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/java/org/fp/ibaweb/configuration/MvcConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/java/org/fp/ibaweb/controller/IbaController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/java/org/fp/ibaweb/repository/CategoryRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/java/org/fp/ibaweb/repository/RoleRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/java/org/fp/ibaweb/repository/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/java/org/fp/ibaweb/restcontroller/CategoryController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/java/org/fp/ibaweb/restcontroller/RoleController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/java/org/fp/ibaweb/restcontroller/UserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/java/org/fp/ibaweb/service/CategoryService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/java/org/fp/ibaweb/service/RoleService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/java/org/fp/ibaweb/service/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/java/org/fp/ibaweb/service/impl/CategoryServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/java/org/fp/ibaweb/service/impl/RoleServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/java/org/fp/ibaweb/service/impl/UserServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/messages.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/messages_es.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/bootstrap/bootstrap-grid.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/bootstrap/bootstrap-grid.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/bootstrap/bootstrap-grid.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/bootstrap/bootstrap-grid.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/bootstrap/bootstrap-reboot.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/bootstrap/bootstrap-reboot.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/bootstrap/bootstrap-reboot.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/bootstrap/bootstrap-reboot.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/bootstrap/bootstrap.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/bootstrap/bootstrap.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/bootstrap/bootstrap.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/bootstrap/bootstrap.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/font-awesome/all.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/font-awesome/brands.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/font-awesome/fontawesome.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/font-awesome/regular.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/font-awesome/solid.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/font-awesome/svg-with-js.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/font-awesome/v4-font-face.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/font-awesome/v4-shims.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/font-awesome/v5-font-face.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/game.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/login.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/webfonts/fa-brands-400.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/webfonts/fa-brands-400.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/webfonts/fa-brands-400.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/webfonts/fa-brands-400.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/webfonts/fa-brands-400.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/webfonts/fa-regular-400.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/webfonts/fa-regular-400.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/webfonts/fa-regular-400.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/webfonts/fa-regular-400.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/webfonts/fa-regular-400.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/webfonts/fa-solid-900.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/webfonts/fa-solid-900.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/webfonts/fa-solid-900.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/webfonts/fa-solid-900.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/css/webfonts/fa-solid-900.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/font/Games-Italic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/font/games.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/font/gyparody_hv.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/font/gyparody_rg.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/font/header.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/font/lcd.TTF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/font/question.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/font/robot.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/img/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/bootstrap.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/bootstrap/bootstrap.bundle.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/bootstrap/bootstrap.bundle.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/bootstrap/bootstrap.bundle.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/bootstrap/bootstrap.bundle.min.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/bootstrap/bootstrap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/bootstrap/bootstrap.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/bootstrap/bootstrap.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/bootstrap/bootstrap.min.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/common.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/config/board-edit.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/config/board.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/config/question-edit.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/font-awesome/all.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/font-awesome/brands.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/font-awesome/conflict-detection.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/font-awesome/fontawesome.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/font-awesome/regular.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/font-awesome/solid.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/font-awesome/v4-shims.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/game/game.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/game/newGame.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/game/question.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/jquery-3.4.1.slim.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/jquery-3.6.0.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/jquery-3.6.0.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/popper.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/static/js/sweetalert.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/main/resources/templates/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/IBA/iba-web/iba-web/src/test/java/org/fp/ibaweb/IbaWebApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/.classpath" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/.project" beforeDir="false" afterPath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/.project" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/.settings/org.eclipse.jdt.core.prefs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/target/classes/com/iba/config/SpringDBConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/target/classes/com/iba/config/SpringDBConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/target/classes/com/iba/dao/RoleDaoImpl$RoleMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/target/classes/com/iba/dao/RoleDaoImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/target/classes/com/iba/dao/UserDaoImpl$UserMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/target/classes/com/iba/dao/UserDaoImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/target/classes/com/iba/db/HsqlDatabaseServerImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/target/classes/com/iba/db/HsqlDatabaseServerImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/target/classes/com/iba/service/RoleServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/target/classes/com/iba/service/UserServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/target/classes/com/iba/validator/UserFormValidator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/target/classes/db/sql/SpringDBConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../Spring/iba_workspace/iba_mvc/target/classes/db/sql/SpringDBConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../git.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../git.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,26 +345,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="jrt://C:/Program Files/Java/jdk-16.0.1!/java.base/java/util/currency.data" root0="FORCE_HIGHLIGHTING" />
-    <setting file="jar://$PROJECT_DIR$/../../../../Program Files/Java/jdk-16.0.1/lib/src.zip!/java.base/java/util/Currency.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="jar://$PROJECT_DIR$/../../../../Program Files/Java/jdk-16.0.1/lib/src.zip!/java.base/java/util/Locale.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="jar://$PROJECT_DIR$/../../../../Program Files/Java/jdk-16.0.1/lib/src.zip!/java.base/java/util/LocaleISOData.java" root0="FORCE_HIGHLIGHTING" />
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/InterviewPrep/SockMerchant.java" />
-        <option value="$PROJECT_DIR$/src/InterviewPrep/CountingValleys.java" />
-        <option value="$PROJECT_DIR$/src/InterviewPrep/JumpingOnTheClouds.java" />
-        <option value="$PROJECT_DIR$/src/InterviewPrep/RepeatedString.java" />
-        <option value="$PROJECT_DIR$/src/InterviewPrep/warmup/RepeatedString.java" />
-        <option value="$PROJECT_DIR$/src/InterviewPrep/StringManipulations/MakingAnagrams.java" />
-        <option value="$PROJECT_DIR$/src/InterviewPrep/StringManipulations/AlternatingCharacters.java" />
-        <option value="$PROJECT_DIR$/src/InterviewPrep/StringManipulations/ShrelockAndTheValidString.java" />
-      </list>
-    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -67,15 +369,6 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Apps/Github/Java/HackerRank&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;
-  }
-}</component>
   <component name="RunManager" selected="Application.TestCMD">
     <configuration name="AlternatingCharacters" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="InterviewPrep.StringManipulations.AlternatingCharacters" />
@@ -143,11 +436,11 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.TestCMD" />
-      <item itemvalue="Application.Strings" />
-      <item itemvalue="Application.Introductions" />
       <item itemvalue="Application.AlternatingCharacters" />
+      <item itemvalue="Application.Introductions" />
       <item itemvalue="Application.ShrelockAndTheValidString" />
+      <item itemvalue="Application.Strings" />
+      <item itemvalue="Application.TestCMD" />
     </list>
     <recent_temporary>
       <list>
@@ -158,6 +451,18 @@
         <item itemvalue="Application.AlternatingCharacters" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -173,77 +478,14 @@
     </task>
     <servers />
   </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.24962178" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="DB Browser" order="5" weight="0.32980332" />
-      <window_info id="Capture Tool" order="6" />
-      <window_info id="Favorites" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="DB Execution Console" order="0" />
-      <window_info anchor="bottom" id="Messages" order="1" weight="0.329718" />
-      <window_info anchor="bottom" id="Version Control" order="2" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="4" />
-      <window_info anchor="bottom" id="Message" order="5" />
-      <window_info anchor="bottom" id="Find" order="6" />
-      <window_info active="true" anchor="bottom" id="Run" order="7" visible="true" weight="0.3295082" />
-      <window_info anchor="bottom" id="Debug" order="8" weight="0.5688525" />
-      <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="11" />
-      <window_info anchor="bottom" x="0" y="0" width="295" height="544" id="Documentation" order="12" weight="0.3295082" />
-      <window_info anchor="right" id="Palette" order="0" />
-      <window_info anchor="right" id="Theme Preview" order="1" />
-      <window_info anchor="right" id="Capture Analysis" order="2" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info anchor="right" id="Maven Projects" order="4" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="5" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="7" weight="0.25" />
-    </layout>
-    <layout-to-restore>
-      <window_info id="Image Layers" order="0" />
-      <window_info id="Designer" order="1" />
-      <window_info id="UI Designer" order="2" />
-      <window_info id="DB Browser" order="3" weight="0.32980332" />
-      <window_info id="Capture Tool" order="4" />
-      <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="6" visible="true" weight="0.24962178" />
-      <window_info id="Structure" order="7" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="DB Execution Console" order="0" />
-      <window_info anchor="bottom" id="Messages" order="1" weight="0.329718" />
-      <window_info anchor="bottom" id="Version Control" order="2" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="4" />
-      <window_info anchor="bottom" id="Message" order="5" />
-      <window_info anchor="bottom" id="Find" order="6" />
-      <window_info active="true" anchor="bottom" id="Run" order="7" visible="true" weight="0.3295082" />
-      <window_info anchor="bottom" id="Debug" order="8" weight="0.5688525" />
-      <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="11" />
-      <window_info anchor="bottom" x="0" y="0" width="295" height="544" id="Documentation" order="12" weight="0.3295082" />
-      <window_info anchor="right" id="Palette" order="0" />
-      <window_info anchor="right" id="Theme Preview" order="1" />
-      <window_info anchor="right" id="Capture Analysis" order="2" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info anchor="right" id="Maven Projects" order="4" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="5" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="7" weight="0.25" />
-    </layout-to-restore>
-  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -284,76 +526,6 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="jar://$PROJECT_DIR$/../../../../Program Files/Java/jdk1.8.0_191/src.zip!/java/util/List.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="144" column="12" selection-start-line="144" selection-start-column="12" selection-end-line="144" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/InterviewPrep/warmup/RepeatedString.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/InterviewPrep/warmup/SockMerchant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/InterviewPrep/warmup/CountingValleys.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/InterviewPrep/warmup/JumpingOnTheClouds.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/InterviewPrep/StringManipulations/MakingAnagrams.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1037">
-          <caret line="63" column="20" selection-start-line="63" selection-start-column="20" selection-end-line="63" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/InterviewPrep/StringManipulations/ShrelockAndTheValidString.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="19" column="39" lean-forward="true" selection-start-line="19" selection-start-column="39" selection-end-line="19" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/InterviewPrep/StringManipulations/AlternatingCharacters.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="39" column="50" lean-forward="true" selection-start-line="43" selection-start-column="8" selection-end-line="54" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
   </component>
   <component name="masterDetails">
     <states>

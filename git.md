@@ -9,4 +9,7 @@ git clone [URL]
 
 # status of repository
 git status
+
+git add [file]
+
 ```

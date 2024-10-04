@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- External CSS -->
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome/fontawesome.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome/regular.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome/all.min.css}" />
+	<style>
+		.box {
+			border-style: solid;
+			border-width: 4px;
+			border-radius: 1px;
+			border-color: #eeebf2;
+			margin: 10px;
+			padding: 10px;
+			background-color: #0b1e42;
+			font-size: 40px;
+			text-transform: uppercase;
+			text-align: center;
+			font-family: robotFont;
+		}
+
+		.login-menu {
+			background-color: #242424;
+			color: white;
+			height: 100vh
+		}
+
+		.main-container {
+			background-color: #f6f6f6;
+		}
+
+		.custom-list-group {
+			margin-left: 20px;
+			margin-right: 20px;
+		}
+
+		.custom-list-group .list-group-item {
+			background-color: transparent;
+			border-color: transparent;
+			color: white;
+		}
+
+		.custom-list-group .list-group-item.active {
+			background-color: #3f3f3f;
+			border-color: transparent;
+			border-radius: 5px;
+		}
+
+		.custom-list-group .list-group-item-action:hover {
+			background-color: white;
+			color: #242424;
+			border-radius: 5px;
+		}
+
+		.logo {
+			text-align: center;
+			padding-top: 40px;
+			padding-bottom: 10px;
+
+		}
+	</style>
+	<title>CFS</title>
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-6 login-menu flex fill">
+				<div class="logo">
+					<h1><i class="fas fa-cross fw-bold"></i> CFS</h1>
+					<p class="fw-bold">Church Financial System</p>
+				</div>
+				<div class="container">
+					<div class="row">
+						<div class="col-8 offset-2">
+						<form>
+							<!-- First Name -->
+							<label for="firstNameInput" class="form-label">First Names</label>
+							<input type="text" class="form-control" id="firstNameInput" placeholder="John">
+
+							<!-- Last Name -->
+							<label for="lastNameInput" class="form-label">Last Names</label>
+							<input type="text" class="form-control" id="lastNameInput" placeholder="Doe">
+
+							<!-- Email -->
+							<label for="emailInput" class="form-label">Email address</label>
+							<input type="email" class="form-control" id="emailInput" placeholder="name@example.com">
+						
+							<label for="passwordInput" class="form-label">Password</label>
+							<input type="password" id="passwordInput" class="form-control" aria-describedby="passwordHelpBlock">
+							
+
+							<label for="repasswordInput" class="form-label">Re-Password</label>
+							<input type="password" id="repasswordInput" class="form-control" aria-describedby="passwordHelpBlock">
+							<div id="passwordHelpBlock" class="form-text text-light">
+								Your password must be 8-20 characters long, contain letters and numbers, and must not
+								contain spaces, special characters, or emoji.
+							</div><div class="form-check">
+								<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+								<label class="form-check-label" for="flexCheckDefault">
+								  Remember me
+								</label>
+							  </div>
+							<button type="button" class="btn btn-primary">Login</button>
+						</form>
+						</div>
+					</div>
+				</div>	
+			</div>
+			<div class="col-8 main-container">
+				<div>
+					Welcome CFS<br>
+					Welcome
+				</div>
+				<div style="background-color: white;">hola</div>
+			</div>
+			<div class="col-2">
+				RIGHT MENU
+			</div>
+		</div>
+	</div>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script type="text/javascript" th:src="@{/js/jquery-3.4.1.slim.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/main.js}"></script>
+</body>
+
+</html>

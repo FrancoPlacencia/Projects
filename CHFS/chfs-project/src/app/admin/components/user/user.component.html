@@ -1,0 +1,221 @@
+{{addChurchId}}<br>
+{{user| json}}
+
+<div class="container top-center-flex">
+  <div class="wrapper almost-full">
+
+    <header>
+      <h1><mat-icon>person</mat-icon>Manage and Edit User</h1>
+      <div class="navigation">
+        <a mat-button href="../app/admin">Admin</a>/
+        <a mat-button href="../app/admin/user-list">Users</a>
+      </div>
+    </header>
+    @if (dataLoaded) {
+
+    <div class="action-section">
+      <div></div>
+      <button mat-raised-button color="accent" type="submit"><mat-icon>save</mat-icon>Save</button>
+    </div>
+    <main>
+      <mat-accordion class="full" multi>
+        <form [formGroup]="formGroup!" (ngSubmit)="submit()">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>person</mat-icon>
+                <h3>User Details</h3>
+              </mat-panel-title>
+              <mat-panel-description>
+                {{userId}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="input-grid">
+              <div>
+                <mat-form-field floatLabel="always" class="full">
+                  <mat-label>Email</mat-label>
+                  <mat-icon matTextPrefix>email</mat-icon>
+                  <input matInput placeholder="email@example.com" formControlName="email" required>
+                  @if(formGroup!.controls['email'].errors?.['required']) {
+                  <mat-error>Email is required.</mat-error>
+                  }
+                  @if(formGroup!.controls['email'].errors?.['email']) {
+                  <mat-error>Email bad format.</mat-error>
+                  }
+                  @if(formGroup!.controls['email'].errors?.['used']) {
+                  <mat-error>Email already in use.</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field floatLabel="always" class="full">
+                  <mat-label>First Name</mat-label>
+                  <input matInput placeholder="John" formControlName="firstName" type="text" maxlength="50" required>
+                  @if(formGroup!.controls['firstName'].errors?.['required']) {
+                  <mat-error>First Name is required.</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field floatLabel="always" class="full">
+                  <mat-label>Last Name</mat-label>
+                  <input matInput placeholder="Doe" formControlName="lastName" type="text" maxlength="50" required>
+                  @if(formGroup!.controls['lastName'].errors?.['required']) {
+                  <mat-error>Last Name is required.</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              <div>
+                <mat-form-field floatLabel="always" class="full">
+                  <mat-label>Phone</mat-label>
+                  <input matInput placeholder="0000000000" formControlName="phone" type="text" minlength="10" required>
+                  @if(formGroup!.controls['phone'].errors?.['required']) {
+                  <mat-error>Phone is required.</mat-error>
+                  }
+                  @if(formGroup!.controls['phone'].errors?.['phone']) {
+                  <mat-error>Phone number can only contain numbers.</mat-error>
+                  }
+                  @if(formGroup!.controls['phone'].errors?.['minlength']) {
+                  <mat-error>Phone number must be 10 numbers.</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field floatLabel="always" class="full">
+                  <mat-label>Address</mat-label>
+                  <input matInput placeholder="Street Name #123 Location Country, State" formControlName="address"
+                    type="text" maxlength="250" required>
+                  @if(formGroup!.controls['address'].errors?.['required']) {
+                  <mat-error>Address is required.</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+
+              <div>
+                <mat-form-field floatLabel="always" class="full">
+                  <mat-label>Title</mat-label>
+                  <mat-select formControlName="title">
+                    @for (option of titleOptions; track option) {
+                    <mat-option [value]="option.value"
+                      [class]="option.color"><mat-icon>{{option.icon}}</mat-icon>{{option.displayValue}}</mat-option>
+                    }
+                  </mat-select>
+                  @if(formGroup!.controls['title'].errors?.['required']) {
+                  <mat-error>Title is required.</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              <div class="full-column-grid">
+                <mat-form-field style="width: 100%;">
+                  <mat-label>Bio</mat-label>
+                  <textarea matInput (keyup)="updateBio()" formControlName="bio" class="full" cdkTextareaAutosize
+                    cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5" required maxlength="150"></textarea>
+                  <mat-hint align="end">{{bioLength}}/150</mat-hint>
+                  @if(formGroup!.controls['bio'].errors?.['required']) {
+                  <mat-error>Bio is required.</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-expansion-panel>
+
+          <!-- Security Info-->
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>lock</mat-icon>
+                <h3>Security</h3>
+              </mat-panel-title>
+              <mat-panel-description>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="input-grid">
+              <div>
+                <mat-form-field floatLabel="always" class="full">
+                  <mat-label>Role</mat-label>
+                  <mat-select formControlName="role">
+                    @for (option of roleOptions; track option) {
+                    <mat-option
+                      [value]="option.value"><mat-icon>{{option.icon}}</mat-icon>{{option.displayValue}}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field floatLabel="always" class="full">
+                  <mat-label>Active</mat-label>
+                  <mat-select formControlName="isActive">
+                    @for (option of activeOptions; track option) {
+                    <mat-option
+                      [value]="option.value"><mat-icon>{{option.icon}}</mat-icon>{{option.displayValue}}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field floatLabel="always" class="full">
+                  <mat-label>Locked</mat-label>
+                  <mat-select formControlName="isLocked">
+                    @for (option of lockedOptions; track option) {
+                    <mat-option
+                      [value]=option.value><mat-icon>{{option.icon}}</mat-icon>{{option.displayValue}}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </form>
+        <form [formGroup]="churchFormGroup">
+          <!-- Permissions Info-->
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>key</mat-icon>
+                <h3>Permissions</h3>
+              </mat-panel-title>
+              <mat-panel-description>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="input-grid">
+              <div>
+                <mat-chip-listbox>
+                  @for (church of userChurches; track church) {
+                  <mat-chip color="primary" selected (removed)="removeChurch(church.churchId!)">
+                    {{church.name}}
+                    <button style="color: #f44336;" matChipRemove>
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </mat-chip>
+                  }
+                </mat-chip-listbox>
+              </div>
+              <div>
+                <mat-form-field floatLabel="always" class="full">
+                  <mat-label>Church</mat-label>
+                  <mat-select formControlName="church">
+                    @for (option of churchOptions; track option) {
+                    <mat-option [value]=" option.value">
+                      <mat-icon>{{option.icon}}</mat-icon>{{option.displayValue}}
+                    </mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div>
+                <button mat-raised-button color="accent" type="button"
+                  (click)="addChurch()"><mat-icon>add</mat-icon>Add</button>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </form>
+      </mat-accordion>
+    </main>
+
+    }
+  </div>
+</div>

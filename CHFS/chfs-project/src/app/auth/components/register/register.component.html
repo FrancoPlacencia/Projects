@@ -1,0 +1,101 @@
+<form [formGroup]="formGroup" (ngSubmit)="submit()">
+  <div class="form-grid">
+    <div>
+      <mat-form-field floatLabel="always" class="full">
+        <mat-label>Email</mat-label>
+        <mat-icon matTextPrefix>email</mat-icon>
+        <input matInput placeholder="email@example.com" formControlName="email" required>
+        @if(formGroup.controls['email'].errors?.['required']) {
+        <mat-error>Email is required.</mat-error>
+        }
+        @if(formGroup.controls['email'].errors?.['email']) {
+        <mat-error>Email bad format.</mat-error>
+        }
+        @if(formGroup.controls['email'].errors?.['used']) {
+        <mat-error>Email already in use.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field floatLabel="always" class="full">
+        <mat-label>First Name</mat-label>
+        <input matInput placeholder="John" formControlName="firstName" type="text" maxlength="50" required>
+        @if(formGroup.controls['firstName'].errors?.['required']) {
+        <mat-error>First Name is required.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field floatLabel="always" class="full">
+        <mat-label>Last Name</mat-label>
+        <input matInput placeholder="Doe" formControlName="lastName" type="text" maxlength="50" required>
+        @if(formGroup.controls['lastName'].errors?.['required']) {
+        <mat-error>Last Name is required.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field floatLabel="always" class="full">
+        <mat-label>Phone</mat-label>
+        <input matInput placeholder="0000000000" formControlName="phone" type="text" minlength="10" required>
+        @if(formGroup.controls['phone'].errors?.['required']) {
+        <mat-error>Phone is required.</mat-error>
+        }
+        @if(formGroup.controls['phone'].errors?.['phone']) {
+        <mat-error>Phone number can only contain numbers.</mat-error>
+        }
+        @if(formGroup.controls['phone'].errors?.['minlength']) {
+        <mat-error>Phone number must be 10 numbers.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field floatLabel="always" class="full">
+        <mat-label>Address</mat-label>
+        <input matInput placeholder="Street Name #123 Location Country, State" formControlName="address" type="text"
+          maxlength="250" required>
+        @if(formGroup.controls['address'].errors?.['required']) {
+        <mat-error>Address is required.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+
+    <div>
+      <mat-form-field floatLabel="always" class="full">
+        <mat-label>Title</mat-label>
+        <mat-select formControlName="title">
+          @for (title of titles; track title) {
+          <mat-option [value]="title.value">{{title.displayValue}}</mat-option>
+          }
+        </mat-select>
+        @if(formGroup.controls['title'].errors?.['required']) {
+        <mat-error>Title is required.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="full-column-grid">
+      <mat-form-field style="width: 100%;">
+        <mat-label>Bio</mat-label>
+        <textarea matInput (keyup)="updateBio()" formControlName="bio" class="full" cdkTextareaAutosize
+          cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5" required maxlength="150"></textarea>
+        <mat-hint align="end">{{bioLength}}/150</mat-hint>
+        @if(formGroup.controls['bio'].errors?.['required']) {
+        <mat-error>Bio is required.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <app-password formGroupName="passwordForm" [password]="user.password!"
+      [passwordValidator]="user.passwordValidator!"></app-password>
+    <div class="two-column-grid">
+      <button mat-raised-button color="primary" type="submit" [disabled]="isProcessing">Register</button>
+    </div>
+  </div>
+  <p class="gray">
+    This is a private application, any registration will be validated.
+    Clicking on register button will accept the conditions, private policies and cookes policies,
+  </p>
+
+</form>

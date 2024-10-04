@@ -1,0 +1,78 @@
+/*h1 {
+    text-align: center;
+    font-size: 60px;
+    color: white;
+}
+*/
+/*********** Score Styles ******************/
+.header-score {
+    text-align: right;
+    padding-right: 20px;
+}
+.header-default {
+    color: white;
+    background-color: #666668;
+    font-size: 20px;
+    opacity: 0.8;
+}
+.header-selected {
+    color: black;
+    background-color: #ffc14a;
+    font-size: 30px;
+    opacity: 1;
+}
+
+.content-score {
+    font-family: lcdFont;
+    text-align: right;
+    padding-right: 20px;
+    background-color: black;
+    color: white;
+}
+.content-default {
+    font-size: 30px;
+    opacity: 0.8;
+}
+.content-selected {
+    font-size: 40px;
+    opacity: 1;
+}
+
+/*********** Boxes Styles ******************/
+.box-header {
+    text-transform: uppercase;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-family: headerFont;
+}
+
+.box {
+    border-style: solid; 
+    border-width: 4px;
+    border-radius: 1px;
+    border-color: #eeebf2;
+    margin: 10px;
+    padding: 10px;
+    background-color: 	#0b1e42;
+    font-size: 40px;
+    text-transform: uppercase;
+    text-align: center;
+    font-family:robotFont;
+}
+
+.option:hover {
+    background-color: #f2a716;
+    color: #061125;
+    cursor: pointer;
+    border-color: #f6c568;
+}
+
+.option {
+    color: #d1dae0;
+}
+
+.no-option {
+    color: #d1dae0;
+    opacity: 0.2;
+}

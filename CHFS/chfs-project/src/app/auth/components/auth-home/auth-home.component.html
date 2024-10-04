@@ -1,0 +1,16 @@
+<div class="container center-flex">
+  <div class="wrapper">
+    <main>
+      <mat-card class="box" [class]="size">
+        <mat-card-header>
+          <app-logo></app-logo>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <h3 class="color-blue">{{title}}</h3>
+          <router-outlet></router-outlet>
+        </mat-card-content>
+      </mat-card>
+    </main>
+  </div>
+</div>

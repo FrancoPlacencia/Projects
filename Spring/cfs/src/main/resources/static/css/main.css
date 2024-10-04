@@ -1,0 +1,57 @@
+@font-face {
+	font-family: jeopardyFont;
+	src: url("../font/gyparody_hv.ttf");
+}
+
+@font-face {
+	font-family: lcdFont;
+	src: url("../font/lcd.ttf");
+}
+
+@font-face {
+	font-family: questionFont;
+	src: url("../font/question.ttf");
+}
+
+@font-face {
+	font-family: headerFont;
+	src: url("../font/header.ttf");
+}
+
+@font-face {
+	font-family: robotFont;
+	src: url("../font/robot.ttf");
+}
+
+* {
+	font-family: jeopardyFont;
+}
+
+body {
+	background-image: url("../img/diamon-bg.jpg");
+	background-color:	#261e5a;
+}
+
+h1 {
+	font-size: 4rem;
+    color: white;
+}
+
+.custom-btn {
+    font-size: 2rem;
+}
+
+.custom-selector {
+	font-size: 2rem;
+}
+
+footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: black;
+   color: white;
+   text-align: center;
+   font-family: robotFont!important;
+}

@@ -1,0 +1,10 @@
+.white-box {
+    background-color: white;
+    border-radius: 15px 0px 0px 15px;
+    color: black;
+}
+
+.blue-box {
+    background-color: #000c72;
+    border-radius: 0px 15px 15px 0px;
+}

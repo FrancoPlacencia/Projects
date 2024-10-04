@@ -1,0 +1,9 @@
+    ____   _____ _    _ ______ _____  ____
+   / / /  / ____| |  | |  ____/ ____| \ \ \
+  / / /  | |    | |__| | |__ | (___    \ \ \
+ < < <   | |    |  __  |  __| \___ \    > > >
+  \ \ \  | |____| |  | | |    ____) |  / / /
+   \_\_\  \_____|_|  |_|_|   |_____/  /_/_/
+Version: ${application.version}
+Spring Boot Version: ${spring-boot.version}
+App Name: ${application.title}

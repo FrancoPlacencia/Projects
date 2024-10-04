@@ -1,0 +1,25 @@
+<div class="container top-center-flex">
+  <div class="wrapper">
+    <header>
+      <h1>Administrator Module</h1>
+    </header>
+    <main>
+      @for (tile of tiles; track tile.title) {
+      <div class="content color-blue">
+        <mat-card class="tile" routerLink="{{tile.url}}">
+          <mat-card-header>
+            <mat-icon class="admin-icon">{{tile.icon}}</mat-icon>
+            <h2>{{tile.title}}</h2>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+            <p>{{tile.description}}</p><br>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      } @empty {
+      <h1>There are no items.</h1>
+      }
+    </main>
+  </div>
+</div>

@@ -1,0 +1,130 @@
+@use "chfs-colors" as chfs-colors;
+
+main {
+  gap: 20px;
+}
+
+.content :hover {
+  background-color: chfs-colors.$blue;
+  color: white;
+}
+
+.admin-icon {
+  font-size: 4rem;
+  width: auto;
+  height: auto;
+}
+
+h1 {
+  font-size: 2rem !important;
+  font-weight: 400 !important;
+  color: white;
+  mat-icon {
+    font-size: 2.5rem !important;
+    height: auto;
+    width: auto;
+  }
+}
+
+h2 {
+  font-size: 3rem !important;
+  font-weight: 400 !important;
+  margin: 0;
+}
+
+h3 {
+  font-size: 1.125rem !important;
+  font-weight: 400 !important;
+  margin: 0;
+}
+
+h4 {
+  font-size: 1.125rem !important;
+  font-weight: 400 !important;
+  margin: 0;
+  color: white;
+}
+
+h5 {
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  margin: 0;
+}
+
+.input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: space-around;
+  grid-gap: 20px;
+  gap: 20px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-content: space-around;
+  grid-gap: 20px;
+  gap: 20px;
+}
+
+.full-column-grid {
+  grid-column: span 3;
+}
+
+mat-panel-title {
+  mat-icon {
+    font-size: 1.25rem !important;
+  }
+}
+
+mat-expansion-panel-header {
+  height: 3.5rem;
+}
+
+.mat-expansion-panel-header-description {
+  justify-content: flex-end;
+  align-items: center;
+}
+
+a {
+  color: white !important;
+}
+
+.navigation {
+  color: white;
+}
+
+.action-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+table {
+  table-layout: fixed;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+.custom-chip {
+  background-color: chfs-colors.$blue !important;
+  color: white !important;
+}
+
+.custom-chip :hover {
+  background-color: white !important;
+  color: chfs-colors.$blue !important;
+}
+
+.mat-mdc-standard-chip {
+  --mdc-chip-label-text-color: white;
+  --mdc-chip-label-text-size: 16px;
+  --mdc-chip-elevated-container-color: #003a6a;
+  --mdc-chip-label-text-weight: 300;
+}
+
+.mat-mdc-chip-remove {
+  opacity: 1;
+}

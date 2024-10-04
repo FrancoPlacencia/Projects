@@ -1,0 +1,11 @@
+spring:
+    datasource:
+        # jdbc:mariadb:
+        # jdbc:mysql:
+        url: jdbc:mariadb://localhost/springlearning
+        password: letmein
+        username: dbconnection-dev
+        driver-class-name: org.mariadb.jdbc.Driver
+    jpa:
+        hibernate: 
+            ddl-auto: create-drop

@@ -1,0 +1,54 @@
+<table class="table table-striped">
+    <!--
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">
+                First Name
+            </th>
+            <th scope="col">
+                Last Name
+            </th>
+            <th scope="col">
+                Email
+            </th>
+            <th scope="col">
+                Title
+            </th>
+            <th scope="col">
+                Bio
+            </th>
+        </tr>
+    </thead>
+-->
+    <tbody>
+        <ng-container *ngFor="let user of users">
+            <tr>
+                <td>
+                    {{user.firstName}} {{user.lastName}}<br>
+                    {{user.email}}
+                </td>
+                <td>
+                    {{user.title}}
+                </td>
+                <td>
+                    {{user.bio}}
+                </td>
+                <td>
+                    {{user.isActive}}
+                </td>
+                <td>
+                    {{user.isLocked}}
+                </td>
+                <td>
+                    {{user.usingMfa}}
+                </td>
+                <td>
+                    {{user.createdOn}}
+                </td>
+                <td>
+                    {{user.role}}
+                </td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>

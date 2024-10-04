@@ -1,0 +1,1 @@
+INSERT INTO T_USER (first_name, last_name) VALUES ('hello', 'world');

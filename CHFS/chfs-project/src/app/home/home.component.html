@@ -1,0 +1,28 @@
+<div class="home-container">
+  <mat-toolbar color="primary" class="home-toolbar">
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <app-logo [type]="logoType"></app-logo>
+    <button mat-icon-button>
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </mat-toolbar>
+  <mat-sidenav-container class="home-sidenav-container">
+    <mat-sidenav #snav mode="side" fixedTopGap="56">
+
+      <mat-nav-list>
+        @for(navItem of navItems; track navItem) {
+        <a mat-list-item routerLink="{{navItem.url}}"><mat-icon>{{navItem.icon}}</mat-icon>{{navItem.title}}</a>
+        @if(navItem.children){
+        @for(navChildren of navItem.children; track navChildren){
+        <a mat-list-item routerLink="{{navItem.url}}"><mat-icon>{{navItem.icon}}</mat-icon>{{navItem.title}}</a>
+        }
+        }
+        }
+      </mat-nav-list>
+
+    </mat-sidenav>
+    <mat-sidenav-content class="background">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

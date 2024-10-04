@@ -1,0 +1,42 @@
+.left-background {
+    background-color: #F5F7FB;
+    height: 100vh;
+}
+
+.register-box {
+	background-color: white;
+	text-align: left;
+	padding: 30px; 
+	border-color: #E8E7EA;
+    border-style: solid;
+    border-width: 2px;
+	border-radius: 5px;
+}
+
+.register-button {
+	width: 60%;
+	padding: 5px;
+}
+
+.register-input-label {    
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #565674;
+    padding-top: 10px;
+}
+
+.inputRow {
+    padding-top: 15px;
+}
+
+.conditions {
+    color: #777;
+    font-size: 0.75rem;
+}
+
+.warning {
+    font-size: 0.75rem;
+    padding: 10px;
+    text-align: start;
+    color: Crimson;
+}

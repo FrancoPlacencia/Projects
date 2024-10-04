@@ -1,0 +1,60 @@
+spring:
+    jpa:
+        show-sql: true
+        hibernate:
+            # update don't create and drop
+            ddl-auto: update
+        properties:
+            hibernate:
+                format_sql: true
+    datasource:
+        driver-class-name: org.mariadb.jdbc.Driver
+        url: jdbc:mariadb://localhost:3306/chfs_dev
+        username: root
+        password: p4$sw0rd
+    mail:
+        host: smtp.gmail.com
+        username: chuchfinancesystem.noreply@gmail.com
+        password: 4dm1n_cHurch/F1n4nc3=Syst3M
+        port: 587
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+server:
+    port: 8081
+token:
+    signing:
+        key: s3cr3tK3yF0rChurchF1n4nc14lSyst3mAppl1c4t10nG3n3rat3dM4nu4lK3tF0rT3st1ng
+#jwtKeys:
+    # openssl genrsa -out private_key.pem 2048  
+#    privateKeyPath: jwtKeys/private_key.pem
+    # openssl rsa -pubout -in private_key.pem -out public_key.pem
+#    publicKeyPath: jwtKeys/public_key.pem
+
+# For referencing a file outside the project, use the following configuration:
+# spring.banner.location=file:/tmp/hello_file.txt
+
+# For referencing in the classpath, use the following configuration:
+# spring.banner.location=classpath:moofasa-banner.txt
+
+# To disable the banner, change the following configuration to OFF:
+# spring.main.banner-mode=OFF
+
+# To use a GIF file:
+#spring.banner.image.location=classpath:helloworld.gif
+#spring.banner.image.width=50
+#spring.banner.image.height=30
+#spring.banner.image.margin=6
+#spring.banner.image.bitdepth=8
+#spring.banner.image.pixelmode=BLOCK
+#spring.banner.image.invert=true
+
+# spring.main.log-startup-info=false
+
+# spring.banner.location=classpath:banner2.txt
+
+# chuchfinancesystem.noreply@gmail.com
+# 4dm1n_cHurch/F1n4nc3=Syst3M

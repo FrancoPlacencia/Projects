@@ -1,0 +1,129 @@
+<div class="container top-center-flex">
+  <div class="wrapper almost-full">
+    <header>
+      <h1><mat-icon>church</mat-icon>Create, Manage and Edit Churches</h1>
+    </header>
+    <form [formGroup]="formGroup" (ngSubmit)="submit()">
+      <div class="action-section">
+        <button mat-raised-button color="primary" type="button" (click)="reset()"><mat-icon>restart_alt</mat-icon>Reset
+        </button>
+        @if (isNew) {
+        <button mat-raised-button color="accent" type="submit"><mat-icon>add</mat-icon>New
+          Church</button>
+        } @else {
+        <button mat-raised-button color="accent" type="submit"><mat-icon>save</mat-icon>Update Church</button>
+        }
+      </div>
+      <main>
+        <mat-card class="box full">
+          <mat-card-content>
+            <div class="form-grid">
+              <div>
+                <mat-form-field floatLabel="always" class="full">
+                  <mat-label>Name</mat-label>
+                  <mat-icon matTextPrefix>church</mat-icon>
+                  <input matInput placeholder="Church of God" formControlName="name" required>
+                  @if(formGroup!.controls['name'].errors?.['required']) {
+                  <mat-error>Church name is required.</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field floatLabel="always" class="full">
+                  <mat-label>Denomination</mat-label>
+                  <mat-icon matTextPrefix>category</mat-icon>
+                  <input matInput placeholder="Christians" formControlName="denomination" type="text" required>
+                  @if(formGroup!.controls['denomination'].errors?.['required']) {
+                  <mat-error>Denomination is required.</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field floatLabel="always" class="full">
+                  <mat-label>Address</mat-label>
+                  <mat-icon matTextPrefix>place</mat-icon>
+                  <input matInput placeholder="Street #123 Country, State" formControlName="address" type="text"
+                    required>
+                  @if(formGroup!.controls['address'].errors?.['required']) {
+                  <mat-error>Address is required.</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field floatLabel="always" class="full">
+                  <mat-label>Registration</mat-label>
+                  <mat-icon matTextPrefix>mode_edit</mat-icon>
+                  <input matInput placeholder="Registration" formControlName="registration" type="text" required>
+                  @if(formGroup!.controls['registration'].errors?.['required']) {
+                  <mat-error>Registration is required.</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-list>
+                  @for (category of categories; track category) {
+                  <mat-list-item>
+                    <span matListItemTitle>category.name</span>
+                    <span matListItemLine>category.description</span>
+                  </mat-list-item>
+                  }
+                </mat-list>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </main>
+    </form>
+    @if (tableLoaded ) {
+    @if(dataSource){
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="church">
+        <th mat-header-cell *matHeaderCellDef> Church Info</th>
+        <td mat-cell *matCellDef="let element">
+          <div>
+            <h3>{{element.name}}</h3>{{element.denomination}}
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="legal">
+        <th mat-header-cell *matHeaderCellDef> Legal Info </th>
+        <td mat-cell *matCellDef="let element">
+          <h5>{{element.address}}</h5>{{element.registration }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="created">
+        <th mat-header-cell *matHeaderCellDef> Created </th>
+        <td mat-cell *matCellDef="let element">
+          <h5>{{element.createdBy}}</h5>{{element.createdOn | date:"mediumDate"}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="updated">
+        <th mat-header-cell *matHeaderCellDef> Updated </th>
+        <td mat-cell *matCellDef="let element">
+          <h5>{{element.updatedBy}}</h5>{{element.updatedOn | date:"mediumDate"}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element">
+          <div>
+            <button mat-raised-button color="warn" type="button" (click)="delete(element)"
+              [disabled]="isProcessing"><mat-icon>delete_outline</mat-icon>Delete</button>
+            &nbsp;
+            <button mat-raised-button color="primary" type="button" (click)="edit(element)"
+              [disabled]="isProcessing"><mat-icon>edit</mat-icon>Edit</button>
+          </div>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnsHeader"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsHeader;"></tr>
+    </table>
+    } @else {<h4>{{errorMessage}}</h4>
+    }
+    } @else {
+    <h4>Loading...</h4>
+    }
+  </div>
+</div>

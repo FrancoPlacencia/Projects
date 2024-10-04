@@ -1,0 +1,99 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col left-background flex fill">
+      <div class="container">
+        <br><br><br><br><br><br><br><br>
+        <div class="row justify-content-center">
+          <div class="col-8 login-box">
+            <div class="row">
+              <div class="col text-center">
+                <h3>Church Financial System</h3>
+              </div>
+              <br>
+            </div>
+            <div class="row">
+              <div class="col login-input">
+                <h4>Log In</h4>
+              </div>
+            </div>
+            <form [formGroup]="loginForm" (ngSubmit)="login()">
+              <div class="row">
+                <div class="col login-input">
+                  <label for="email" class="form-label login-input-label">Email</label>
+                  <input id="email" name="email" formControlName="email" type="email" class="form-control"
+                    placeholder="name@example.com" required />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col login-input">
+                  <label for="password" class="form-label login-input-label">Password</label>
+                  <div class="input-group">
+                    <input id="password" name="password" formControlName="password"
+                      [type]="viewPassword ? 'text' :'password'" class="form-control" placeholder="Password" required
+                      minlength="8" maxlength="20" />
+                    <button (click)="togglePassword()" class="btn btn-default reveal" type="button"><i
+                        [ngClass]="viewPassword ? 'bi-eye-fill' : 'bi-eye-slash'" class="bi"></i></button>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="row">
+                <div class="col login-input text-left">
+                  <a href="../forgot"
+                    class=" link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Forgot
+                    Password?</a>
+                </div>
+                <div class="col login-input text-right" style="text-align: right;">
+                  <a href="../register"
+                    class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Register</a>
+                </div>
+              </div>
+              <div class="text-center">
+                <button class="btn btn-primary login-button font-weight-bold" type="submit"
+                  [disabled]="!loginForm.valid">
+                  <fa-icon *ngIf="isProcessing" [icon]="['fas', 'spinner']" animation="spin"></fa-icon> Login</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col d-none d-xl-block" style="padding: 0px;">
+      <img src="assets/images/chfs-background.jpg" alt="chfs" height="100%" width="100%" />
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ====================================================================================================== -->
+<!--
+<h1 style="font-size: 50px; color: white; font-weight: 500;">CHFS Application</h1>
+<h4 style="color: hsla(0,0%,100%,.6);">
+Is a private application, registration will be validated, please make sure you need to request access to this application before registration.<br/><br/>
+</h4>
+-->
+
+<!-- Template-driven forms
+<form>
+    
+    <label for="email" class="form-label">Email address</label>
+    <input [(ngModel)]="loginUser.email" #email="ngModel" class="form-control" name="email" type="email" placeholder="name@example.com" required/>
+
+    <br/>
+        Password
+    <label for="password" class="form-label">Password</label>
+    <input [(ngModel)]="loginUser.password" name="password" type="password" class="form-control" placeholder="Password" required/>
+    <br/>
+    <button (click)="login()" class="btn btn-primary login-button" type="submit" >Login</button>
+</form>
+-->

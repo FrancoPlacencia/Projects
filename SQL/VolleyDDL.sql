@@ -1,8 +1,8 @@
 CREATE DATABASE volley_tournamet;
 
 DROP TABLE IF EXISTS standings_results;
-DROP TABLE IF EXISTS  game;
 DROP TABLE IF EXISTS  play_match;
+DROP TABLE IF EXISTS  games;
 DROP TABLE IF EXISTS  teams;
 DROP TABLE IF EXISTS  tournaments;
 
@@ -12,8 +12,8 @@ CREATE TABLE tournaments (
 	year INTEGER NOT NULL,
 	description VARCHAR(255) NOT NULL,
 	url VARCHAR(255) NOT NULL,
-	CONSTRAINT PK_tournament_id PRIMARY KEY (tournament_id),
-	CONSTRAINT UC_tournament_name_year UNIQUE(name, year)
+	CONSTRAINT PK_tournaments PRIMARY KEY (tournament_id),
+	CONSTRAINT UC_tournaments UNIQUE(name, year)
 );
 	
 CREATE TABLE teams (
@@ -24,25 +24,33 @@ CREATE TABLE teams (
 	name VARCHAR(20) NOT NULL,
 	category ENUM('MIXTO','FEMENIL','VARONIL') NOT NULL,
 	image VARCHAR(255),
-	CONSTRAINT PK_team_id PRIMARY KEY (team_id),
-	CONSTRAINT FK_team_tournament_id FOREIGN KEY (tournament_id) REFERENCES tournaments (tournament_id)
+	
+	games_won INTEGER NOT NULL DEFAULT 0,
+	games_lost INTEGER NOT NULL DEFAULT 0,
+		
+	sets_won INTEGER NOT NULL DEFAULT 0,
+	SETS_LOST INTEGER NOT NULL DEFAULT 0,
+	
+	points_won INTEGER NOT NULL DEFAULT 0,
+	poitns_lost INTEGER NOT NULL DEFAULT 0,
+	
+	is_active BOOLEAN NOT NULL DEFAULT FALSE,
+	CONSTRAINT PK_teams PRIMARY KEY (team_id),
+	CONSTRAINT FK_teams_tournament FOREIGN KEY (tournament_id) 
+		REFERENCES tournaments (tournament_id),
+	CONSTRAINT UC_teams_name_tournament UNIQUE (name, category, tournament_id)
 );
-
-
 
 CREATE TABLE games (
 	game_id INTEGER NOT NULL AUTO_INCREMENT,
 	tournament_id INTEGER NOT NULL,
-	week_number INTEGER NOT NULL,
-	game_week_order INTEGER NOT NULL,
-	game_group_order INTEGER NOT NULL,
-	game_day_order INTEGER NOT NULL,
-
-	
-	game_day  VARCHAR(50) NOT NULL,
-	game_time VARCHAR(10) NOT NULL,
-	
 	category ENUM('MIXTO','FEMENIL','VARONIL') NOT NULL,
+	
+	week_number INTEGER NOT NULL,
+
+	game_date  DATETIME NOT NULL,
+	game_place VARCHAR(10) NOT NULL,
+	
 	team_1 INTEGER NOT NULL,
 	team_1_sets INTEGER DEFAULT 0,
 	team_1_points INTEGER DEFAULT 0,
@@ -51,11 +59,14 @@ CREATE TABLE games (
 	team_2_sets INTEGER DEFAULT 0,
 	team_2_points INTEGER DEFAULT 0,
 	team_2_score INTEGER DEFAULT 0,	
-	CONSTRAINT PK_week_id PRIMARY KEY (game_id),
 	
-	CONSTRAINT FK_game_tournament_id FOREIGN KEY (tournament_id) REFERENCES tournaments(tournament_id),
-	CONSTRAINT FK_game_team_1 FOREIGN KEY (team_1) REFERENCES teams(team_id),
-	CONSTRAINT FK_game_team_2 FOREIGN KEY (team_2) REFERENCES teams(team_id)
+	CONSTRAINT PK_games PRIMARY KEY (game_id),
+	
+	CONSTRAINT FK_games_tournament FOREIGN KEY (tournament_id) 
+		REFERENCES tournaments(tournament_id),
+	CONSTRAINT FK_games_team_1 FOREIGN KEY (team_1) REFERENCES teams(team_id),
+	CONSTRAINT FK_games_team_2 FOREIGN KEY (team_2) REFERENCES teams(team_id),
+	CONSTRAINT UC_games_match UNIQUE
 );
 
 CREATE TABLE playoffs (
@@ -74,7 +85,8 @@ CREATE TABLE playoffs (
 	bracket VARCHAR(10) NOT NULL DEFAULT '',
 	CONSTRAINT PK_playoff_id PRIMARY KEY (playoff_id),
 	
-	CONSTRAINT FK_playoffs_tournament_id FOREIGN KEY (tournament_id) REFERENCES tournaments(tournament_id)
+	CONSTRAINT FK_playoffs_tournament FOREIGN KEY (tournament_id) 
+		REFERENCES tournaments(tournament_id)
 );
 
 CREATE TABLE standings (
@@ -151,3 +163,8 @@ CREATE TABLE standings_results (
 	
 	CONSTRAINT FK_standings_results_tournament_id FOREIGN KEY (tournament_id) REFERENCES tournaments(tournament_id)
 );
+
+
+/*
+INSERT TEST DATA
+*/

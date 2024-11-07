@@ -1,5 +1,7 @@
 package org.tvmtz.volley_api.util;
 
+import java.util.UUID;
+
 public class AppUtil {
     /**
      * Quick validation for String, to be used on DTO validations
@@ -13,5 +15,9 @@ public class AppUtil {
      */
     public static boolean isNullOrZeroOrLess(Integer integer) {
         return integer == null || integer <= 0;
+    }
+
+    public static boolean isUuidNull(UUID uuid) {
+        return uuid == null || isNullOrEmptyString(uuid.toString());
     }
 }

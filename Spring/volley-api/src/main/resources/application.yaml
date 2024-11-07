@@ -11,11 +11,16 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/tvmtz_dev
     username: root
-    password: p4$sw0rd
+    password: M4r1@Db__R0ot_P4$sw0rd
   application:
     name: volley.api
+  test:
+    database:
+      replace: none
 server:
   port: 8082
   error:
     include-stacktrace: never
     # include-message: never
+app:
+  content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet

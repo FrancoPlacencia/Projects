@@ -1,71 +1,59 @@
 SELECT 
-CONCAT(
-	'{{GameDayNew|Day=', game_text, '\n', gameLine, '}}'
+t1.name AS t1_name,
+games.team_1_set_1_pts,
+games.team_1_set_2_pts,
+games.team_1_set_3_pts,
+t2.name AS t2_name,
+games.team_2_set_1_pts,
+games.team_2_set_2_pts,
+games.team_2_set_3_pts,
+games.*
+
+FROM games
+
+INNER JOIN teams t1 ON t1.team_id = games.team_1 
+INNER JOIN teams t2 ON t2.team_id = games.team_2
+
+WHERE games.tournament_id = 2
+AND games.week_number = 9
+
+
+DELETE FROM games WHERE game_id IN (461,473,484)
+29- 59
+SELECT * FROM TEAMS WHERE tournament_id = 2 AND category = 'MIXTO'
+
+INSERT INTO games (
+	tournament_id, category, week_number, game_date, game_place, 
+	team_1, team_1_set_1_pts, team_1_set_2_pts,
+	team_2, team_2_set_1_pts, team_2_set_2_pts
+)
+SELECT 
+	2, 'FEMENIL', 5, '2024-10-09 18:00:00.000', 'ARRIBA', 
+	32, 0, 0,
+	31, 25, 25
+FROM DUAL
+
+
+SELECT 
+CONCAT ('<div>[[Torneo_Otoño_Invierno_2024_Jornada ',,'|<span class="button_link game_link">Jornada ',DISTINCT week_number,'</span>]]</div>')
+FROM games WHERE tournament_id = 2
+
+se
+
+SELECT 
+CONCAT('<div class="buttons_in_line">\n',
+GROUP_CONCAT (
+	'<div>[[Torneo_Otoño_Invierno_2024_Jornada ',week_number,
+	'|<span class="button_link game_link">Jornada ',week_number,
+	'</span>]]</div>'
+	ORDER BY week_number
+	SEPARATOR '\n'
+) ,
+'\n</div>'
 )
 FROM (
-	SELECT 
-	GROUP_CONCAT(
-		'|GameLine_',seqNum,'=',gameLine
-		ORDER BY game_date ASC, game_place DESC
-		SEPARATOR '\n'
-	) AS gameLine,
-	game_text,
-	game_date
-	FROM (
-		SELECT 
-		UPPER(DATE_FORMAT(game_date, '%W %d %M')) AS game_text,
-		game_date AS game_date,
-		game_place AS game_place,
-		(
-            CASE UPPER(DATE_FORMAT(game_date, '%W %d %M')) 
-            WHEN @daynum 
-            THEN @curRow := @curRow + 1 
-            ELSE @curRow := 1 AND @daynum := UPPER(DATE_FORMAT(game_date, '%W %d %M')) END
-		) + 1 AS seqNum,
-		CONCAT(
-		'{{GameLineNew',
-			'|TIME=',DATE_FORMAT(game_date, '%h:%i %p') ,
-			'|PLACE=',game_place,
-			'|PLACE_ICON=[[Archivo:Arrow_',IF(game_place = 'ARRIBA', 'up','down'),'.svg]]',
-			'|CATEGORY=',
-			CASE games.category 
-			WHEN 'MIXTO' THEN 'MIX'
-			WHEN 'VARONIL' THEN 'VAR'
-			WHEN 'FEMENIL' THEN 'FEM'
-			ELSE 'ERROR' END,
-			'|TEAM_1=',team_1.name,
-			'|TEAM_1_SETS=',team_1_sets,
-			fn_getSetInfo(team_1_set_1_pts,team_2_set_1_pts, 1, 1),
-			fn_getSetInfo(team_1_set_2_pts,team_2_set_2_pts, 1, 2),
-			fn_getSetInfo(team_1_set_3_pts,team_2_set_3_pts, 1, 3),
-			fn_getSetInfo(team_1_set_4_pts,team_2_set_4_pts, 1, 4),
-			fn_getSetInfo(team_1_set_5_pts,team_2_set_5_pts, 1, 5),
-			'|TEAM_1_COLOR=',fn_isWinner(team_1_sets,team_2_sets),
-			'|TEAM_2=',team_2.name,
-			'|TEAM_2_SETS=',team_2_sets,
-			fn_getSetInfo(team_2_set_1_pts,team_1_set_1_pts, 2, 1),
-			fn_getSetInfo(team_2_set_2_pts,team_1_set_2_pts, 2, 2),
-			fn_getSetInfo(team_2_set_3_pts,team_1_set_3_pts, 2, 3),
-			fn_getSetInfo(team_2_set_4_pts,team_1_set_4_pts, 2, 4),
-			fn_getSetInfo(team_2_set_5_pts,team_1_set_5_pts, 2, 5),
-			'|TEAM_2_COLOR=',fn_isWinner(team_2_sets,team_1_sets),
-		'}}') AS gameLine
-		FROM games
-		
-		INNER JOIN teams team_1
-		ON team_1.team_id = games.team_1
-		
-		INNER JOIN teams team_2
-		ON team_2.team_id = games.team_2
-		
-		INNER JOIN (SELECT @rowInnerNum:=0, @daynum := '') r
-		
-		WHERE games.tournament_id = 1
-		AND week_number = 5
-		ORDER BY game_date ASC, game_place DESC
-	
-	) AS games
-	GROUP BY game_text
-	ORDER BY game_date ASC, game_place DESC
-) AS gameLines
-ORDER BY game_date ASC
+	SELECT DISTINCT week_number AS week_number
+	FROM games
+	WHERE tournament_id = 2
+) AS weeks
+

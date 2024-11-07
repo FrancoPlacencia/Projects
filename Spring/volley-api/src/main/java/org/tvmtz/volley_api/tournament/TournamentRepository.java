@@ -5,30 +5,22 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface TournamentRepository extends JpaRepository<Tournament, Integer> {
 
 
     @Query(
-            value = "SELECT * FROM tournaments WHERE name LIKE %:name%",
+            value = "SELECT * FROM tournaments WHERE name LIKE %:name% OR year = :year",
             nativeQuery = true
     )
-    List<Tournament> findByName(String name);
+    List<Tournament> findByLikeNameOrYear(String name, Integer year);
+
+    Optional<Tournament> findByNameOrYear(String name, Integer year);
 
 
-    List<Tournament> findByYear(Integer year);
+    Optional<Tournament> findByNameAndYear(String name, Integer year);
 
-    @Query(
-            value = "SELECT * FROM tournaments WHERE name LIKE %:name% and year = :year",
-            nativeQuery = true
-    )
-    List<Tournament> findByNameAndYear(String name, Integer year);
+    Optional<Tournament> findByUuid(UUID uuid);
 
-    @Query(
-            value = "SELECT * FROM tournaments WHERE name = :name AND year = :year ",
-            nativeQuery = true
-    )
-    Optional<Tournament> findUnique(String name, Integer year);
-
-    Optional<Tournament> findByTournamentId(Integer tournamentId);
 }

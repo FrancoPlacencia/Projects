@@ -1,21 +1,21 @@
 package org.tvmtz.volley_api.tournament;
 
 import org.springframework.http.ResponseEntity;
-import org.tvmtz.volley_api.common.CommonResponseDTO;
 
-import java.util.Map;
+import java.util.List;
 
 public interface TournamentService {
 
-    ResponseEntity<CommonResponseDTO> createTournament(Tournament tournament);
+    ResponseEntity<TournamentDTO> saveTournament(TournamentDTO tournament);
 
-    ResponseEntity<CommonResponseDTO> getTournaments();
+    ResponseEntity<List<TournamentDTO>> getTournaments();
 
-    ResponseEntity<CommonResponseDTO> getTournament(Map<String, String> request);
+    ResponseEntity<TournamentDTO> getTournamentByUUID(String uuid);
 
-    ResponseEntity<CommonResponseDTO> updateTournament(Tournament tournament);
+    ResponseEntity<TournamentDTO> getTournament(String name, Integer year);
 
-    ResponseEntity<CommonResponseDTO> deleteTournament(Tournament tournament);
+    ResponseEntity<TournamentDTO> updateTournament(TournamentDTO tournament);
 
+    ResponseEntity<TournamentDTO> deleteTournament(String uuid);
 
 }

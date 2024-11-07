@@ -1,8 +1,5 @@
-package org.tvmtz.volley_api.util;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.tvmtz.volley_api.common.CommonResponseDTO;
 import org.tvmtz.volley_api.common.ResponseType;
 
 import java.util.ArrayList;
@@ -34,10 +31,11 @@ public class AppResponseUtil {
         return new ResponseEntity<>(commonResponse, httpStatus);
     }
 
-    public static CommonResponseDTO getLengthErrorResponse(String element) {
+    public static CommonResponseDTO getLengthErrorResponse(String element, List<String> message) {
         CommonResponseDTO commonResponse = new CommonResponseDTO();
         commonResponse.setType(ResponseType.WARNING.toString());
         commonResponse.setTitle(element + AppConstants.LENGTH_ERROR);
+        commonResponse.setMessage(message);
         return commonResponse;
     }
 
@@ -49,11 +47,11 @@ public class AppResponseUtil {
         return new ResponseEntity<>(commonResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public static CommonResponseDTO dataMissingResponse() {
+    public static CommonResponseDTO dataMissingResponse(List<String> message) {
         CommonResponseDTO commonResponse = new CommonResponseDTO();
         commonResponse.setType(ResponseType.ERROR.toString());
         commonResponse.setTitle(AppConstants.MISSING_MANDATORY);
-        commonResponse.setMessage(getListMessage(AppConstants.MISSING_MANDATORY_MESSAGE));
+        commonResponse.setMessage(message);
         return commonResponse;
     }
 
@@ -89,5 +87,12 @@ public class AppResponseUtil {
         List<String> messageList = new ArrayList<>();
         messageList.add(message);
         return messageList;
+    }
+
+    public static CommonResponseDTO contentTypeNotSupported() {
+        CommonResponseDTO commonResponseDTO = new CommonResponseDTO();
+        commonResponseDTO.setType(ResponseType.ERROR.toString());
+        commonResponseDTO.setTitle("Content Type not supported.");
+        return commonResponseDTO;
     }
 }

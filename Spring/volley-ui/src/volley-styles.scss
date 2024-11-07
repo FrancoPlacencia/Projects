@@ -1,0 +1,172 @@
+@use "volley-colors" as volley-colors;
+
+.background {
+  background-image: linear-gradient(volley-colors.$blue, volley-colors.$clear-blue);
+}
+
+.full {
+  width: 100% !important;
+}
+
+.almost-full {
+  width: 80% !important;
+}
+
+.flex-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+// LAYOUT
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+mat-card {
+  mat-card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    img {
+      height: 5rem;
+    }
+  }
+
+  mat-card-content {
+    text-align: center;
+    padding-bottom: 1rem;
+
+    h3 {
+      font-size: 1.125rem !important;
+      font-weight: 400 !important;
+    }
+  }
+
+  mat-card-footer {
+    padding-top: 1rem;
+  }
+}
+
+.center-flex {
+  justify-content: center;
+  align-items: center;
+}
+
+.start-flex {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.top-center-flex {
+  justify-content: center;
+  align-items: flex-start;
+}
+
+mat-icon {
+  font-size: 1.25rem;
+}
+
+.box {
+  text-align: center;
+  padding: 30px;
+  border-color: volley-colors.$gray;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 0.5rem !important;
+}
+
+.tile {
+  text-align: center;
+  padding: 30px;
+  border-color: volley-colors.$gray;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 1rem !important;
+}
+/*
+// Tables
+.mat-mdc-row:hover {
+  background-color: volley-colors.$clear-blue !important;
+}
+
+.mat-mdc-header-cell {
+  background-color: volley-colors.$blue !important;
+  color: white;
+}
+
+.mat-mdc-row:nth-child(even) {
+  background: whitesmoke;
+}
+
+.mat-mdc-row:nth-child(odd) {
+  background: white;
+}
+*/
+td {
+  font-size: 1.25rem;
+
+  h1 {
+    font-size: 2rem !important;
+    font-weight: 400 !important;
+    color: white;
+  }
+
+  h2 {
+    font-size: 1.125rem !important;
+    font-weight: 400 !important;
+    margin: 0;
+  }
+}
+
+.mat-mdc-header-cell {
+  background-color: volley-colors.$blue !important;
+  color: white;
+}
+
+.mat-mdc-row:hover {
+  background-color: volley-colors.$clear-blue !important;
+}
+
+.mat-mdc-row:nth-child(even) {
+  background: whitesmoke;
+}
+
+.mat-mdc-row:nth-child(odd) {
+  background: white;
+}
+
+mat-form-field {
+  mat-icon {
+    color: #adb5bd;
+    padding-right: 10px;
+  }
+}

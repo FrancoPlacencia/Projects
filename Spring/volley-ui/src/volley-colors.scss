@@ -1,0 +1,47 @@
+// Blue Colors
+$blue: #003a6a;
+$clear-blue: #7c97ad;
+
+// Gray Colors
+$gray: #adb5bd;
+$clear-gray: #e8e7ee;
+$dark-gray: #424242;
+
+// COLOR
+.color-blue {
+  color: $blue;
+}
+
+.color-clear-blue {
+  color: $clear-blue;
+}
+.color-gray {
+  color: $gray;
+}
+.color-clear-gray {
+  color: $clear-gray;
+}
+.color-dark-gray {
+  color: $dark-gray;
+}
+
+.color-red {
+  color: red;
+}
+
+// BACKGROUND-COLOR
+.bg-color-blue {
+  color: $blue;
+}
+.bg-color-clear-blue {
+  color: $clear-blue;
+}
+.bg-color-gray {
+  color: $gray;
+}
+.bg-color-clear-gray {
+  color: $clear-gray;
+}
+.bg-color-dark-gray {
+  color: $dark-gray;
+}

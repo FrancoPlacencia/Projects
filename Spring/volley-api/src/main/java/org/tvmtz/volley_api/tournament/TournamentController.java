@@ -1,16 +1,16 @@
 package org.tvmtz.volley_api.tournament;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.tvmtz.volley_api.common.CommonResponseDTO;
 
-import java.util.Map;
+import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/admin")
 public class TournamentController {
 
     @Autowired
@@ -18,31 +18,37 @@ public class TournamentController {
 
     // CREATE
     @PostMapping("/tournament")
-    public ResponseEntity<CommonResponseDTO> createTournament(@RequestBody Tournament tournament) {
-        return tournamentService.createTournament(tournament);
-
+    public ResponseEntity<TournamentDTO> createTournament(@Valid @RequestBody TournamentDTO tournament) {
+        return tournamentService.saveTournament(tournament);
     }
 
     // READ
     @GetMapping("/tournaments")
-    public ResponseEntity<CommonResponseDTO> getTournaments() {
+    public ResponseEntity<List<TournamentDTO>> getTournaments() {
         return tournamentService.getTournaments();
     }
 
+
+    @GetMapping("/tournamentByUUID")
+    public ResponseEntity<TournamentDTO> getTournamentByUUID(@RequestParam String uuid) {
+        return tournamentService.getTournamentByUUID(uuid);
+    }
+
     @GetMapping("/tournament")
-    public ResponseEntity<CommonResponseDTO> getTournament(@RequestParam Map<String, String> request) {
-        return tournamentService.getTournament(request);
+    public ResponseEntity<TournamentDTO> getTournamentByUUID(@RequestParam String name, @RequestParam Integer year) {
+        return tournamentService.getTournament(name, year);
     }
 
     // UPDATE
     @PutMapping("/tournament")
-    public ResponseEntity<CommonResponseDTO> updateTournament(@RequestBody Tournament tournament) {
+    public ResponseEntity<TournamentDTO> updateTournament(@Valid @RequestBody TournamentDTO tournament) {
         return tournamentService.updateTournament(tournament);
     }
 
     // DELETE
     @DeleteMapping("/tournament")
-    public ResponseEntity<CommonResponseDTO> deleteTournament(@RequestBody Tournament tournament) {
-        return tournamentService.deleteTournament(tournament);
+    public ResponseEntity<TournamentDTO> deleteTournament(@RequestParam String uuid) {
+        return tournamentService.deleteTournament(uuid);
     }
+
 }

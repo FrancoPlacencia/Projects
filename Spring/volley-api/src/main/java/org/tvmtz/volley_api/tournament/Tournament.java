@@ -1,6 +1,5 @@
 package org.tvmtz.volley_api.tournament;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,28 +7,33 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.UUID;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
 @Entity
 @Table(name = "tournaments")
 @DynamicUpdate
 public class Tournament {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tournament_id")
-    @JsonProperty("id")
-    private Integer tournamentId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "uuid")
+    private UUID uuid;
 
-    @Column(name = "name", columnDefinition = "VARCHAR(50)")
+    @Column(name = "name", columnDefinition = "VARCHAR(50)", nullable = false)
     private String name;
 
-    @Column(name = "year")
+    @Column(name = "year", nullable = false)
     private Integer year;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     private String description;
+
+    @Column(name = "rounds", nullable = false)
+    private Integer rounds;
 
     @Column(name = "url")
     private String url;

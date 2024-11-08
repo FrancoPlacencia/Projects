@@ -43,8 +43,25 @@ header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  h1 {
+    font-size: 3rem !important;
+    color: white;
+
+    mat-icon {
+      width: 2.5rem !important;
+      height: 2.5rem !important;
+      font-size: 2.5rem !important;
+    }
+  }
+
+  .action-section {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
 }
+
+
 
 mat-card {
   mat-card-header {

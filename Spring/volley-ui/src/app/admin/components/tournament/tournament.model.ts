@@ -1,5 +1,5 @@
 export interface Tournament {
-  uuid?: string,
+  tournamentUuid?: string,
   name: string,
   year: number,
   description: string,

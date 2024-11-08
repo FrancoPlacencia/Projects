@@ -1,11 +1,11 @@
 <div class="container top-center-flex">
   <div class="wrapper almost-full">
-    <header>
-      <h1><mat-icon>church</mat-icon>Torneos</h1>
-    </header>
+    
     <form [formGroup]="formGroup" (ngSubmit)="submit()">
-      <div class="action-section">
-        <button
+      <header>
+        <h1><mat-icon>emoji_events</mat-icon>Torneos</h1>
+        <div class="action-section">
+          <button
           mat-raised-button
           color="primary"
           type="button"
@@ -22,7 +22,10 @@
           <mat-icon>save</mat-icon>Actualizar Torneo
         </button>
         }
-      </div>
+        </div>
+        
+      </header>
+      
       <main>
         <mat-card class="box full">
           <mat-card-content>
@@ -30,7 +33,7 @@
               <div class="flex-input">
                 <mat-form-field floatLabel="always" class="full">
                   <mat-label>Nombre</mat-label>
-                  <mat-icon matTextPrefix>church</mat-icon>
+                  <mat-icon matTextPrefix>emoji_events</mat-icon>
                   <input
                     matInput
                     placeholder="Nombre del torneo"
@@ -43,7 +46,7 @@
                 </mat-form-field>
                 <mat-form-field floatLabel="always" class="full">
                   <mat-label>URL</mat-label>
-                  <mat-icon matTextPrefix>mode_edit</mat-icon>
+                  <mat-icon matTextPrefix>link</mat-icon>
                   <input
                     matInput
                     placeholder="URL"
@@ -59,7 +62,7 @@
               <div class="flex-input">
                 <mat-form-field floatLabel="always" class="full">
                   <mat-label>Descripción</mat-label>
-                  <mat-icon matTextPrefix>place</mat-icon>
+                  <mat-icon matTextPrefix>description</mat-icon>
                   <input
                     matInput
                     placeholder="Descripción"
@@ -75,7 +78,7 @@
               <div class="flex-input">
                 <mat-form-field floatLabel="always" class="full">
                   <mat-label>Año</mat-label>
-                  <mat-icon matTextPrefix>category</mat-icon>
+                  <mat-icon matTextPrefix>calendar_month</mat-icon>
                   <input
                     matInput
                     placeholder="Año"
@@ -95,7 +98,7 @@
                 </mat-form-field>
                 <mat-form-field floatLabel="always" class="full">
                   <mat-label>Numero de Rondas</mat-label>
-                  <mat-icon matTextPrefix>mode_edit</mat-icon>
+                  <mat-icon matTextPrefix>tag</mat-icon>
                   <input
                     matInput
                     placeholder="Rondas"
@@ -163,7 +166,7 @@
               mat-raised-button
               color="primary"
               type="button"
-              (click)="edit(element)"
+              (click)="team(element)"
               [disabled]="isProcessing"
             >
               <mat-icon>people</mat-icon>Teams

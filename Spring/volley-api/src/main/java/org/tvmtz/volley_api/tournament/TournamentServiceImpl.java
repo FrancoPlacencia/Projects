@@ -56,7 +56,7 @@ public class TournamentServiceImpl implements TournamentService {
         try {
             UUID uuid = UUID.fromString(stringUuid);
             // NOT FOUND
-            Tournament dbTournament = tournamentRepository.findByUuid(uuid).orElse(null);
+            Tournament dbTournament = tournamentRepository.findByTournamentUuid(uuid).orElse(null);
             if (dbTournament == null) {
                 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
             }
@@ -84,14 +84,14 @@ public class TournamentServiceImpl implements TournamentService {
         log.info("Tournament {}", tournament);
         // BAD REQUEST
         if (
-                tournament.getUuid() == null ||
-                        AppUtil.isNullOrEmptyString(tournament.getUuid().toString())
+                tournament.getTournamentUuid() == null ||
+                        AppUtil.isNullOrEmptyString(tournament.getTournamentUuid().toString())
         ) {
             return new ResponseEntity<>(tournamentDto, HttpStatus.BAD_REQUEST);
         }
 
         // NOT FOUND
-        Tournament dbTournament = tournamentRepository.findByUuid(tournament.getUuid()).orElse(null);
+        Tournament dbTournament = tournamentRepository.findByTournamentUuid(tournament.getTournamentUuid()).orElse(null);
         if (dbTournament == null) {
             return new ResponseEntity<>(tournamentDto, HttpStatus.NOT_FOUND);
         }
@@ -102,19 +102,19 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     @Override
-    public ResponseEntity<TournamentDTO> deleteTournament(String uuid) {
+    public ResponseEntity<TournamentDTO> deleteTournament(String stringUuid) {
 
         // BAD REQUEST
         if (
-                uuid != null &&
-                        AppUtil.isNullOrEmptyString(uuid)
+                stringUuid != null &&
+                        AppUtil.isNullOrEmptyString(stringUuid)
         ) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
         Tournament tournament = new Tournament();
-        tournament.setUuid(UUID.fromString(uuid));
+        tournament.setTournamentUuid(UUID.fromString(stringUuid));
         // NOT FOUND
-        Tournament dbTournament = tournamentRepository.findByUuid(tournament.getUuid()).orElse(null);
+        Tournament dbTournament = tournamentRepository.findByTournamentUuid(tournament.getTournamentUuid()).orElse(null);
         if (dbTournament == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }

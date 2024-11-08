@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class TournamentDTO {
 
-    private UUID uuid;
+    private UUID tournamentUuid;
 
     @NotBlank(message = "The name is required.")
     @Size(max = 50, message = "The name must be 50 chars max.")

@@ -21,6 +21,6 @@ public interface TournamentRepository extends JpaRepository<Tournament, Integer>
 
     Optional<Tournament> findByNameAndYear(String name, Integer year);
 
-    Optional<Tournament> findByUuid(UUID uuid);
+    Optional<Tournament> findByTournamentUuid(UUID tournamentUuid);
 
 }

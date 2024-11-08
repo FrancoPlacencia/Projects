@@ -3,20 +3,19 @@ DROP TABLE IF EXISTS teams;
 DROP TABLE IF EXISTS tournaments;
 
 CREATE TABLE tournaments (
-	uuid UUID NOT NULL,
+	tournament_uuid UUID NOT NULL,
 	name VARCHAR(50) NOT NULL,
 	year INTEGER NOT NULL,
 	description VARCHAR(255) NOT NULL,
 	rounds INTEGER NOT NULL,
 	url VARCHAR(255) NOT NULL,
-	is_active BOOLEAN NOT NULL,
-	CONSTRAINT PK_tournaments PRIMARY KEY (uuid),
+	CONSTRAINT PK_tournaments PRIMARY KEY (tournament_uuid),
 	CONSTRAINT UC_tournaments UNIQUE(name, year)
 );
 	
 CREATE TABLE teams (
-	team_id INTEGER NOT NULL AUTO_INCREMENT,
-	tournament_id INTEGER NOT NULL,
+	team_uuid UUID NOT NULL,
+	tournament_uuid UUID NOT NULL,
 	team_number INTEGER NOT NULL DEFAULT 0,
 	name VARCHAR(20) NOT NULL,
 	initials VARCHAR(8) NOT NULL DEFAULT '',
@@ -34,9 +33,9 @@ CREATE TABLE teams (
 	points_lost INTEGER NOT NULL DEFAULT 0,
 	
 	
-	CONSTRAINT PK_teams PRIMARY KEY (team_id),
-	CONSTRAINT FK_teams_tournament FOREIGN KEY (tournament_id) REFERENCES tournaments (tournament_id),
-	CONSTRAINT UC_teams_name_tournament UNIQUE (name, category, tournament_id)
+	CONSTRAINT PK_teams PRIMARY KEY (team_uuid),
+	CONSTRAINT FK_teams_tournament FOREIGN KEY (tournament_uuid) REFERENCES tournaments (tournament_uuid),
+	CONSTRAINT UC_teams_name_tournament UNIQUE (team_number, name, category, tournament_uuid)
 );
 
 CREATE TABLE games (

@@ -20,8 +20,8 @@ import java.util.UUID;
 public class Tournament {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "uuid")
-    private UUID uuid;
+    @Column(name = "tournament_uuid")
+    private UUID tournamentUuid;
 
     @Column(name = "name", columnDefinition = "VARCHAR(50)", nullable = false)
     private String name;

@@ -1,17 +1,12 @@
 # Volley-UI
 
-## Start the angular project
-
-```sh
-ng serve --port 5000
-```
-
-## Commands used for create the project
-
+## Installation
 ```sh
 # NPM Version
 npm version
   #  npm: '10.9.0'
+  # update to last version
+  npm install -g npm
 
 # Angular Installation
 npm install -g @angular/cli
@@ -21,6 +16,19 @@ ng version
   # > Node: 22.11.0
   # > Package Manager: npm 10.9.0
   # > OS: win32 x64
+```
+
+## Start the angular project
+
+
+```sh
+ng serve --port 5000
+```
+
+## Commands used for create the project
+
+```sh
+
 
 # Generating the project
 ng new volley-ui
@@ -71,20 +79,27 @@ ng generate component home --skip-tests
 ng generate interface Tournament model
 
 
-# admin tools
+# Admin tools
 cd ./src/app
 pwd
   # ../volley-ui/src/app
 mkdir admin
 cd admin
+pwd
+  # ../volley-ui/src/app/admin
 
 # services
 mkdir services
+
 cd services
 ng generate service tournament --skip-tests
 
-
+mkdir components
+cd components
+pwd
+  # ../volley-ui/src/app/admin/components
 ng generate component tournament --skip-tests
+ng generate component team --skip-tests
 
 # util
 touch form-util.ts

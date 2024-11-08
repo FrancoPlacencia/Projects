@@ -38,7 +38,7 @@ export class TournamentService {
 
   // DELETE
   public deleteTournament(tournament: Tournament): Observable<Tournament> {
-    const url = `${this.SERVER_URL}/tournament?uuid=${tournament.uuid}`;
+    const url = `${this.SERVER_URL}/tournament?uuid=${tournament.tournamentUuid}`;
     return this.http.delete<Tournament>(url);
   }
 

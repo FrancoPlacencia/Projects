@@ -1,10 +1,13 @@
 $grow: 1.1;
 $effect: 0.3s;
 img {
-  height: 3rem;
+  height: 7.5rem;
 }
 
 .logo {
+  padding-left: 10%;
+  display: flex;
+  text-align: left;
   transition: $effect ease;
 }
 

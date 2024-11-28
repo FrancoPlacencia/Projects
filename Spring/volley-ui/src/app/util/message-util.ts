@@ -1,4 +1,8 @@
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 
 import { DialogMessageComponent } from '../common/dialog-message/dialog-message.component';
 import { DialogMessage } from '../common/model/dialog-message.model';
@@ -11,7 +15,10 @@ import { CommonResponse } from '../common/model/common-response.dto';
  * @param dialogMessage
  * @returns
  */
-export function openDialog(dialog: MatDialog, dialogMessage: DialogMessage): MatDialogRef<any> {
+export function openDialogMessage(
+  dialog: MatDialog,
+  dialogMessage: DialogMessage
+): MatDialogRef<any> {
   return dialog.open(DialogMessageComponent, dialogMessage.getDialogJson());
 }
 
@@ -20,13 +27,26 @@ export function openDialog(dialog: MatDialog, dialogMessage: DialogMessage): Mat
  * @param dialog
  * @param commonResponse
  */
-export function openCommonDialog(dialog: MatDialog, commonResponse: CommonResponse): void {
-  if (commonResponse) {
-    let dialogMessage = new DialogMessage(commonResponse.responseType, commonResponse.responseTitle, commonResponse.responseMessage)
-    openDialog(dialog, dialogMessage);
-  } else {
-    openErrorDialog(dialog);
+export function openDialog(
+  dialog: MatDialog,
+  type: string,
+  action: string,
+  element: string
+): void {
+  let dialogMessageTitle: string;
+  let dialogMessageMessage: string;
+  switch (type) {
+    case DialogMessageTypes.SUCCESS:
+      break;
+    case DialogMessageTypes.ERROR:
+      break;
   }
+  let dialogMessage = new DialogMessage(
+    type,
+    `${action} ${element.toLowerCase()} exitosamente.`,
+    ''
+  );
+  openDialogMessage(dialog, dialogMessage);
 }
 
 /**
@@ -34,9 +54,30 @@ export function openCommonDialog(dialog: MatDialog, commonResponse: CommonRespon
  * @param dialog
  * @returns
  */
-export function openErrorDialog(dialog: MatDialog): MatDialogRef<any> {
-  let dialogMessage = new DialogMessage(DialogMessageTypes.ERROR, DialogMessageTypes.SERVER_ERROR, DialogMessageTypes.SERVER_ERROR_MESSAGE);
-  return dialog.open(DialogMessageComponent, dialogMessage.getDialogJson());
+export function openErrorDialog(
+  dialog: MatDialog,
+  status: number,
+  message: string
+): MatDialogRef<any> {
+  let errorTitle: string;
+  let errorMessage: string;
+  switch (status) {
+    case 400:
+      errorTitle = DialogMessageTypes.BAD_REQUEST;
+      errorMessage = DialogMessageTypes.BAD_REQUEST_MESSAGE;
+      break;
+    case 500:
+    default:
+      errorTitle = DialogMessageTypes.SERVER_ERROR;
+      errorMessage = DialogMessageTypes.SERVER_ERROR_MESSAGE;
+      break;
+  }
+  let dialogMessage = new DialogMessage(
+    DialogMessageTypes.ERROR,
+    errorTitle,
+    errorMessage
+  );
+  return openDialogMessage(dialog, dialogMessage);
 }
 
 /**
@@ -44,13 +85,24 @@ export function openErrorDialog(dialog: MatDialog): MatDialogRef<any> {
  * @param dialog
  * @returns
  */
-export function openConfirmDialog(dialog: MatDialog): MatDialogRef<any> {
-  let dialogMessage = new DialogMessage(DialogMessageTypes.CONFIRM, DialogMessageTypes.CONFIRM_TITLE, DialogMessageTypes.DELETE_MESSAGE);
-  return dialog.open(DialogMessageComponent, dialogMessage.getDialogJson());
+export function openConfirmDialog(
+  dialog: MatDialog,
+  action: string,
+  element: string
+): MatDialogRef<any> {
+  let dialogMessage = new DialogMessage(
+    DialogMessageTypes.CONFIRM,
+    `¿${action} ${element}?`,
+    DialogMessageTypes.DELETE_MESSAGE
+  );
+  return openDialogMessage(dialog, dialogMessage);
 }
 
 export function openLoadingDialog(dialog: MatDialog) {
-  let dialogMessage = new DialogMessage(DialogMessageTypes.LOADING, DialogMessageTypes.LOADING_TITLE, DialogMessageTypes.LOADING_DATA_MESSAGE);
-  return dialog.open(DialogMessageComponent, dialogMessage.getDialogJson());
+  let dialogMessage = new DialogMessage(
+    DialogMessageTypes.LOADING,
+    DialogMessageTypes.LOADING_TITLE,
+    DialogMessageTypes.LOADING_DATA_MESSAGE
+  );
+  return openDialogMessage(dialog, dialogMessage);
 }
-

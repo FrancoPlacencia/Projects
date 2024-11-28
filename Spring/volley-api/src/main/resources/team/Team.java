@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
-import org.tvmtz.volley_api.common.TeamCategory;
 import org.tvmtz.volley_api.tournament.Tournament;
 
 import java.util.UUID;

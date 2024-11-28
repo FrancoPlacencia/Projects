@@ -1,9 +1,5 @@
 @use "volley-colors" as volley-colors;
 
-.background {
-  background-image: linear-gradient(volley-colors.$blue, volley-colors.$clear-blue);
-}
-
 .full {
   width: 100% !important;
 }
@@ -46,6 +42,7 @@ header {
   h1 {
     font-size: 3rem !important;
     color: white;
+    margin: 0px !important;
 
     mat-icon {
       width: 2.5rem !important;
@@ -60,8 +57,6 @@ header {
     gap: 20px;
   }
 }
-
-
 
 mat-card {
   mat-card-header {
@@ -186,4 +181,8 @@ mat-form-field {
     color: #adb5bd;
     padding-right: 10px;
   }
+}
+
+.upper-case {
+  text-transform: uppercase !important;
 }

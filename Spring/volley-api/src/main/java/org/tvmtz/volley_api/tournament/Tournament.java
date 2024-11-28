@@ -13,7 +13,6 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
 @Table(name = "tournaments")
 @DynamicUpdate

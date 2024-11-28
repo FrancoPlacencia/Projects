@@ -1,6 +1,14 @@
+import { WeekOption } from './../../model/week-option.model';
+import { WeekService } from './../../services/week.service';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -12,15 +20,22 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
-import { Tournament } from './tournament.model';
+import { Tournament } from '../../model/tournament.model';
 import { TournamentService } from '../../services/tournament.service';
-import { endProcessing, resetFormGroup, startProcessing } from '../../../util/form-util';
-import { openCommonDialog, openConfirmDialog, openErrorDialog } from '../../../util/message-util';
+import {
+  endProcessing,
+  resetFormGroup,
+  startProcessing,
+} from '../../../util/form-util';
+import {
+  openConfirmDialog,
+  openDialog,
+  openErrorDialog,
+} from '../../../util/message-util';
 import { successResponse } from '../../../util/response-util';
 import { CommonResponse } from '../../../common/model/common-response.dto';
 import { DialogMessageTypes } from '../../../common/model/dialog-message-types';
 import { ActivatedRoute, Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-tournament',
@@ -37,14 +52,12 @@ import { ActivatedRoute, Router } from '@angular/router';
     MatInputModule,
     MatListModule,
     MatSlideToggleModule,
-    MatTableModule
-
+    MatTableModule,
   ],
   templateUrl: './tournament.component.html',
-  styleUrl: './tournament.component.scss'
+  styleUrl: './tournament.component.scss',
 })
 export class TournamentComponent {
-
   // Flags
   public tableLoaded: boolean = false;
   public isProcessing: boolean = false;
@@ -60,8 +73,11 @@ export class TournamentComponent {
 
   private tournament: Tournament;
 
+  public tournamentWeeks: WeekOption[] = [];
+
   constructor(
     private tournamentService: TournamentService,
+    private weekService: WeekService,
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
     private router: Router,
@@ -70,45 +86,50 @@ export class TournamentComponent {
     // initialize the object
     this.tournament = {
       name: '',
-      year: (new Date()).getFullYear(),
+      year: new Date().getFullYear(),
       description: '',
       rounds: 0,
-      url: ''
-    }
+      url: '',
+    };
 
     // create the form group and subscribe any changes to the object
     this.formGroup = this.formBuilder.group({
       name: [this.tournament.name, Validators.required],
       year: [this.tournament.year, Validators.required],
       description: [this.tournament.description, Validators.required],
-      rounds: [this.tournament.rounds,[
-        Validators.required,
-        Validators.maxLength,
-        Validators.max,
-        Validators.min
-      ]],
-      url: [this.tournament.url, Validators.required]
+      rounds: [
+        this.tournament.rounds,
+        [
+          Validators.required,
+          Validators.maxLength,
+          Validators.max,
+          Validators.min,
+        ],
+      ],
+      url: [this.tournament.url, Validators.required],
     });
 
-    this.formGroup.get("name")!.valueChanges.subscribe(selectedValue => {
+    this.formGroup.get('name')!.valueChanges.subscribe((selectedValue) => {
       this.tournament.name = selectedValue;
     });
 
-    this.formGroup.get("year")!.valueChanges.subscribe(selectedValue => {
+    this.formGroup.get('year')!.valueChanges.subscribe((selectedValue) => {
       this.tournament.year = selectedValue;
     });
-    this.formGroup.get("description")!.valueChanges.subscribe(selectedValue => {
-      this.tournament.description = selectedValue;
-    });
-    this.formGroup.get("rounds")!.valueChanges.subscribe(selectedValue => {
+    this.formGroup
+      .get('description')!
+      .valueChanges.subscribe((selectedValue) => {
+        this.tournament.description = selectedValue;
+      });
+    this.formGroup.get('rounds')!.valueChanges.subscribe((selectedValue) => {
       this.tournament.rounds = selectedValue;
     });
-    this.formGroup.get("url")!.valueChanges.subscribe(selectedValue => {
+    this.formGroup.get('url')!.valueChanges.subscribe((selectedValue) => {
       this.tournament.url = selectedValue;
     });
 
     // Load existing data
-    this.getTournaments()
+    this.getTournaments();
   }
 
   public reset() {
@@ -118,7 +139,7 @@ export class TournamentComponent {
 
   public submit(): void {
     this.formGroup.markAllAsTouched();
-    if (this.formGroup.status === "VALID") {
+    if (this.formGroup.status === 'VALID') {
       this.isProcessing = startProcessing(this.formGroup, this.dialog);
       this.isNew ? this.createTournament() : this.updateTournament();
     }
@@ -127,17 +148,19 @@ export class TournamentComponent {
   public edit(tournament: Tournament): void {
     this.isNew = false;
     this.tournament.tournamentUuid = tournament.tournamentUuid;
-    this.formGroup.get("name")?.setValue(tournament.name);
-    this.formGroup.get("year")?.setValue(tournament.year);
-    this.formGroup.get("description")?.setValue(tournament.description);
-    this.formGroup.get("rounds")?.setValue(tournament.rounds);
-    this.formGroup.get("url")?.setValue(tournament.url);
+    this.formGroup.get('name')?.setValue(tournament.name);
+    this.formGroup.get('year')?.setValue(tournament.year);
+    this.formGroup.get('description')?.setValue(tournament.description);
+    this.formGroup.get('rounds')?.setValue(tournament.rounds);
+    this.formGroup.get('url')?.setValue(tournament.url);
+
+    this.getWeekOptions(tournament.tournamentUuid!);
   }
 
   public delete(tournament: Tournament): void {
-    if(tournament) {
-      const dialogRef = openConfirmDialog(this.dialog);
-      dialogRef.afterClosed().subscribe(result => {
+    if (tournament) {
+      const dialogRef = openConfirmDialog(this.dialog, 'Borrar', 'Torneo');
+      dialogRef.afterClosed().subscribe((result) => {
         if (result) {
           this.isProcessing = startProcessing(this.formGroup, this.dialog);
           this.deleteTournament(tournament);
@@ -146,10 +169,29 @@ export class TournamentComponent {
     }
   }
 
-  public team(tournament: Tournament): void {
-    this.router.navigate(['/admin/team', {uuid: tournament.tournamentUuid}]);
-    //this.router.navigate(['team', 33, 'user', 11]);
-    this.router.navigate(['../team'], {relativeTo: this.route, queryParams: {uuid: tournament.tournamentUuid},skipLocationChange: true})
+  public team(category: string): void {
+    if (this.tournament.tournamentUuid) {
+      this.router.navigate(['../team'], {
+        relativeTo: this.route,
+        queryParams: {
+          uuid: this.tournament.tournamentUuid,
+          category: category,
+        },
+        //skipLocationChange: true
+      });
+    }
+  }
+
+  public gameDay(week: WeekOption) {
+    console.log(week);
+    this.router.navigate(['../game'], {
+      relativeTo: this.route,
+      queryParams: {
+        uuid: week.tournamentUuid,
+        weekNumber: week.weekNumber,
+      },
+      //skipLocationChange: true
+    });
   }
 
   // ======================================================
@@ -159,32 +201,31 @@ export class TournamentComponent {
     this.tournamentService.postTournament(this.tournament).subscribe({
       next: (tournament: Tournament) => {
         this.isProcessing = endProcessing(this.formGroup, this.dialog);
-        openCommonDialog(this.dialog, successResponse('Torneo', 'Creado'));
+        openDialog(this.dialog, DialogMessageTypes.SUCCESS, 'Torneo', 'Creado');
         resetFormGroup(this.formGroup);
         this.getTournaments();
         this.isNew = true;
       },
       error: (e: any) => {
         this.isProcessing = endProcessing(this.formGroup, this.dialog);
-        e.status == 0 ? openErrorDialog(this.dialog) : openCommonDialog(this.dialog, e.error);
-      }
+        openErrorDialog(this.dialog, e.status, e.error);
+      },
     });
   }
 
-
   private getTournaments(): void {
     this.tournamentService.getTournaments().subscribe({
-      next: (tournaments : Tournament[]) => {
-        if(tournaments && tournaments.length > 0) {
+      next: (tournaments: Tournament[]) => {
+        if (tournaments && tournaments.length > 0) {
           this.dataSource = new MatTableDataSource(tournaments);
         } else {
           this.dataSource = undefined;
-          this.errorMessage = "Nothing to display...";
+          this.errorMessage = 'Nothing to display...';
         }
       },
       error: (e: any) => {
         this.errorMessage = 'Unable to load the data!';
-      }
+      },
     });
     this.tableLoaded = true;
   }
@@ -194,13 +235,19 @@ export class TournamentComponent {
       next: (tournament: Tournament) => {
         this.isProcessing = endProcessing(this.formGroup, this.dialog);
         resetFormGroup(this.formGroup);
-        openCommonDialog(this.dialog, successResponse('Torneo', 'Actualizado'));
+        openDialog(
+          this.dialog,
+          DialogMessageTypes.SUCCESS,
+          'Torneo',
+          'Actualizado'
+        );
         this.getTournaments();
         this.isNew = true;
       },
       error: (e: any) => {
-        console.log(e.error);
-      }
+        this.isProcessing = endProcessing(this.formGroup, this.dialog);
+        openErrorDialog(this.dialog, e.status, e.error);
+      },
     });
   }
 
@@ -209,16 +256,30 @@ export class TournamentComponent {
     this.tournamentService.deleteTournament(tournament).subscribe({
       next: (tournament: Tournament) => {
         this.isProcessing = endProcessing(this.formGroup, this.dialog);
-        openCommonDialog(this.dialog, successResponse('Torneo', 'Borrado'));
+        openDialog(
+          this.dialog,
+          DialogMessageTypes.SUCCESS,
+          'Torneo',
+          'Borrado'
+        );
         this.getTournaments();
       },
-      error: (e :any) => {
+      error: (e: any) => {
         this.isProcessing = endProcessing(this.formGroup, this.dialog);
-        e.status == 0 ? openErrorDialog(this.dialog) : openCommonDialog(this.dialog, e.error);
-      }
+        openErrorDialog(this.dialog, e.status, e.error);
+      },
     });
   }
 
+  public getWeekOptions(uuid: string): void {
+    this.weekService.getWeekOptions(uuid).subscribe({
+      next: (weekOptions: WeekOption[]) => {
+        this.tournamentWeeks = weekOptions;
+        console.log('Tournament Weeks ', this.tournamentWeeks);
+      },
+      error: (e: any) => {
+        this.tournamentWeeks = [];
+      },
+    });
+  }
 }
-
-

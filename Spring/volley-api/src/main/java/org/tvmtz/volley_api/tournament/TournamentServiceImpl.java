@@ -29,6 +29,7 @@ public class TournamentServiceImpl implements TournamentService {
         if (tournamentExists(tournament)) {
             return new ResponseEntity<>(tournamentDto, HttpStatus.CONFLICT);
         }
+        log.info("Tournament {}", tournament);
         // CREATE
         tournamentRepository.save(tournament);
 
@@ -50,9 +51,8 @@ public class TournamentServiceImpl implements TournamentService {
         return new ResponseEntity<>(tournamentDTOS, HttpStatus.OK);
     }
 
-
     @Override
-    public ResponseEntity<TournamentDTO> getTournamentByUUID(String stringUuid) {
+    public ResponseEntity<TournamentDTO> getTournament(String stringUuid) {
         try {
             UUID uuid = UUID.fromString(stringUuid);
             // NOT FOUND
@@ -66,18 +66,19 @@ public class TournamentServiceImpl implements TournamentService {
         }
     }
 
-    @Override
-    public ResponseEntity<TournamentDTO> getTournament(String name, Integer year) {
-        if (AppUtil.isNullOrEmptyString(name) || AppUtil.isNullOrZeroOrLess(year)) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    /*
+        @Override
+        public ResponseEntity<TournamentDTO> getTournament(String name, Integer year) {
+            if (AppUtil.isNullOrEmptyString(name) || AppUtil.isNullOrZeroOrLess(year)) {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+            Tournament tournamentDb = tournamentRepository.findByNameOrYear(name, year).orElse(null);
+            if (tournamentDb == null) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(modelMapper.map(tournamentDb, TournamentDTO.class), HttpStatus.OK);
         }
-        Tournament tournamentDb = tournamentRepository.findByNameOrYear(name, year).orElse(null);
-        if (tournamentDb == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(modelMapper.map(tournamentDb, TournamentDTO.class), HttpStatus.OK);
-    }
-
+    */
     @Override
     public ResponseEntity<TournamentDTO> updateTournament(TournamentDTO tournamentDto) {
         Tournament tournament = modelMapper.map(tournamentDto, Tournament.class);
@@ -103,7 +104,6 @@ public class TournamentServiceImpl implements TournamentService {
 
     @Override
     public ResponseEntity<TournamentDTO> deleteTournament(String stringUuid) {
-
         // BAD REQUEST
         if (
                 stringUuid != null &&

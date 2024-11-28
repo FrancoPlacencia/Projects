@@ -1,4 +1,4 @@
-CALL usp_get_week_template(9, @template) 
+CALL usp_get_week_template(11, @template) 
 
 CALL usp_get_category_template('FEMENIL',@template);
 CALL usp_get_category_template('VARONIL',@template);
@@ -15,4 +15,4 @@ AND category = 'VARONIL'
 
 
 
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'M4r1@Db__R0ot_P4$sw0rd';
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'M4r1@Db_R0ot_P4$sw0rd';

@@ -31,7 +31,6 @@
     <mat-icon class="error-message">highlight_off</mat-icon>
     }
   </div>
-
   <h2 mat-dialog-title class="dialog-message-title" [class]="typeMessageClass">
     {{ dialogMessage.title }}
   </h2>
@@ -40,14 +39,14 @@
   </mat-dialog-content>
   @if(dialogMessageTypes.CONFIRM == dialogMessage.type){
   <mat-dialog-actions align="end">
-    <button mat-button color="warn" mat-dialog-close>Cancel</button>
+    <button mat-button color="warn" mat-dialog-close>Cancelar</button>
     <button
       mat-button
       color="primary"
       [mat-dialog-close]="true"
       cdkFocusInitial
     >
-      Continue
+      Continuar
     </button>
   </mat-dialog-actions>
   }

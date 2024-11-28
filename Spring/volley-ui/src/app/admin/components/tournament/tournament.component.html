@@ -1,31 +1,29 @@
 <div class="container top-center-flex">
   <div class="wrapper almost-full">
-    
     <form [formGroup]="formGroup" (ngSubmit)="submit()">
       <header>
-        <h1><mat-icon>emoji_events</mat-icon>Torneos</h1>
+        <h1><mat-icon>emoji_events</mat-icon> Torneos</h1>
         <div class="action-section">
           <button
-          mat-raised-button
-          color="primary"
-          type="button"
-          (click)="reset()"
-        >
-          <mat-icon>restart_alt</mat-icon>Limpiar campos
-        </button>
-        @if (isNew) {
-        <button mat-raised-button color="accent" type="submit">
-          <mat-icon>add</mat-icon>Nuevo Tourneo Church
-        </button>
-        } @else {
-        <button mat-raised-button color="accent" type="submit">
-          <mat-icon>save</mat-icon>Actualizar Torneo
-        </button>
-        }
+            mat-raised-button
+            color="primary"
+            type="button"
+            (click)="reset()"
+          >
+            <mat-icon>restart_alt</mat-icon>Limpiar campos
+          </button>
+          @if (isNew) {
+          <button mat-raised-button color="accent" type="submit">
+            <mat-icon>add</mat-icon>Nuevo Tourneo Church
+          </button>
+          } @else {
+          <button mat-raised-button color="accent" type="submit">
+            <mat-icon>save</mat-icon>Actualizar Torneo
+          </button>
+          }
         </div>
-        
       </header>
-      
+
       <main>
         <mat-card class="box full">
           <mat-card-content>
@@ -112,6 +110,57 @@
                   }
                 </mat-form-field>
               </div>
+              @if(!isNew) {
+              <div class="flex-input">
+                <button
+                  mat-fab
+                  extended
+                  color="fem"
+                  type="button"
+                  (click)="team('FEMENIL')"
+                  [disabled]="isProcessing"
+                >
+                  <mat-icon>groups</mat-icon>FEMENIL
+                </button>
+                <button
+                  mat-fab
+                  extended
+                  color="var"
+                  type="button"
+                  (click)="team('VARONIL')"
+                  [disabled]="isProcessing"
+                >
+                  <mat-icon>groups</mat-icon>VARONIL
+                </button>
+                <button
+                  mat-fab
+                  extended
+                  color="mix"
+                  type="button"
+                  (click)="team('MIXTO')"
+                  [disabled]="isProcessing"
+                >
+                  <mat-icon>groups</mat-icon>MIXTO
+                </button>
+              </div>
+              <br />
+              <div class="flex-input">
+                @for(week of tournamentWeeks; track $index) {
+                <button
+                  mat-fab
+                  extended
+                  color="primary"
+                  type="button"
+                  (click)="gameDay(week)"
+                  [disabled]="isProcessing"
+                >
+                  <mat-icon>date_range</mat-icon>JORNADA {{ week.weekNumber }}
+                </button>
+                } @empty {
+                <h5>No Week Added</h5>
+                }
+              </div>
+              }
             </div>
           </mat-card-content>
         </mat-card>
@@ -161,15 +210,6 @@
               [disabled]="isProcessing"
             >
               <mat-icon>edit</mat-icon>Edit
-            </button>
-            <button
-              mat-raised-button
-              color="primary"
-              type="button"
-              (click)="team(element)"
-              [disabled]="isProcessing"
-            >
-              <mat-icon>people</mat-icon>Teams
             </button>
           </div>
         </td>

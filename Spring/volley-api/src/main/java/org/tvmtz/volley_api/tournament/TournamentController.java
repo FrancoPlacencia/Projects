@@ -28,15 +28,9 @@ public class TournamentController {
         return tournamentService.getTournaments();
     }
 
-
-    @GetMapping("/tournamentByUUID")
-    public ResponseEntity<TournamentDTO> getTournamentByUUID(@RequestParam String uuid) {
-        return tournamentService.getTournamentByUUID(uuid);
-    }
-
     @GetMapping("/tournament")
-    public ResponseEntity<TournamentDTO> getTournamentByUUID(@RequestParam String name, @RequestParam Integer year) {
-        return tournamentService.getTournament(name, year);
+    public ResponseEntity<TournamentDTO> getTournament(@RequestParam String uuid) {
+        return tournamentService.getTournament(uuid);
     }
 
     // UPDATE

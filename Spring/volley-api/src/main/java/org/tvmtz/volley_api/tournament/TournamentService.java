@@ -10,9 +10,9 @@ public interface TournamentService {
 
     ResponseEntity<List<TournamentDTO>> getTournaments();
 
-    ResponseEntity<TournamentDTO> getTournamentByUUID(String uuid);
+    //ResponseEntity<TournamentDTO> getTournamentByUUID(String uuid);
 
-    ResponseEntity<TournamentDTO> getTournament(String name, Integer year);
+    ResponseEntity<TournamentDTO> getTournament(String uuid);
 
     ResponseEntity<TournamentDTO> updateTournament(TournamentDTO tournament);
 

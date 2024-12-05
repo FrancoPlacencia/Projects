@@ -3,7 +3,7 @@ import { TournamentService } from './../../services/tournament.service';
 import { TeamsService } from './../../services/teams.service';
 
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Inject, Input } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -42,13 +42,12 @@ import { successResponse } from '../../../util/response-util';
 import { DialogMessageTypes } from '../../../common/model/dialog-message-types';
 
 @Component({
-  selector: 'app-team',
   standalone: true,
+  selector: 'app-team',
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
@@ -83,13 +82,14 @@ export class TeamComponent {
 
   private team: Team;
 
+  // Inject External Service
+
+  private formBuilder: FormBuilder = inject(FormBuilder);
+  private route: ActivatedRoute = inject(ActivatedRoute);
   constructor(
     private teamsService: TeamsService,
     private tournamentService: TournamentService,
-    private formBuilder: FormBuilder,
-    private dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute
+    private dialog: MatDialog
   ) {
     this.route.queryParamMap.subscribe((params) => {
       console.log(params);

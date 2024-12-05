@@ -5,20 +5,25 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
-public interface TeamRepository extends JpaRepository<Team, UUID> {
-    /*
-        @Query(
-                value = "SELECT * FROM team WHERE tournament_id = :tournamentId AND name = :name AND number = :number",
-                nativeQuery = true
-        )
-        Optional<Team> findUnique(String uuid, String name, Integer number);
+public interface TeamRepository extends JpaRepository<Team, Integer> {
 
-     */
     @Query(
-            value = "SELECT * FROM teams WHERE tournament_uuid = :tournamentUuid AND category = :category",
+            value = "SELECT * FROM teams WHERE tournament_id = :tournamentId AND name = :name AND category = :category",
             nativeQuery = true
     )
-    Optional<List<Team>> findByTournamentAndCategory(String tournamentUuid, String category);
+    Optional<Team> findUnique(Integer tournamentId, String name, String category);
+
+    @Query(
+            value = "SELECT * FROM teams WHERE tournament_id = :tournamentId AND category = :category",
+            nativeQuery = true
+    )
+    Optional<List<Team>> findByTournamentAndCategory(Integer tournamentId, String category);
+
+    @Query(
+            value = "SELECT * FROM teams WHERE tournament_id = :tournamentId",
+            nativeQuery = true
+    )
+    Optional<List<Team>> findByTournament(Integer tournamentId);
+
 }

@@ -25,31 +25,29 @@ interface NavItem {
 }
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    RouterLink,
-
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDividerModule,
-    MatIconModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatListModule,
-    MatTreeModule,
-    CommonModule,
-    LogoComponent,
-  ],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss',
+    selector: 'app-home',
+    imports: [
+        RouterOutlet,
+        RouterLink,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDividerModule,
+        MatIconModule,
+        MatButtonModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatListModule,
+        MatTreeModule,
+        CommonModule,
+        LogoComponent,
+    ],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss'
 })
 export class HomeComponent {
   title = 'material-responsive-sidenav';

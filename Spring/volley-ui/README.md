@@ -6,6 +6,7 @@
 # NPM Version
 npm version
   #  npm: '10.9.0'
+  # node: 22.11.0
   # update to last version
   npm install -g npm
 
@@ -13,9 +14,9 @@ npm version
 npm install -g @angular/cli
 
 ng version
-  # > Angular CLI: 18.2.11
+  # > Angular CLI: 19.0.2
   # > Node: 22.11.0
-  # > Package Manager: npm 10.9.0
+  # > Package Manager: npm 10.9.1
   # > OS: win32 x64
 ```
 

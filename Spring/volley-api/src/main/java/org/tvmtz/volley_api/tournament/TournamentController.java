@@ -5,21 +5,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.tvmtz.volley_api.common.CommonResponse;
 
 import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api")
 public class TournamentController {
 
     @Autowired
     TournamentService tournamentService;
 
     // CREATE
-    @PostMapping("/tournament")
-    public ResponseEntity<TournamentDTO> createTournament(@Valid @RequestBody TournamentDTO tournament) {
-        return tournamentService.saveTournament(tournament);
+    @PostMapping("/admin/tournament")
+    public ResponseEntity<CommonResponse> createTournament(@Valid @RequestBody TournamentDTO tournament) {
+        return tournamentService.createTournament(tournament);
     }
 
     // READ
@@ -29,20 +30,20 @@ public class TournamentController {
     }
 
     @GetMapping("/tournament")
-    public ResponseEntity<TournamentDTO> getTournament(@RequestParam String uuid) {
-        return tournamentService.getTournament(uuid);
+    public ResponseEntity<TournamentDTO> getTournament(@RequestParam Integer id) {
+        return tournamentService.getTournament(id);
     }
 
     // UPDATE
-    @PutMapping("/tournament")
-    public ResponseEntity<TournamentDTO> updateTournament(@Valid @RequestBody TournamentDTO tournament) {
+    @PutMapping("/admin/tournament")
+    public ResponseEntity<CommonResponse> updateTournament(@Valid @RequestBody TournamentDTO tournament) {
         return tournamentService.updateTournament(tournament);
     }
 
     // DELETE
-    @DeleteMapping("/tournament")
-    public ResponseEntity<TournamentDTO> deleteTournament(@RequestParam String uuid) {
-        return tournamentService.deleteTournament(uuid);
+    @DeleteMapping("/admin/tournament")
+    public ResponseEntity<CommonResponse> deleteTournament(@RequestParam Integer id) {
+        return tournamentService.deleteTournament(id);
     }
 
 }

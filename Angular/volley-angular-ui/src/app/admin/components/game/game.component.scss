@@ -1,0 +1,139 @@
+/* ===========================================================================
+	MATCH STYLES
+=========================================================================== */
+.match-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  background-color: #eee;
+  justify-content: center;
+}
+.match-box {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  background-color: white;
+  font-weight: 400;
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.25);
+  padding: 10px;
+  margin: 10px;
+}
+.match-info {
+  display: flex;
+  justify-content: space-between;
+}
+.match-category {
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 800;
+  padding: 5px 10px;
+  width: fit-content;
+  height: fit-content;
+}
+.match-place {
+  color: #282828;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  line-height: 14px;
+}
+
+.match-action {
+  text-align: right;
+}
+
+.match-details {
+  padding-top: 5px;
+  display: grid;
+  grid-template-columns: 40% 20% 40%;
+  align-items: center;
+  justify-content: space-between;
+}
+.match-team {
+  padding: 0px 10px;
+  font-size: 20px;
+  font-weight: 450;
+  color: #282828;
+}
+.match-results {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+}
+.match-sets {
+  width: 30px;
+  color: #8a8a8a;
+  font-size: 26px;
+  font-weight: 450;
+  text-align: center;
+  justify-self: center;
+  align-self: center;
+}
+.match-points {
+  width: 25px;
+  color: #8a8a8a;
+  font-size: 15px;
+  font-weight: 450;
+  text-align: center;
+  justify-self: center;
+  align-self: center;
+}
+.winner {
+  color: #282828;
+  font-weight: 550 !important;
+}
+.match-players {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  gap: 5px;
+}
+
+.match-player {
+  border: 1px solid #282828;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  padding: 2px 4px 2px 4px;
+  font-size: 12px;
+  color: #282828;
+}
+.losser {
+  color: #7d7d7d;
+  font-weight: 500 !important;
+}
+
+.game-played {
+  background-color: #01c879;
+  box-shadow: inset 0 0 3px #00643c;
+  color: white;
+}
+
+.var-bc {
+  background-color: #e4f6ff !important;
+}
+.var-color {
+  color: #203c6b;
+  font-weight: 450 !important;
+}
+.mix-bc {
+  background-color: #def9c4 !important;
+}
+.mix-color {
+  color: #347928;
+  font-weight: 450 !important;
+}
+.fem-bc {
+  background-color: #ffecef !important;
+}
+.fem-color {
+  color: #ed647c;
+  font-weight: 450 !important;
+}
+
+.arrow-up {
+  color: green;
+}
+.arrow-down {
+  color: brown;
+}

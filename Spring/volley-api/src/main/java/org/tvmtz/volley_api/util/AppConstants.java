@@ -26,6 +26,7 @@ public class AppConstants {
 
     // Endpoints
     public static String TOURNAMENT = "Tournament";
-
     public static String TEAM = "Team";
+    public static String PLAYER = "Player";
+    public static String GAME = "Game";
 }

@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.tvmtz.volley_api.common.CommonResponse;
+import org.tvmtz.volley_api.util.AppConstants;
 import org.tvmtz.volley_api.util.AppUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -23,18 +24,18 @@ public class TournamentServiceImpl implements TournamentService {
     ModelMapper modelMapper;
 
     @Override
-    public ResponseEntity<TournamentDTO> saveTournament(TournamentDTO tournamentDto) {
+    public ResponseEntity<CommonResponse> createTournament(TournamentDTO tournamentDto) {
+        CommonResponse commonResponse;
         Tournament tournament = modelMapper.map(tournamentDto, Tournament.class);
         // ALREADY EXISTS
         if (tournamentExists(tournament)) {
-            return new ResponseEntity<>(tournamentDto, HttpStatus.CONFLICT);
+            commonResponse = CommonResponse.builder().response(AppConstants.TOURNAMENT + " " + AppConstants.ALREADY_EXISTS).build();
+            return new ResponseEntity<>(commonResponse, HttpStatus.CONFLICT);
         }
-        log.info("Tournament {}", tournament);
         // CREATE
         tournamentRepository.save(tournament);
-
-        tournamentDto = modelMapper.map(tournament, TournamentDTO.class);
-        return new ResponseEntity<>(tournamentDto, HttpStatus.CREATED);
+        commonResponse = CommonResponse.builder().response(AppConstants.TOURNAMENT + " " + AppConstants.CREATED).build();
+        return new ResponseEntity<>(commonResponse, HttpStatus.CREATED);
     }
 
 
@@ -52,80 +53,72 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     @Override
-    public ResponseEntity<TournamentDTO> getTournament(String stringUuid) {
-        try {
-            UUID uuid = UUID.fromString(stringUuid);
-            // NOT FOUND
-            Tournament dbTournament = tournamentRepository.findByTournamentUuid(uuid).orElse(null);
-            if (dbTournament == null) {
-                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(modelMapper.map(dbTournament, TournamentDTO.class), HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
+    public ResponseEntity<TournamentDTO> getTournament(Integer tournamentId) {
+        // BAD REQUEST
+        if (AppUtil.isNullOrZeroOrLess(tournamentId)) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-    }
-
-    /*
-        @Override
-        public ResponseEntity<TournamentDTO> getTournament(String name, Integer year) {
-            if (AppUtil.isNullOrEmptyString(name) || AppUtil.isNullOrZeroOrLess(year)) {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-            }
-            Tournament tournamentDb = tournamentRepository.findByNameOrYear(name, year).orElse(null);
-            if (tournamentDb == null) {
-                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(modelMapper.map(tournamentDb, TournamentDTO.class), HttpStatus.OK);
-        }
-    */
-    @Override
-    public ResponseEntity<TournamentDTO> updateTournament(TournamentDTO tournamentDto) {
-        Tournament tournament = modelMapper.map(tournamentDto, Tournament.class);
-        log.info("Tournament {}", tournament);
-        // BAD REQUEST
-        if (
-                tournament.getTournamentUuid() == null ||
-                        AppUtil.isNullOrEmptyString(tournament.getTournamentUuid().toString())
-        ) {
-            return new ResponseEntity<>(tournamentDto, HttpStatus.BAD_REQUEST);
-        }
-
         // NOT FOUND
-        Tournament dbTournament = tournamentRepository.findByTournamentUuid(tournament.getTournamentUuid()).orElse(null);
-        if (dbTournament == null) {
-            return new ResponseEntity<>(tournamentDto, HttpStatus.NOT_FOUND);
-        }
-        // UPDATE
-        updateTournament(tournament, dbTournament);
-        tournamentDto = modelMapper.map(tournament, TournamentDTO.class);
-        return new ResponseEntity<>(tournamentDto, HttpStatus.OK);
-    }
-
-    @Override
-    public ResponseEntity<TournamentDTO> deleteTournament(String stringUuid) {
-        // BAD REQUEST
-        if (
-                stringUuid != null &&
-                        AppUtil.isNullOrEmptyString(stringUuid)
-        ) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-        Tournament tournament = new Tournament();
-        tournament.setTournamentUuid(UUID.fromString(stringUuid));
-        // NOT FOUND
-        Tournament dbTournament = tournamentRepository.findByTournamentUuid(tournament.getTournamentUuid()).orElse(null);
+        Tournament dbTournament = tournamentRepository.findByTournamentId(tournamentId).orElse(null);
         if (dbTournament == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(modelMapper.map(dbTournament, TournamentDTO.class), HttpStatus.OK);
+
+    }
+
+    @Override
+    public ResponseEntity<CommonResponse> updateTournament(TournamentDTO tournamentDto) {
+        CommonResponse commonResponse;
+        Tournament tournament = modelMapper.map(tournamentDto, Tournament.class);
+        // BAD REQUEST
+        if (AppUtil.isNullOrZeroOrLess(tournament.getTournamentId())) {
+            commonResponse = CommonResponse.builder().response(AppConstants.TOURNAMENT + " " + AppConstants.MISSING_DATA).build();
+            return new ResponseEntity<>(commonResponse, HttpStatus.BAD_REQUEST);
+        }
+        // ALREADY EXISTS
+        if (tournamentExists(tournament)) {
+            commonResponse = CommonResponse.builder().response(AppConstants.TOURNAMENT + " " + AppConstants.ALREADY_EXISTS).build();
+            return new ResponseEntity<>(commonResponse, HttpStatus.CONFLICT);
+        }
+        // NOT FOUND
+        Tournament dbTournament = tournamentRepository.findByTournamentId(tournament.getTournamentId()).orElse(null);
+        if (dbTournament == null) {
+            commonResponse = CommonResponse.builder().response(AppConstants.TOURNAMENT + " " + AppConstants.NOT_FOUND).build();
+            return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
+        }
+        // UPDATE
+        updateTournament(tournament, dbTournament);
+        commonResponse = CommonResponse.builder().response(AppConstants.TOURNAMENT + " " + AppConstants.UPDATED).build();
+        return new ResponseEntity<>(commonResponse, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<CommonResponse> deleteTournament(Integer tournamentId) {
+        CommonResponse commonResponse;
+        // BAD REQUEST
+        if (AppUtil.isNullOrZeroOrLess(tournamentId)) {
+            commonResponse = CommonResponse.builder().response(AppConstants.TOURNAMENT + " " + AppConstants.MISSING_DATA).build();
+            return new ResponseEntity<>(commonResponse, HttpStatus.BAD_REQUEST);
+        }
+        // NOT FOUND
+        Tournament tournament = tournamentRepository.findByTournamentId(tournamentId).orElse(null);
+        if (tournament == null) {
+            commonResponse = CommonResponse.builder().response(AppConstants.TOURNAMENT + " " + AppConstants.NOT_FOUND).build();
+            return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
+        }
         // OK
         tournamentRepository.delete(tournament);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        commonResponse = CommonResponse.builder().response(AppConstants.TOURNAMENT + " " + AppConstants.DELETED).build();
+        return new ResponseEntity<>(commonResponse, HttpStatus.OK);
     }
 
     private boolean tournamentExists(Tournament tournament) {
         Tournament dbTournament = tournamentRepository.findByNameAndYear(tournament.getName(), tournament.getYear()).orElse(null);
-        return dbTournament != null;
+        if (dbTournament == null) {
+            return false;
+        }
+        return !Objects.equals(tournament.getTournamentId(), dbTournament.getTournamentId());
     }
 
     /*
@@ -150,27 +143,7 @@ public class TournamentServiceImpl implements TournamentService {
         if (!request.getUrl().equals(db.getUrl())) {
             db.setUrl(request.getUrl());
         }
-        log.info("DB Tournament {}", db);
         tournamentRepository.save(db);
     }
-/*
-    private List<String> validateMandatoryFields(Tournament tournament) {
-        List<String> mandatoryFields = new ArrayList<>();
-        if (AppUtil.isNullOrEmptyString(tournament.getName())) {
-            mandatoryFields.add("Missing name");
-        }
-        if (AppUtil.isNullOrZeroOrLess(tournament.getYear())) {
-            mandatoryFields.add("Missing year");
-        }
-        if (AppUtil.isNullOrEmptyString(tournament.getDescription())) {
-            mandatoryFields.add("Missing description");
-        }
-        /*
-        if (AppUtil.isNullOrEmptyString(tournament.getUrl())) {
-            mandatoryFields.add("Missing URL");
-        }
 
-        return mandatoryFields;
-    }
-*/
 }

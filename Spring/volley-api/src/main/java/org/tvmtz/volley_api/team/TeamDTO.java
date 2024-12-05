@@ -7,8 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.tvmtz.volley_api.player.Player;
 
-import java.util.UUID;
+import java.util.List;
 
 @Data
 @Builder
@@ -16,11 +17,11 @@ import java.util.UUID;
 @AllArgsConstructor
 public class TeamDTO {
 
-    private UUID teamUuid;
+    private Integer teamId;
 
-    @NotNull(message = "The tournament UUID is required.")
-    private UUID tournamentUuid;
-    
+    @NotNull(message = "The tournament ID is required.")
+    private Integer tournamentId;
+
     @NotBlank(message = "The description is required.")
     @Size(max = 250, message = "The description must be 250 chars max.")
     private String name;
@@ -32,6 +33,8 @@ public class TeamDTO {
     @NotBlank(message = "The description is required.")
     @Size(max = 250, message = "The description must be 250 chars max.")
     private String category;
+
+    private List<Player> players;
 
     private Boolean isActive;
 }

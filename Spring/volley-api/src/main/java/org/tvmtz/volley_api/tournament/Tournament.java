@@ -7,8 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
-import java.util.UUID;
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,11 +16,11 @@ import java.util.UUID;
 @DynamicUpdate
 public class Tournament {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "tournament_uuid")
-    private UUID tournamentUuid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "tournament_id")
+    private Integer tournamentId;
 
-    @Column(name = "name", columnDefinition = "VARCHAR(50)", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "year", nullable = false)

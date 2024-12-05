@@ -2,19 +2,37 @@ package org.tvmtz.volley_api.player;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.tvmtz.volley_api.team.Team;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
-public interface PlayerRepository extends JpaRepository<Player, UUID> {
+public interface PlayerRepository extends JpaRepository<Player, Integer> {
 
     @Query(
-            value = "SELECT * FROM players WHERE team_uuid = :teamUuid",
+            value = "SELECT * FROM players WHERE team_id = :teamId ORDER BY number",
             nativeQuery = true
     )
-    Optional<List<Player>> findByTeam(String teamUuid);
+    Optional<List<Player>> findByTeam(Integer teamId);
 
-    Optional<Player> findByTeamAndNumber(Team team, Integer number);
+    @Query(
+            value = "SELECT players.* " +
+                    "FROM players " +
+                    "INNER JOIN games_played " +
+                    "ON games_played.player_id = players.player_id " +
+                    "AND games_played.game_id = :gameId " +
+                    "WHERE team_id = :teamId " +
+                    "ORDER BY number",
+            nativeQuery = true
+    )
+    Optional<List<Player>> findByTeamGame(Integer teamId, Integer gameId);
+
+
+    @Query(
+            value = "SELECT players.* " +
+                    "FROM players " +
+                    "WHERE team_id = :teamId " +
+                    "AND number = :number ",
+            nativeQuery = true
+    )
+    Optional<Player> findByTeamIdAndNumber(Integer teamId, Integer number);
 }

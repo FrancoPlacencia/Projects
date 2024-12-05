@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface TournamentRepository extends JpaRepository<Tournament, Integer> {
 
@@ -21,6 +20,6 @@ public interface TournamentRepository extends JpaRepository<Tournament, Integer>
 
     Optional<Tournament> findByNameAndYear(String name, Integer year);
 
-    Optional<Tournament> findByTournamentUuid(UUID tournamentUuid);
+    Optional<Tournament> findByTournamentId(Integer tournamentId);
 
 }

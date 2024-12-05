@@ -1,14 +1,11 @@
 package org.tvmtz.volley_api.player;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.tvmtz.volley_api.team.Team;
-
-import java.util.UUID;
 
 @Data
 @Builder
@@ -20,12 +17,16 @@ import java.util.UUID;
 public class Player {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "player_uuid")
-    private UUID playerUuid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "player_id")
+    private Integer playerId;
 
-    @OneToOne
-    @JoinColumn(name = "team_uuid")
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    // @JsonBackReference
+    @JsonIgnoreProperties("players")
+    @JsonIgnore
+    @ToString.Exclude
     private Team team;
 
     @Column(name = "name")
@@ -36,4 +37,8 @@ public class Player {
 
     @Column(name = "number")
     private Integer number;
+
+    @Transient
+    private Boolean gamePlayed;
+
 }

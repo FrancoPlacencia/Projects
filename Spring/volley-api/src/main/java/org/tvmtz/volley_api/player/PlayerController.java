@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.tvmtz.volley_api.common.CommonResponse;
 
 import java.util.List;
 
@@ -16,25 +17,25 @@ public class PlayerController {
 
     // CREATE
     @PostMapping("/admin/player")
-    public ResponseEntity<PlayerDTO> createPlayer(@Valid @RequestBody PlayerDTO playerDTO) {
+    public ResponseEntity<CommonResponse> createPlayer(@Valid @RequestBody PlayerDTO playerDTO) {
         return playerService.createPlayer(playerDTO);
     }
 
     // READ
     @GetMapping("/players")
-    public ResponseEntity<List<PlayerDTO>> getPlayers(@RequestParam String uuid) {
-        return playerService.getPlayers(uuid);
+    public ResponseEntity<List<PlayerDTO>> getPlayers(@RequestParam Integer id) {
+        return playerService.getPlayers(id);
     }
 
     // Update
     @PutMapping("/admin/player")
-    public ResponseEntity<PlayerDTO> updatePlayer(@Valid @RequestBody PlayerDTO playerDTO) {
+    public ResponseEntity<CommonResponse> updatePlayer(@Valid @RequestBody PlayerDTO playerDTO) {
         return playerService.updatePlayer(playerDTO);
     }
 
     // DELETE
     @DeleteMapping("/admin/player")
-    public ResponseEntity<PlayerDTO> deletePlayer(@RequestParam String uuid) {
-        return playerService.deletePlayer(uuid);
+    public ResponseEntity<CommonResponse> deletePlayer(@RequestParam Integer id) {
+        return playerService.deletePlayer(id);
     }
 }

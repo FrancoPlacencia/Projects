@@ -6,15 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class TournamentDTO {
 
-    private UUID tournamentUuid;
+    private Integer tournamentId;
 
     @NotBlank(message = "The name is required.")
     @Size(max = 50, message = "The name must be 50 chars max.")

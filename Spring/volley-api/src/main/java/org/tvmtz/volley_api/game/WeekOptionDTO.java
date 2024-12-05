@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class WeekOptionDTO {
 
-    String tournamentUuid;
+    Integer tournamentId;
 
     Integer weekNumber;
 }

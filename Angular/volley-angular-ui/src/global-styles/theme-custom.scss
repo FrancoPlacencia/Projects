@@ -1,0 +1,15 @@
+@use "@angular/material" as mat;
+
+@include mat.core();
+
+$dark-theme: mat.define-theme(
+  (
+    color: (
+      them-type: dark,
+      primary: mat.$blue-palette,
+    ),
+    density: (
+      scale: -2,
+    ),
+  )
+);

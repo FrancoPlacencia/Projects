@@ -1,16 +1,19 @@
 package org.tvmtz.volley_api.player;
 
 import org.springframework.http.ResponseEntity;
+import org.tvmtz.volley_api.common.CommonResponse;
 
 import java.util.List;
 
 public interface PlayerService {
 
-    ResponseEntity<PlayerDTO> createPlayer(PlayerDTO playerDTO);
+    ResponseEntity<CommonResponse> createPlayer(PlayerDTO playerDTO);
 
-    ResponseEntity<List<PlayerDTO>> getPlayers(String uuid);
+    ResponseEntity<List<PlayerDTO>> getPlayers(Integer playerId);
 
-    ResponseEntity<PlayerDTO> updatePlayer(PlayerDTO playerDTO);
+    ResponseEntity<CommonResponse> updatePlayer(PlayerDTO playerDTO);
 
-    ResponseEntity<PlayerDTO> deletePlayer(String uuid);
+    ResponseEntity<CommonResponse> deletePlayer(Integer playerId);
+
+    List<PlayerOptionsDTO> getPlayersOptions(Integer teamId, Integer gameId);
 }

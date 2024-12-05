@@ -37,25 +37,23 @@ import {
 import { DialogMessageTypes } from '../../../common/model/dialog-message-types';
 
 @Component({
-  selector: 'app-player',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-
-    MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatSlideToggleModule,
-    MatTableModule,
-    MatSelectModule,
-  ],
-  templateUrl: './player.component.html',
-  styleUrl: './player.component.scss',
+    selector: 'app-player',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        MatSlideToggleModule,
+        MatTableModule,
+        MatSelectModule,
+    ],
+    templateUrl: './player.component.html',
+    styleUrl: './player.component.scss'
 })
 export class PlayerComponent {
   // Flags

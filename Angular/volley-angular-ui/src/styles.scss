@@ -1,0 +1,266 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+@use "./global-styles/theme-colors" as my-theme;
+@use "./global-styles/volley-colors.scss" as volley-colors;
+@include mat.core();
+
+html {
+  color-scheme: light;
+
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: my-theme.$primary-palette,
+        tertiary: my-theme.$tertiary-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+
+  .primary-button {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: white,
+        filled-container-color: volley-colors.$primary-color,
+      )
+    );
+  }
+  .primary-button:hover {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: volley-colors.$primary-color,
+        filled-container-color: white,
+      )
+    );
+  }
+  .secondary-button {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: white,
+        filled-container-color: volley-colors.$secondary-color,
+      )
+    );
+  }
+  .secondary-button:hover {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: volley-colors.$secondary-color,
+        filled-container-color: white,
+      )
+    );
+  }
+  .success-button {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: white,
+        filled-container-color: volley-colors.$success-color,
+      )
+    );
+  }
+  .success-button:hover {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: volley-colors.$success-color,
+        filled-container-color: white,
+      )
+    );
+  }
+  .info-button {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: white,
+        filled-container-color: volley-colors.$info-color,
+      )
+    );
+  }
+  .info-button:hover {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: volley-colors.$info-color,
+        filled-container-color: white,
+      )
+    );
+  }
+  .warning-button {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: white,
+        filled-container-color: volley-colors.$warning-color,
+      )
+    );
+  }
+  .warning-button:hover {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: volley-colors.$warning-color,
+        filled-container-color: white,
+      )
+    );
+  }
+  .danger-button {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: white,
+        filled-container-color: volley-colors.$danger-color,
+      )
+    );
+  }
+  .danger-button:hover {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: volley-colors.$danger-color,
+        filled-container-color: white,
+      )
+    );
+  }
+  .focus-button {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: white,
+        filled-container-color: volley-colors.$focus-color,
+      )
+    );
+  }
+  .focus-button:hover {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: volley-colors.$focus-color,
+        filled-container-color: white,
+      )
+    );
+  }
+  .alt-button {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: white,
+        filled-container-color: volley-colors.$alt-color,
+      )
+    );
+  }
+  .alt-button:hover {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: volley-colors.$alt-color,
+        filled-container-color: white,
+      )
+    );
+  }
+  .light-button {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: white,
+        filled-container-color: volley-colors.$light-color,
+      )
+    );
+  }
+  .light-button:hover {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: volley-colors.$light-color,
+        filled-container-color: white,
+      )
+    );
+  }
+  .dark-button {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: white,
+        filled-container-color: volley-colors.$dark-color,
+      )
+    );
+  }
+  .dark-button:hover {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: volley-colors.$dark-color,
+        filled-container-color: white,
+      )
+    );
+  }
+
+  .fem-button {
+    @include mat.fab-overrides(
+      (
+        container-color: volley-colors.$fem-light-color,
+        foreground-color: volley-colors.$fem-color,
+      )
+    );
+  }
+  .fem-button:hover {
+    @include mat.fab-overrides(
+      (
+        container-color: volley-colors.$fem-color,
+        foreground-color: volley-colors.$fem-light-color,
+      )
+    );
+  }
+
+  .var-button {
+    @include mat.fab-overrides(
+      (
+        container-color: volley-colors.$var-light-color,
+        foreground-color: volley-colors.$var-color,
+      )
+    );
+  }
+  .var-button:hover {
+    @include mat.fab-overrides(
+      (
+        container-color: volley-colors.$var-color,
+        foreground-color: volley-colors.$var-light-color,
+      )
+    );
+  }
+
+  .mix-button {
+    @include mat.fab-overrides(
+      (
+        container-color: volley-colors.$mix-light-color,
+        foreground-color: volley-colors.$mix-color,
+      )
+    );
+  }
+  .mix-button:hover {
+    @include mat.fab-overrides(
+      (
+        container-color: volley-colors.$mix-color,
+        foreground-color: volley-colors.$mix-light-color,
+      )
+    );
+  }
+
+  .week-button {
+    @include mat.fab-overrides(
+      (
+        container-color: volley-colors.$week-light-color,
+        foreground-color: volley-colors.$week-color,
+      )
+    );
+  }
+  .week-button:hover {
+    @include mat.fab-overrides(
+      (
+        container-color: volley-colors.$week-color,
+        foreground-color: volley-colors.$week-light-color,
+      )
+    );
+  }
+
+  @include mat.fab-overrides(
+    (
+      small-foreground-color: purple,
+    )
+  );
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

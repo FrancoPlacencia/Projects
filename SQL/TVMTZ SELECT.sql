@@ -18,6 +18,7 @@ WHERE games.tournament_id = 2
 AND games.week_number = 11
 AND games.game_date LIKE '2024-11-26%'
 
+SELECT COUNT(*) FROM GAMES;
 
 DELETE FROM games WHERE week_number = 11 AND game_id = 644
 29- 59

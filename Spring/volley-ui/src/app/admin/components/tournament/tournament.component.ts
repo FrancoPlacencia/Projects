@@ -1,6 +1,3 @@
-import { WeekOption } from './../../model/week-option.model';
-import { WeekService } from './../../services/week.service';
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   FormBuilder,
@@ -9,19 +6,29 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
-import { MatCardModule } from '@angular/material/card';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatFormFieldModule } from '@angular/material/form-field';
+// @angular/material
 import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatDialog } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
 
+// Models
 import { Tournament } from '../../model/tournament.model';
+import { WeekOption } from './../../model/week-option.model';
+
+// Services
+import { WeekService } from './../../services/week.service';
 import { TournamentService } from '../../services/tournament.service';
+
+// Util
 import {
   endProcessing,
   resetFormGroup,
@@ -32,14 +39,11 @@ import {
   openDialog,
   openErrorDialog,
 } from '../../../util/message-util';
-import { successResponse } from '../../../util/response-util';
-import { CommonResponse } from '../../../common/model/common-response.dto';
+
 import { DialogMessageTypes } from '../../../common/model/dialog-message-types';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-tournament',
-  standalone: true,
   imports: [
     CommonModule,
     FormsModule,

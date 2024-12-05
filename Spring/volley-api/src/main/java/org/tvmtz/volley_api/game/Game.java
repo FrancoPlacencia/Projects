@@ -1,5 +1,6 @@
 package org.tvmtz.volley_api.game;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +11,6 @@ import org.tvmtz.volley_api.team.Team;
 import org.tvmtz.volley_api.tournament.Tournament;
 
 import java.util.Date;
-import java.util.UUID;
 
 @Data
 @Builder
@@ -22,12 +22,13 @@ import java.util.UUID;
 public class Game {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "game_uuid")
-    private UUID gameUuid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "game_id")
+    private Integer gameId;
 
+    @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "tournament_uuid")
+    @JoinColumn(name = "tournament_id")
     private Tournament tournament;
 
     @Column(name = "category")

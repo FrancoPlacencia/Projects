@@ -1,0 +1,106 @@
+// Blue Colors
+$blue: #003a6a;
+$clear-blue: #7c97ad;
+
+// Gray Colors
+$gray: #adb5bd;
+$clear-gray: #e8e7ee;
+$dark-gray: #424242;
+
+// BUTTON COLORS
+$primary-color: #3f6ad8;
+$secondary-color: #6c757d;
+$success-color: #3ac47d;
+$info-color: #16aaff;
+$warning-color: #f7b924;
+$danger-color: #d92550;
+$focus-color: #444054;
+$alt-color: #794c8a;
+$light-color: #dcdcdc;
+$dark-color: #343a40;
+
+$fem-color: #ed647c;
+$fem-light-color: #ffecef;
+
+$var-color: #203c6b;
+$var-light-color: #e4f6ff;
+
+$mix-color: #347928;
+$mix-light-color: #def9c4;
+
+$week-color: #1d1d55;
+$week-light-color: #ffc801;
+
+$new-color: #3ac47d;
+
+$delete-color: #d92550;
+
+$edit-color: #16aaff;
+
+// COLOR
+.color-white {
+  color: white;
+}
+.color-blue {
+  color: $blue;
+}
+.color-clear-blue {
+  color: $clear-blue;
+}
+.color-gray {
+  color: $gray;
+}
+.color-clear-gray {
+  color: $clear-gray;
+}
+.color-dark-gray {
+  color: $dark-gray;
+}
+.color-red {
+  color: red;
+}
+
+.color-fem {
+  color: #ed647c;
+}
+.color-clear-fem {
+  color: #ffecef;
+}
+.color-var {
+  color: #203c6b;
+}
+.color-clear-var {
+  color: #e4f6ff;
+}
+.color-mix {
+  color: #347928;
+}
+.color-clear-mix {
+  color: #def9c4;
+}
+// BACKGROUND-COLOR
+.bg-color-blue {
+  color: $blue;
+}
+.bg-color-clear-blue {
+  color: $clear-blue;
+}
+.bg-color-gray {
+  color: $gray;
+}
+.bg-color-clear-gray {
+  color: $clear-gray;
+}
+.bg-color-dark-gray {
+  color: $dark-gray;
+}
+
+.bg-color-fem {
+  background-color: #ffecef !important;
+}
+.bg-color-var {
+  background-color: #e4f6ff !important;
+}
+.bg-color-mix {
+  background-color: #def9c4 !important;
+}

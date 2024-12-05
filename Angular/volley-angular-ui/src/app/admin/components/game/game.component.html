@@ -1,0 +1,238 @@
+<div class="container top-center-flex">
+  <div class="wrapper almost-full">
+    <form [formGroup]="formGroup" (ngSubmit)="submit()">
+      <header>
+        <h1>
+          <mat-icon>sports_volleyball</mat-icon>&nbsp;Jornada {{ weekNumber }}
+          {{ formGroup.invalid }}
+        </h1>
+        <h1>{{ tournamentName }}</h1>
+        <div class="action-section">
+          <button
+            mat-flat-button
+            class="info-button"
+            type="button"
+            (click)="reset()"
+          >
+            <mat-icon>restart_alt</mat-icon>Limpiar campos
+          </button>
+          @if (isNew) {
+          <button mat-flat-button class="success-button" type="submit">
+            <mat-icon>add</mat-icon>Agregar Equipo
+          </button>
+          } @else {
+          <button mat-flat-button class="warning-button" type="submit">
+            <mat-icon>save</mat-icon>Actualizar Equipo
+          </button>
+          }
+        </div>
+      </header>
+      <main>
+        <mat-card class="box full">
+          <mat-card-content>
+            <div>
+              <div class="flex-input">
+                <!-- CATEGORY -->
+                <mat-form-field class="full">
+                  <mat-label>Categoria</mat-label>
+                  <mat-select formControlName="category">
+                    <mat-option value="FEMENIL">Femenil</mat-option>
+                    <mat-option value="VARONIL">Varonil</mat-option>
+                    <mat-option value="MIXTO">Mixto</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!-- DATE -->
+                <mat-form-field class="full">
+                  <mat-label>Fecha</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="datePicker"
+                    formControlName="gameDate"
+                  />
+                  <mat-hint>DD/MM/YYYY</mat-hint>
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="datePicker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #datePicker></mat-datepicker>
+                </mat-form-field>
+                <!-- TIME -->
+                <mat-form-field class="full">
+                  <mat-label>Hora del Partido</mat-label>
+                  <input
+                    matInput
+                    [matTimepicker]="timePicker"
+                    formControlName="gameTime"
+                  />
+                  <mat-timepicker-toggle matIconSuffix [for]="timePicker" />
+                  <mat-timepicker #timePicker />
+                </mat-form-field>
+                <!-- PLACE -->
+                <mat-form-field class="full">
+                  <mat-label>Lugar</mat-label>
+                  <mat-select formControlName="gamePlace">
+                    <mat-option value="ARRIBA">Cancha Arriba</mat-option>
+                    <mat-option value="ABAJO">Cancha Abajo</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              @for(teamStat of game.teamStats; track $index; let teamIndex =
+              $index) {
+              <div class="flex-input">
+                <!-- TEAM -->
+                <mat-form-field class="full">
+                  <mat-label>Equipo {{ teamIndex + 1 }}</mat-label>
+                  <mat-select formControlName="team{{ teamIndex + 1 }}">
+                    @for (teamOption of teamOptions; track $index) {
+                    <mat-option [value]="teamOption.teamId">{{
+                      teamOption.name
+                    }}</mat-option>
+                    } @empty { }
+                  </mat-select>
+                </mat-form-field>
+                <!-- SETS -->
+                @for(set of teamStat.setStats; track $index; let setIndex =
+                $index) {
+                <mat-form-field floatLabel="always" class="full">
+                  <mat-label>Set {{ setIndex + 1 }}</mat-label>
+                  <mat-icon matTextPrefix>looks_one</mat-icon>
+                  <input
+                    matInput
+                    placeholder="Equipo {{ teamIndex + 1 }} Set {{
+                      setIndex + 1
+                    }}"
+                    formControlName="team{{ teamIndex + 1 }}Set{{
+                      setIndex + 1
+                    }}"
+                    type="number"
+                    maxlength="2"
+                    required
+                  /><!--
+                    @if(formGroup!.controls['team{{ teamIndex + 1 }}Set{{
+                      set
+                    }}'].errors?.['required']) {
+                    <mat-error>Numero de Rondas es requerido.</mat-error>
+                    }
+                    -->
+                </mat-form-field>
+                }
+              </div>
+              <div class="flex-input-weeks">
+                <!--@for(player of teamStat.players; track $index; let playerIndex =
+                $index) {
+              -->
+                @for(player of players; track $index; let playerIndex = $index)
+                { @if(playerIndex < teamStat.players.length) {
+                <mat-slide-toggle
+                  formControlName="team{{ teamIndex + 1 }}Player{{
+                    playerIndex + 1
+                  }}"
+                  >{{ teamStat.players[playerIndex].number }}</mat-slide-toggle
+                >
+                }@else {
+                <mat-slide-toggle
+                  formControlName="team{{ teamIndex + 1 }}Player{{
+                    playerIndex + 1
+                  }}"
+                ></mat-slide-toggle>
+                } }
+              </div>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </main>
+    </form>
+    <div class="match-container">
+      @for(game of games; track $index){
+      <div class="match-box">
+        <div class="match-info">
+          <div
+            [ngClass]="{
+              'mix-color mix-bc': game.category === 'MIXTO',
+              'var-color var-bc': game.category === 'VARONIL',
+              'fem-color fem-bc': game.category === 'FEMENIL'
+            }"
+            class="match-category"
+          >
+            {{ game.category }}
+          </div>
+          <div class="match-place">
+            @if (game.gamePlace === "ARRIBA") {
+            <span class="arrow-up">
+              <mat-icon>arrow_circle_up</mat-icon>
+              {{ game.gamePlace }}
+            </span>
+            } @else {
+            <span class="arrow-down">
+              <mat-icon>arrow_circle_down</mat-icon>
+              {{ game.gamePlace }}
+            </span>
+            }&nbsp;{{ game.gameDate | date : "EEEE, d MMM h:mm a" | uppercase }}
+          </div>
+          <div class="match-action">
+            <button
+              mat-raised-button
+              color="fem"
+              type="button"
+              (click)="edit(game)"
+              [disabled]="isProcessing"
+            >
+              <mat-icon>edit</mat-icon>Edit
+            </button>
+            <button
+              mat-raised-button
+              color="danger"
+              type="button"
+              (click)="edit(game)"
+              [disabled]="isProcessing"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+        @for(teamStat of game.teamStats; track $index){
+        <div class="match-details">
+          <div
+            [ngClass]="teamStat.isWinner ? 'winner' : 'losser'"
+            class="match-team"
+          >
+            {{ teamStat.teamName }}
+          </div>
+          <div class="match-results">
+            <div
+              [ngClass]="teamStat.isWinner ? 'winner' : 'losser'"
+              class="match-sets"
+            >
+              {{ teamStat.sets }}
+            </div>
+            @for(setStat of teamStat.setStats; track $index){
+            <div
+              [ngClass]="setStat.isWinner ? 'winner' : 'losser'"
+              class="match-points"
+            >
+              {{ setStat.points }}
+            </div>
+            }
+          </div>
+          <div class="match-players">
+            @for(player of teamStat.players; track $index) {
+            <div
+              [ngClass]="player.gamePlayed ? 'game-played' : ''"
+              class="match-player"
+            >
+              {{ player.number }}
+            </div>
+            } @empty {
+            <div><span>-</span></div>
+            }
+          </div>
+        </div>
+        }
+      </div>
+      } @empty {
+      <h1>Please create a game</h1>
+      }
+    </div>
+  </div>
+</div>

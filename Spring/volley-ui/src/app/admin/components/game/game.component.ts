@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -26,12 +26,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 @Component({
   selector: 'app-game',
-  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
@@ -70,10 +68,10 @@ export class GameComponent {
   constructor(
     private teamsService: TeamsService,
     private tournamentService: TournamentService,
-    private formBuilder: FormBuilder,
+    @Inject('formBuilder') private formBuilder: FormBuilder,
     private dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute
+    //private router: Router,
+    @Inject('route') private route: ActivatedRoute
   ) {
     this.route.queryParamMap.subscribe((params) => {
       console.log(params);

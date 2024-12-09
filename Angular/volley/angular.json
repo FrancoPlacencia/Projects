@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "volley-angular-ui": {
+    "volley": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/volley-angular-ui",
+            "outputPath": "dist/volley",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -28,24 +28,11 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "src/assets/",
-                "output": "/assets/"
+                "input": "public"
               }
             ],
             "styles": [
-               "src/styles.scss",
-               {
-                "input":"src/global-styles/volley-styles.scss",
-                "bundleName": "volley-styles"
-               },
-               {
-                "input":"src/global-styles/volley-colors.scss",
-                "bundleName": "volley-colors"
-               },
-               {
-                "input":"src/global-styles/theme-colors.scss",
-                "bundleName": "theme-colors"
-               }
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -77,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "volley-angular-ui:build:production"
+              "buildTarget": "volley:build:production"
             },
             "development": {
-              "buildTarget": "volley-angular-ui:build:development"
+              "buildTarget": "volley:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -111,8 +98,5 @@
         }
       }
     }
-  },
-  "cli": {
-    "analytics": false
   }
 }

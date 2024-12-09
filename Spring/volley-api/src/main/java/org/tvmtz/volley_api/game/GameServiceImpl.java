@@ -50,7 +50,7 @@ public class GameServiceImpl implements GameService {
         List<PlayerOptionsDTO> gamesPlayed = new ArrayList<>();
         Game game = buildGame(gameDto, gamesPlayed);
         // ALREADY EXISTS
-        if (gameExists(gameDto)) {
+        if (gameExists(game)) {
             commonResponse = CommonResponse.builder().response(AppConstants.GAME + " " + AppConstants.ALREADY_EXISTS).build();
             return new ResponseEntity<>(commonResponse, HttpStatus.CONFLICT);
         }
@@ -91,15 +91,11 @@ public class GameServiceImpl implements GameService {
     public ResponseEntity<CommonResponse> updateGame(GameDTO gameDto) {
         log.info("UPDATE GAME {}", gameDto);
         CommonResponse commonResponse;
+
+        List<String> errors = validateUpdate(gameDto);
         // VALIDATION
-        if (AppUtil.isNullOrEmptyString(gameDto.getCategory()) ||
-                AppUtil.isNullOrZeroOrLess(gameDto.getWeekNumber()) ||
-                AppUtil.isNullOrEmptyString(gameDto.getGamePlace()) ||
-                AppUtil.isNullOrZeroOrLess(gameDto.getTournamentId()) ||
-                AppUtil.isNullOrZeroOrLess(gameDto.getGameId()) ||
-                gameDto.getTeamStats().size() != 2
-        ) {
-            commonResponse = CommonResponse.builder().response(AppConstants.GAME + " " + AppConstants.BAD_REQUEST).build();
+        if (!errors.isEmpty()) {
+            commonResponse = CommonResponse.builder().response(AppConstants.GAME + " " + AppConstants.BAD_REQUEST).errors(errors).build();
             return new ResponseEntity<>(commonResponse, HttpStatus.BAD_REQUEST);
         }
         List<PlayerOptionsDTO> gamesPlayed = new ArrayList<>();
@@ -111,10 +107,15 @@ public class GameServiceImpl implements GameService {
         }
         // NOT FOUND
         Game dbGame = gameRepository.findById(game.getGameId()).orElse(null);
+        if (dbGame == null) {
+            commonResponse = CommonResponse.builder().response(AppConstants.GAME + " " + AppConstants.NOT_FOUND).errors(errors).build();
+            return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
+        }
         // UPDATE
         updateGame(game, dbGame);
+        clearGamesPlayed(game.getGameId());
         saveGamesPlayed(gamesPlayed, game.getGameId());
-        commonResponse = CommonResponse.builder().response(AppConstants.GAME + " " + AppConstants.CREATED).build();
+        commonResponse = CommonResponse.builder().response(AppConstants.GAME + " " + AppConstants.UPDATED).build();
         return new ResponseEntity<>(commonResponse, HttpStatus.OK);
     }
 
@@ -157,9 +158,6 @@ public class GameServiceImpl implements GameService {
 
     private SetStat buildSetStat(Integer setNumber, Integer teamPoints, Integer vsPoints, Integer teamNumber) {
         setNumber++;
-        if (teamPoints == 0 && vsPoints == 0) {
-            return null;
-        }
         return SetStat.builder()
                 .setNumber(setNumber)
                 .isWinner(teamNumber == 1 ? teamPoints > vsPoints : vsPoints > teamPoints)
@@ -178,11 +176,34 @@ public class GameServiceImpl implements GameService {
         if (dbGame == null) {
             return false;
         }
+        // log.info("gameExists {} - {}", game.getGameId(), dbGame.getGameId());
         return !Objects.equals(game.getGameId(), dbGame.getGameId());
     }
 
     private void updateGame(Game game, Game db) {
-        log.info("DB Game {}", db);
+        db.setCategory(game.getCategory());
+        db.setGameDate(game.getGameDate());
+        db.setGamePlace(game.getGamePlace());
+        db.setTeam1(game.getTeam1());
+        db.setTeam1Score(game.getTeam1Score());
+        db.setTeam1Sets(game.getTeam1Sets());
+        db.setTeam1Points(game.getTeam1Points());
+        db.setTeam1Set1Pts(game.getTeam1Set1Pts());
+        db.setTeam1Set2Pts(game.getTeam1Set2Pts());
+        db.setTeam1Set3Pts(game.getTeam1Set3Pts());
+        db.setTeam1Set4Pts(game.getTeam1Set4Pts());
+        db.setTeam1Set5Pts(game.getTeam1Set5Pts());
+
+        db.setTeam2(game.getTeam2());
+        db.setTeam2Score(game.getTeam2Score());
+        db.setTeam2Sets(game.getTeam2Sets());
+        db.setTeam2Points(game.getTeam2Points());
+        db.setTeam2Set1Pts(game.getTeam2Set1Pts());
+        db.setTeam2Set2Pts(game.getTeam2Set2Pts());
+        db.setTeam2Set3Pts(game.getTeam2Set3Pts());
+        db.setTeam2Set4Pts(game.getTeam2Set4Pts());
+        db.setTeam2Set5Pts(game.getTeam2Set5Pts());
+        gameRepository.save(game);
     }
 
     private GameDTO buildGameDTO(Game game) {
@@ -197,16 +218,19 @@ public class GameServiceImpl implements GameService {
                 .gameDate(game.getGameDate())
                 .gamePlace(game.getGamePlace())
                 .teamStats(teamStats)
+                .byDefault(game.getByDefault())
                 .build();
     }
 
     private Game buildGame(GameDTO gameDto, List<PlayerOptionsDTO> gamesPlayed) {
         Game game = Game.builder()
+                .gameId(gameDto.getGameId())
                 .tournament(Tournament.builder().tournamentId(gameDto.getTournamentId()).build())
                 .category(gameDto.getCategory())
                 .weekNumber(gameDto.getWeekNumber())
                 .gameDate(gameDto.getGameDate())
                 .gamePlace(gameDto.getGamePlace())
+                .byDefault(gameDto.getByDefault())
                 .build();
         List<SetStat> setStatsTeam1 = new ArrayList<>();
         List<SetStat> setStatsTeam2 = new ArrayList<>();
@@ -220,7 +244,6 @@ public class GameServiceImpl implements GameService {
                     for (int j = 0; j < teamStat.getSetStats().size(); j++) {
                         SetStat setStat = teamStat.getSetStats().get(j);
                         setStatsTeam1.add(setStat);
-
                         switch (j) {
                             case 0:
                                 game.setTeam1Set1Pts(setStat.getPoints());
@@ -287,8 +310,8 @@ public class GameServiceImpl implements GameService {
                 if (team1Pts < team2Pts) {
                     team2Sets++;
                 }
-                team1Points += team1Sets;
-                team2Points += team2Sets;
+                team1Points += team1Pts;
+                team2Points += team2Pts;
             }
         }
         game.setTeam1Points(team1Points);
@@ -313,6 +336,34 @@ public class GameServiceImpl implements GameService {
             }
 
         }
+    }
+
+    private void clearGamesPlayed(Integer gameId) {
+        // Clear games played
+        gamePlayedRepository.deleteByGame(gameId);
+    }
+
+    private List<String> validateUpdate(GameDTO gameDto) {
+        List<String> errors = new ArrayList<>();
+        if (AppUtil.isNullOrEmptyString(gameDto.getCategory())) {
+            errors.add("Missing category");
+        }
+        if (AppUtil.isNullOrZeroOrLess(gameDto.getWeekNumber())) {
+            errors.add("Missing week number");
+        }
+        if (AppUtil.isNullOrZeroOrLess(gameDto.getTournamentId())) {
+            errors.add("Missing tournament data");
+        }
+        if (AppUtil.isNullOrZeroOrLess(gameDto.getGameId())) {
+            errors.add("Missing game data");
+        }
+        if (AppUtil.isNullOrEmptyString(gameDto.getCategory())) {
+            errors.add("Missing category");
+        }
+        if (gameDto.getTeamStats().size() != 2) {
+            errors.add("Missing one or both teams");
+        }
+        return errors;
     }
 
 }

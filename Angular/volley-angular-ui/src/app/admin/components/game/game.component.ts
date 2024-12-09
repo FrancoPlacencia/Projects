@@ -16,7 +16,7 @@ import {
   resetFormGroup,
   startProcessing,
 } from '../../../util/form-util';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, JsonPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -111,6 +111,7 @@ export const MY_FORMATS = {
     MatSelectModule,
     MatNativeDateModule,
     MatTimepickerModule,
+    JsonPipe
   ],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss',
@@ -147,6 +148,13 @@ export class GameComponent {
   public gameId: number | undefined;
 
   public game: Game = emptyGame();
+
+  public dateStart = moment().set({
+    hour:   17,
+    minute: 0,
+    second: 0
+});;
+
   private femTeamsOptions: TeamOption[] = [];
   private femTeams: Team[] = [];
 
@@ -172,13 +180,14 @@ export class GameComponent {
 
       this.getTeams();
     });
+
     // Create the form group from DTO
     this.formGroup = this.formBuilder.group({
-      category: ['', Validators.required],
-      gameDate: [moment(), Validators.required],
-      gameTime: [moment(), Validators.required],
-      gamePlace: ['ARRIBA', Validators.required],
-      byDefault: [false, Validators.required],
+      category: [this.game.category, Validators.required],
+      gameDate: [this.dateStart, Validators.required],
+      gameTime: [this.dateStart, Validators.required],
+      gamePlace: [this.game.gamePlace, Validators.required],
+      byDefault: [this.game.byDefault, Validators.required],
 
       team1: [{ value: '', disabled: true }, Validators.required],
       team1Set1: [{ value: 0, disabled: true }, Validators.required],
@@ -241,6 +250,10 @@ export class GameComponent {
       this.updateCategoryOption();
       this.enableFields();
     });
+
+    
+
+    
     this.formGroup.get('gameDate')!.valueChanges.subscribe((selectedValue) => {
       this.game.gameDate = selectedValue;
     });
@@ -250,6 +263,42 @@ export class GameComponent {
     this.formGroup.get('gamePlace')!.valueChanges.subscribe((selectedValue) => {
       this.game.gamePlace = selectedValue;
     });
+
+    this.formGroup.get('byDefault')!.valueChanges.subscribe((selectedValue) => {
+      this.game.byDefault = selectedValue;
+    });
+
+    for(let i=0; i< this.game.teamStats.length ; i++){
+      // TEAMS
+      this.formGroup
+        .get('team' + (i + 1))!
+        .valueChanges.subscribe((selectedValue) => {
+          this.game.teamStats[i].players = this.setPlayersByCategory(selectedValue);
+          this.game.teamStats[i].teamId = selectedValue;
+          this.enablePlayers(this.game.teamStats[i], i);
+        });
+        // SETS
+        for(let j=0; j < this.game.teamStats[i].setStats.length; j++) {
+          this.formGroup
+          .get('team' + (i + 1) + 'Set' + (j + 1))!
+          .valueChanges.subscribe((selectedValue) => {
+            this.game.teamStats[i].setStats[j].points = selectedValue;
+          });
+        }
+        // PLAYERS
+        for (let p = 0; p < 20; p++) {
+          this.formGroup
+            .get('team' + (i + 1) + 'Player' + (p + 1))!
+            .valueChanges.subscribe((selectedValue) => {
+              if (p < this.game.teamStats[i].players.length) {
+                this.game.teamStats[i].players[p].gamePlayed = selectedValue;
+              }
+            });
+        }
+    }
+
+/*
+ITS NOT ASSIGNING THE VALUE
     this.game.teamStats.forEach((teamStats, i) => {
       // TEAM AND PLAYERS
       this.formGroup
@@ -278,7 +327,7 @@ export class GameComponent {
           });
       }
     });
-
+*/
     this.getGames();
   }
 
@@ -286,11 +335,15 @@ export class GameComponent {
     this.game = emptyGame();
     this.game.tournamentId = this.tournamentId;
 
+    
     this.gameId = this.game.gameId;
     this.isNew = true;
 
     resetFormGroup(this.formGroup);
     this.getGames();
+
+    this.formGroup.get('gameTime')?.setValue(this.dateStart);
+    this.formGroup.get('gameDate')?.setValue(this.dateStart);
   }
 
   public submit(): void {
@@ -302,7 +355,9 @@ export class GameComponent {
   }
 
   public edit(game: Game): void {
+    console.log("EDIT",game);
     this.isNew = false;
+
 
     let dateT = new Date(game.gameDate);
     this.formGroup.get('category')?.setValue(game.category);
@@ -310,7 +365,11 @@ export class GameComponent {
 
     this.formGroup.get('gameDate')?.setValue(moment(dateT));
     this.formGroup.get('gamePlace')?.setValue(game.gamePlace);
+    console.log(game.byDefault);
+    this.formGroup.get('byDefault')?.setValue(game.byDefault);
 
+    this.gameId = game.gameId;
+    this.game.gameId = game.gameId;
     this.game.tournamentId = this.tournamentId;
     this.game.weekNumber = this.weekNumber;
 
@@ -319,7 +378,6 @@ export class GameComponent {
       this.formGroup.get('team' + (i + 1))?.setValue(teamStat.teamId);
 
       for (let j = 0; j < this.sets.length; j++) {
-        console.log(j, '-', teamStat.setStats.length);
         if (j >= teamStat.setStats.length) {
           this.formGroup.get('team' + (i + 1) + 'Set' + (j + 1))?.setValue(0);
         } else {
@@ -373,7 +431,9 @@ export class GameComponent {
     this.gamesService
       .getGames(this.tournamentId, Number(this.weekNumber))
       .subscribe({
+        
         next: (games: Game[]) => {
+          console.log(games);
           if (games && games.length > 0) {
             this.games = games;
           } else {
@@ -441,14 +501,16 @@ export class GameComponent {
   }
 
   private updateGame(): void {
-    console.log(this.game);
+    console.log("updateGame ",this.game);
     this.gamesService.putGame(this.game).subscribe({
       next: (result: CommonResponse) => {
+        console.log(result);
         this.isProcessing = endProcessing(this.formGroup, this.dialog);
         openDialog(this.dialog, DialogMessageTypes.SUCCESS, result.response);
         this.reset();
       },
       error: (e: any) => {
+        console.log(e.error);
         this.isProcessing = endProcessing(this.formGroup, this.dialog);
         openErrorDialog(this.dialog, e.status, e.error.response);
       },

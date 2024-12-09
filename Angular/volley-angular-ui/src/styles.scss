@@ -184,16 +184,16 @@ html {
   .fem-button {
     @include mat.fab-overrides(
       (
-        container-color: volley-colors.$fem-light-color,
-        foreground-color: volley-colors.$fem-color,
+        container-color: volley-colors.$fem-color,
+        foreground-color: volley-colors.$fem-light-color,
       )
     );
   }
   .fem-button:hover {
     @include mat.fab-overrides(
       (
-        container-color: volley-colors.$fem-color,
-        foreground-color: volley-colors.$fem-light-color,
+        container-color: volley-colors.$fem-light-color,
+        foreground-color: volley-colors.$fem-color,
       )
     );
   }
@@ -201,16 +201,16 @@ html {
   .var-button {
     @include mat.fab-overrides(
       (
-        container-color: volley-colors.$var-light-color,
-        foreground-color: volley-colors.$var-color,
+        container-color: volley-colors.$var-color,
+        foreground-color: volley-colors.$var-light-color,
       )
     );
   }
   .var-button:hover {
     @include mat.fab-overrides(
       (
-        container-color: volley-colors.$var-color,
-        foreground-color: volley-colors.$var-light-color,
+        container-color: volley-colors.$var-light-color,
+        foreground-color: volley-colors.$var-color,
       )
     );
   }
@@ -218,16 +218,16 @@ html {
   .mix-button {
     @include mat.fab-overrides(
       (
-        container-color: volley-colors.$mix-light-color,
-        foreground-color: volley-colors.$mix-color,
+        container-color: volley-colors.$mix-color,
+        foreground-color: volley-colors.$mix-light-color,
       )
     );
   }
   .mix-button:hover {
     @include mat.fab-overrides(
       (
-        container-color: volley-colors.$mix-color,
-        foreground-color: volley-colors.$mix-light-color,
+        container-color: volley-colors.$mix-light-color,
+        foreground-color: volley-colors.$mix-color,
       )
     );
   }
@@ -235,16 +235,16 @@ html {
   .week-button {
     @include mat.fab-overrides(
       (
-        container-color: volley-colors.$week-light-color,
-        foreground-color: volley-colors.$week-color,
+        container-color: volley-colors.$week-color,
+        foreground-color: volley-colors.$week-light-color,
       )
     );
   }
   .week-button:hover {
     @include mat.fab-overrides(
       (
-        container-color: volley-colors.$week-color,
-        foreground-color: volley-colors.$week-light-color,
+        container-color: volley-colors.$week-light-color,
+        foreground-color: volley-colors.$week-color,
       )
     );
   }
@@ -264,3 +264,6 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -4,7 +4,7 @@
       <header>
         <h1>
           <mat-icon>sports_volleyball</mat-icon>&nbsp;Jornada {{ weekNumber }}
-          {{ formGroup.invalid }}
+          {{ formGroup.valid }}
         </h1>
         <h1>{{ tournamentName }}</h1>
         <div class="action-section">
@@ -30,6 +30,9 @@
       <main>
         <mat-card class="box full">
           <mat-card-content>
+            @if(gameId) {
+            <h5>ID - {{ gameId }}</h5>
+            }
             <div>
               <div class="flex-input">
                 <!-- CATEGORY -->
@@ -75,6 +78,13 @@
                     <mat-option value="ABAJO">Cancha Abajo</mat-option>
                   </mat-select>
                 </mat-form-field>
+                <!-- DEFAULT -->
+                <mat-slide-toggle formControlName="byDefault"
+                  >Default</mat-slide-toggle
+                >
+                @if(formGroup!.controls['byDefault'].errors?.['required']) {
+                <mat-error>Default is required.</mat-error>
+                }
               </div>
               @for(teamStat of game.teamStats; track $index; let teamIndex =
               $index) {
@@ -107,22 +117,19 @@
                     type="number"
                     maxlength="2"
                     required
-                  /><!--
-                    @if(formGroup!.controls['team{{ teamIndex + 1 }}Set{{
-                      set
-                    }}'].errors?.['required']) {
-                    <mat-error>Numero de Rondas es requerido.</mat-error>
-                    }
-                    -->
+                  />
+                  @if(formGroup!.controls['team1Set1'].errors?.['required']) {
+                  <mat-error>Numero de Rondas es requerido.</mat-error>
+                  }
                 </mat-form-field>
                 }
               </div>
               <div class="flex-input-weeks">
-                <!--@for(player of teamStat.players; track $index; let playerIndex =
+                @for(player of teamStat.players; track $index; let playerIndex =
                 $index) {
-              -->
-                @for(player of players; track $index; let playerIndex = $index)
-                { @if(playerIndex < teamStat.players.length) {
+
+                <!--@for(player of players; track $index; let playerIndex = $index) { -->
+                @if(playerIndex < teamStat.players.length) {
                 <mat-slide-toggle
                   formControlName="team{{ teamIndex + 1 }}Player{{
                     playerIndex + 1
@@ -137,6 +144,7 @@
                 ></mat-slide-toggle>
                 } }
               </div>
+              <br />
               }
             </div>
           </mat-card-content>
@@ -172,22 +180,22 @@
           </div>
           <div class="match-action">
             <button
-              mat-raised-button
-              color="fem"
+              mat-flat-button
+              class="danger-button"
               type="button"
               (click)="edit(game)"
               [disabled]="isProcessing"
             >
-              <mat-icon>edit</mat-icon>Edit
+              <mat-icon>delete</mat-icon>Borrar
             </button>
             <button
-              mat-raised-button
-              color="danger"
+              mat-flat-button
+              class="primary-button"
               type="button"
               (click)="edit(game)"
               [disabled]="isProcessing"
             >
-              <mat-icon>delete</mat-icon>
+              <mat-icon>edit</mat-icon>Editar
             </button>
           </div>
         </div>

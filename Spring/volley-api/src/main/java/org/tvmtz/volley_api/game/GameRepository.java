@@ -39,12 +39,12 @@ public interface GameRepository extends JpaRepository<Game, Integer> {
     @Query(
             value = "SELECT * \n" +
                     "FROM games \n" +
-                    "WHERE tournament_id = :tournamentId\n" +
+                    "WHERE tournament_id = :tournamentId \n" +
                     "AND category = :category \n" +
                     "AND week_number = :weekNumber \n" +
                     "AND game_date = :gameDate \n" +
-                    "AND team1 = :team1 \n" +
-                    "AND team2 = :team2",
+                    "AND team_1 = :team1 \n" +
+                    "AND team_2 = :team2",
             nativeQuery = true
     )
     Optional<Game> findUnique(Integer tournamentId, String category, Integer weekNumber, Date gameDate, Integer team1, Integer team2);

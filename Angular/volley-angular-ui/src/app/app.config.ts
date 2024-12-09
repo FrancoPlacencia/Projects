@@ -22,6 +22,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideHttpClient(),
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
-    { provide: LOCALE_ID, useValue: 'es' },
+    { provide: LOCALE_ID, useValue: 'es' }, provideAnimationsAsync(),
   ],
 };

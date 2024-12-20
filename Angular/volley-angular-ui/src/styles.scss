@@ -254,16 +254,116 @@ html {
       small-foreground-color: purple,
     )
   );
+
+  @include mat.expansion-overrides(
+    (
+      container-background-color: #eeeeee,
+      container-text-color: volley-colors.$dark-gray,
+      header-text-color: volley-colors.$dark-gray,
+    )
+  );
+}
+
+.main-tab {
+  .mat-mdc-tab-header {
+    margin-bottom: 20px;
+  }
+
+  @include mat.tabs-overrides(
+    (
+      active-indicator-color: volley-colors.$blue,
+      active-label-text-color: volley-colors.$blue,
+      active-ripple-color: volley-colors.$light-blue,
+      inactive-ripple-color: volley-colors.$light-blue,
+
+      active-focus-label-text-color: volley-colors.$blue,
+      active-focus-indicator-color: volley-colors.$blue,
+
+      active-hover-label-text-color: volley-colors.$light-blue,
+      active-hover-indicator-color: volley-colors.$light-blue,
+
+      inactive-label-text-color: volley-colors.$light-blue,
+
+      inactive-focus-label-text-color: volley-colors.$blue,
+      inactive-hover-label-text-color: volley-colors.$blue,
+
+      divider-color: volley-colors.$blue,
+      label-text-size: 1.5rem,
+    )
+  );
+  .sub-tab {
+    .mat-mdc-tab-header {
+      margin-bottom: 20px;
+      color: black;
+    }
+    @include mat.tabs-overrides(
+      (
+        active-indicator-color: volley-colors.$dark-color,
+        active-label-text-color: volley-colors.$dark-color,
+        active-ripple-color: volley-colors.$light-color,
+        inactive-ripple-color: volley-colors.$light-color,
+
+        active-focus-label-text-color: volley-colors.$dark-color,
+        active-focus-indicator-color: volley-colors.$dark-color,
+
+        active-hover-label-text-color: volley-colors.$light-color,
+        active-hover-indicator-color: volley-colors.$light-color,
+
+        inactive-label-text-color: volley-colors.$light-color,
+
+        inactive-focus-label-text-color: volley-colors.$dark-color,
+        inactive-hover-label-text-color: volley-colors.$dark-color,
+
+        divider-color: volley-colors.$dark-color,
+        label-text-size: 1rem,
+      )
+    );
+  }
+}
+
+.fem-table {
+  .mat-mdc-header-cell {
+    background-color: volley-colors.$fem-color !important;
+    color: volley-colors.$fem-light-color;
+  }
+
+  .mat-mdc-row:hover {
+    background-color: volley-colors.$fem-light-color !important;
+  }
+}
+
+.var-table {
+  .mat-mdc-header-cell {
+    background-color: volley-colors.$var-color !important;
+    color: volley-colors.$var-light-color;
+  }
+
+  .mat-mdc-row:hover {
+    background-color: volley-colors.$var-light-color !important;
+  }
+}
+
+.mix-table {
+  .mat-mdc-header-cell {
+    background-color: volley-colors.$mix-color !important;
+    color: volley-colors.$mix-light-color;
+  }
+
+  .mat-mdc-row:hover {
+    background-color: volley-colors.$mix-light-color !important;
+  }
 }
 
 html,
 body {
+  background: linear-gradient(
+    90deg,
+    volley-colors.$blue 0%,
+    volley-colors.$light-blue 100%
+  );
   height: 100%;
 }
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

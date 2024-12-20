@@ -1,12 +1,12 @@
 SET FOREIGN_KEY_CHECKS=0;
 
-DROP TABLE IF EXISTS tvmtz_dev.games;
-DROP TABLE IF EXISTS tvmtz_dev.games_played;
-DROP TABLE IF EXISTS tvmtz_dev.players;
-DROP TABLE IF EXISTS tvmtz_dev.teams;
-DROP TABLE IF EXISTS tvmtz_dev.tournaments;
+DROP TABLE IF EXISTS games;
+DROP TABLE IF EXISTS games_played;
+DROP TABLE IF EXISTS players;
+DROP TABLE IF EXISTS teams;
+DROP TABLE IF EXISTS tournaments;
 
-CREATE TABLE tvmtz_dev.tournaments (
+CREATE TABLE tournaments (
 	tournament_id	INTEGER NOT NULL AUTO_INCREMENT,
 	name 			VARCHAR(50) NOT NULL,
 	year 			INTEGER NOT NULL,
@@ -21,6 +21,7 @@ CREATE TABLE tvmtz_dev.tournaments (
 CREATE TABLE teams (
 	team_id 		INTEGER NOT NULL AUTO_INCREMENT,
 	tournament_id 	INTEGER NOT NULL,
+	team_number		INTEGER NOT NULL DEFAULT 0,
 	name 			VARCHAR(20) NOT NULL,
 	initials 		VARCHAR(8) NOT NULL DEFAULT '',
 	category 		ENUM('MIXTO','FEMENIL','VARONIL') NOT NULL,

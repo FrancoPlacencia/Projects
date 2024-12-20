@@ -34,7 +34,7 @@ public interface GameRepository extends JpaRepository<Game, Integer> {
                     "ORDER BY week_number",
             nativeQuery = true
     )
-    Optional<List<Integer>> weeksByTournament(Integer tournamentId);
+    Optional<List<Integer>> getWeeksByTournament(Integer tournamentId);
 
     @Query(
             value = "SELECT * \n" +

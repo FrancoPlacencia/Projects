@@ -1,0 +1,48 @@
+<div class="container top-center-flex">
+  <div class="wrapper almost-full">
+    <h4>{{ tournamentApp.tournament.name }}</h4>
+    <mat-tab-group class="main-tab">
+      <!-- WEEKS -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>date_range</mat-icon>&nbsp;Jornadas
+        </ng-template>
+        <mat-tab-group #weeksTab class="sub-tab">
+          @for (week of tournamentApp.weeks; track week[0]) {
+            <mat-tab [label]="'J' + week[0]">
+              <app-week [days]="week[1]"></app-week>
+            </mat-tab>
+          }
+        </mat-tab-group>
+      </mat-tab>
+      <!-- CATEGORIES -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>category</mat-icon>&nbsp;Categorias
+        </ng-template>
+        <mat-tab-group class="sub-tab">
+          @for (dataSource of mapDataSource; track dataSource[0]) {
+            <mat-tab [label]="dataSource[0]">
+              <app-standing
+                [category]="dataSource[0]"
+                [dataSource]="dataSource[1]"
+              ></app-standing>
+            </mat-tab>
+          }
+        </mat-tab-group>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>sports_volleyball</mat-icon>&nbsp;Juegos
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>groups</mat-icon>&nbsp;Equipos
+        </ng-template>
+        <div>Content Equipos</div>
+      </mat-tab>
+    </mat-tab-group>
+    <br /><br /><br />
+  </div>
+</div>

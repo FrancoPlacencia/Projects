@@ -62,7 +62,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public ResponseEntity<List<GameDTO>> getGames(Integer tournamentId, Integer weekNumber) {
+    public ResponseEntity<List<GameDTO>> getGameWeeks(Integer tournamentId, Integer weekNumber) {
         List<Game> games = gameRepository.findByTournamentAndWeekNumber(tournamentId, weekNumber).orElse(new ArrayList<>());
         if (games.isEmpty()) {
             return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
@@ -74,18 +74,6 @@ public class GameServiceImpl implements GameService {
         return new ResponseEntity<>(gamesDTOs, HttpStatus.OK);
     }
 
-    @Override
-    public ResponseEntity<List<WeekOptionDTO>> getWeekOptions(Integer tournamentId) {
-        List<Integer> weeks = gameRepository.weeksByTournament(tournamentId).orElse(null);
-        List<WeekOptionDTO> weekDTOs = new ArrayList<>();
-        if (weeks == null) {
-            return new ResponseEntity<>(weekDTOs, HttpStatus.NOT_FOUND);
-        }
-        for (Integer week : weeks) {
-            weekDTOs.add(WeekOptionDTO.builder().weekNumber(week).tournamentId(tournamentId).build());
-        }
-        return new ResponseEntity<>(weekDTOs, HttpStatus.OK);
-    }
 
     @Override
     public ResponseEntity<CommonResponse> updateGame(GameDTO gameDto) {
@@ -119,12 +107,43 @@ public class GameServiceImpl implements GameService {
         return new ResponseEntity<>(commonResponse, HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<CommonResponse> deleteGame(Integer gameId) {
+        CommonResponse commonResponse;
+        // BAD REQUEST
+        if (AppUtil.isNullOrZeroOrLess(gameId)) {
+            commonResponse = CommonResponse.builder().response(AppConstants.GAME + " " + AppConstants.MISSING_DATA).build();
+            return new ResponseEntity<>(commonResponse, HttpStatus.BAD_REQUEST);
+        }
+        // NOT FOUND
+        Game game = gameRepository.findById(gameId).orElse(null);
+        if (game == null) {
+            commonResponse = CommonResponse.builder().response(AppConstants.GAME + " " + AppConstants.NOT_FOUND).build();
+            return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
+        }
+        // OK
+        clearGamesPlayed(game.getGameId());
+        gameRepository.delete(game);
+        commonResponse = CommonResponse.builder().response(AppConstants.GAME + " " + AppConstants.DELETED).build();
+        return new ResponseEntity<>(commonResponse, HttpStatus.OK);
+    }
+
+
+    public ResponseEntity<List<GameDTO>> getGames(Integer tournamentId) {
+        List<Game> games = gameRepository.findByTournament(tournamentId).orElse(new ArrayList<>());
+        List<GameDTO> gameDTOS = new ArrayList<>();
+        for (Game game : games) {
+            gameDTOS.add(buildGameDTO(game));
+        }
+        return new ResponseEntity<>(gameDTOS, HttpStatus.OK);
+    }
+
 
     private TeamStat buildTeamStat(Game game, Integer teamNumber) {
         TeamStat teamStat = TeamStat.builder()
                 .teamId(teamNumber == 1 ? game.getTeam1().getTeamId() : game.getTeam2().getTeamId())
                 .teamName(teamNumber == 1 ? game.getTeam1().getName() : game.getTeam2().getName())
-                .isWinner(teamNumber == 1 ? game.getTeam1Sets() > game.getTeam2Sets() : game.getTeam2Sets() > game.getTeam1Sets())
+                .state(getState(game.getTeam1Sets(), game.getTeam2Sets(), teamNumber, game.getByDefault()))
                 .score(teamNumber == 1 ? game.getTeam1Score() : game.getTeam2Score())
                 .sets(teamNumber == 1 ? game.getTeam1Sets() : game.getTeam2Sets())
                 .points(teamNumber == 1 ? game.getTeam1Points() : game.getTeam2Points())
@@ -147,7 +166,7 @@ public class GameServiceImpl implements GameService {
                 game.getTeam2Set5Pts()
         };
         for (int i = 0; i < teamPoints.length; i++) {
-            SetStat setStat = buildSetStat(i, teamPoints[i], vsPoints[i], teamNumber);
+            SetStat setStat = buildSetStat(i, teamPoints[i], vsPoints[i], teamNumber, game.getByDefault());
             if (setStat != null) {
                 setStats.add(setStat);
             }
@@ -156,13 +175,44 @@ public class GameServiceImpl implements GameService {
         return teamStat;
     }
 
-    private SetStat buildSetStat(Integer setNumber, Integer teamPoints, Integer vsPoints, Integer teamNumber) {
+    private SetStat buildSetStat(Integer setNumber, Integer teamPoints, Integer vsPoints, Integer teamNumber, Boolean byDefault) {
         setNumber++;
         return SetStat.builder()
                 .setNumber(setNumber)
-                .isWinner(teamNumber == 1 ? teamPoints > vsPoints : vsPoints > teamPoints)
+                .state(getState(teamPoints, vsPoints, teamNumber, byDefault))
                 .points(teamNumber == 1 ? teamPoints : vsPoints)
                 .build();
+    }
+
+    private String getState(Integer team, Integer vs, Integer teamNumber, Boolean byDefault) {
+        String state = "";
+        if (team == 0 && vs == 0) {
+            state = "PENDING";
+        } else {
+            if (teamNumber == 1) {
+                if (byDefault && team == 0) {
+                    state = "DEFAULT";
+                } else if (team > vs) {
+                    state = "WINNER";
+                } else if (vs > team) {
+                    state = "LOSSER";
+                } else {
+                    state = "TIE";
+                }
+            } else {
+                if (byDefault && vs == 0) {
+                    state = "DEFAULT";
+                } else if (vs > team) {
+                    state = "WINNER";
+                } else if (team > vs) {
+                    state = "LOSSER";
+                } else {
+                    state = "TIE";
+                }
+            }
+
+        }
+        return state;
     }
 
     private Boolean gameExists(Game game) {
@@ -303,16 +353,16 @@ public class GameServiceImpl implements GameService {
         for (int i = 0; i < setStatsTeam1.size(); i++) {
             int team1Pts = setStatsTeam1.get(i).getPoints();
             int team2Pts = setStatsTeam2.get(i).getPoints();
-            if (team1Pts != 0 && team2Pts != 0) {
-                if (team1Pts > team2Pts) {
-                    team1Sets++;
-                }
-                if (team1Pts < team2Pts) {
-                    team2Sets++;
-                }
-                team1Points += team1Pts;
-                team2Points += team2Pts;
+
+            if (team1Pts > team2Pts) {
+                team1Sets++;
             }
+            if (team1Pts < team2Pts) {
+                team2Sets++;
+            }
+            team1Points += team1Pts;
+            team2Points += team2Pts;
+
         }
         game.setTeam1Points(team1Points);
         game.setTeam1Sets(team1Sets);

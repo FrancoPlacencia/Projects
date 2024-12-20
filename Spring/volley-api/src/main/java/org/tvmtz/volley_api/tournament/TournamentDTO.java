@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -32,4 +34,8 @@ public class TournamentDTO {
 
     @NotBlank(message = "URL is required.")
     private String url;
+
+    private Boolean isActive;
+
+    private List<Integer> weeks;
 }

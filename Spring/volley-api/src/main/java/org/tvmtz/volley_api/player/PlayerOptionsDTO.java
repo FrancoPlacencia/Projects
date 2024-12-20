@@ -15,5 +15,7 @@ public class PlayerOptionsDTO {
 
     private Integer number;
 
+    private String name;
+
     private Boolean gamePlayed;
 }

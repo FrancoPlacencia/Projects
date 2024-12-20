@@ -1,11 +1,18 @@
 // Blue Colors
-$blue: #003a6a;
-$clear-blue: #7c97ad;
-
+$blue: #001861;
+$light-blue: #4868ca;
+$clear-blue: #f6f6f7;
 // Gray Colors
 $gray: #adb5bd;
-$clear-gray: #e8e7ee;
+$light-gray: #e8e7ee;
 $dark-gray: #424242;
+
+// TOOLBAR
+$toolbar-bgc: #fafbfc;
+
+$left-bc: #fbfbfb;
+$page-bgc: #f1f4f6;
+$games-bc: #eeeeee;
 
 // BUTTON COLORS
 $primary-color: #3f6ad8;
@@ -16,8 +23,8 @@ $warning-color: #f7b924;
 $danger-color: #d92550;
 $focus-color: #444054;
 $alt-color: #794c8a;
-$light-color: #dcdcdc;
-$dark-color: #343a40;
+$light-color: #989a9c;
+$dark-color: #3d3f41;
 
 $fem-color: #ed647c;
 $fem-light-color: #ffecef;
@@ -26,7 +33,7 @@ $var-color: #203c6b;
 $var-light-color: #e4f6ff;
 
 $mix-color: #347928;
-$mix-light-color: #def9c4;
+$mix-light-color: #e7f9d6;
 
 $week-color: #1d1d55;
 $week-light-color: #ffc801;
@@ -44,63 +51,71 @@ $edit-color: #16aaff;
 .color-blue {
   color: $blue;
 }
-.color-clear-blue {
-  color: $clear-blue;
+.color-light-blue {
+  color: $light-blue;
 }
 .color-gray {
   color: $gray;
 }
-.color-clear-gray {
-  color: $clear-gray;
+.color-light-gray {
+  color: $light-gray;
 }
 .color-dark-gray {
   color: $dark-gray;
 }
 .color-red {
-  color: red;
+  color: $delete-color;
 }
 
 .color-fem {
-  color: #ed647c;
+  color: $fem-color;
 }
-.color-clear-fem {
-  color: #ffecef;
+.color-light-fem {
+  color: $fem-light-color;
 }
 .color-var {
-  color: #203c6b;
+  color: $var-color;
 }
-.color-clear-var {
-  color: #e4f6ff;
+.color-light-var {
+  color: $var-light-color;
 }
 .color-mix {
-  color: #347928;
+  color: $mix-color;
 }
-.color-clear-mix {
-  color: #def9c4;
+.color-light-mix {
+  color: $mix-light-color;
 }
 // BACKGROUND-COLOR
 .bg-color-blue {
-  color: $blue;
+  background-color: $blue;
 }
-.bg-color-clear-blue {
-  color: $clear-blue;
+.bg-color-light-blue {
+  background-color: $light-blue;
 }
 .bg-color-gray {
-  color: $gray;
+  background-color: $gray;
 }
-.bg-color-clear-gray {
-  color: $clear-gray;
+.bg-color-light-gray {
+  background-color: $light-gray;
 }
 .bg-color-dark-gray {
-  color: $dark-gray;
+  background-color: $dark-gray;
 }
-
 .bg-color-fem {
-  background-color: #ffecef !important;
+  background-color: $fem-color;
+}
+.bg-color-light-fem {
+  background-color: $fem-light-color;
 }
 .bg-color-var {
-  background-color: #e4f6ff !important;
+  background-color: $var-color;
+}
+.bg-color-light-var {
+  background-color: $var-light-color;
 }
 .bg-color-mix {
-  background-color: #def9c4 !important;
+  background-color: $mix-color;
+}
+.bg-color-light-mix {
+  background-color: $mix-light-color;
 }

@@ -24,7 +24,7 @@ public class TeamStat {
     private Integer sets;
     private Integer points;
 
-    private Boolean isWinner;
+    private String state;
 
     private List<SetStat> setStats;
 }

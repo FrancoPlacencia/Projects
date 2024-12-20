@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.tvmtz.volley_api.common.CommonResponse;
+import org.tvmtz.volley_api.game.GameRepository;
 import org.tvmtz.volley_api.util.AppConstants;
 import org.tvmtz.volley_api.util.AppUtil;
 
@@ -19,6 +20,9 @@ import java.util.Objects;
 public class TournamentServiceImpl implements TournamentService {
     @Autowired
     TournamentRepository tournamentRepository;
+
+    @Autowired
+    GameRepository gameRepository;
 
     @Autowired
     ModelMapper modelMapper;
@@ -47,7 +51,9 @@ public class TournamentServiceImpl implements TournamentService {
         }
         List<TournamentDTO> tournamentDTOS = new ArrayList<>();
         for (Tournament tournament : tournaments) {
-            tournamentDTOS.add(modelMapper.map(tournament, TournamentDTO.class));
+            TournamentDTO tournamentDTO = modelMapper.map(tournament, TournamentDTO.class);
+            tournamentDTO.setWeeks(gameRepository.getWeeksByTournament(tournament.getTournamentId()).orElse(new ArrayList<>()));
+            tournamentDTOS.add(tournamentDTO);
         }
         return new ResponseEntity<>(tournamentDTOS, HttpStatus.OK);
     }
@@ -63,8 +69,22 @@ public class TournamentServiceImpl implements TournamentService {
         if (dbTournament == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(modelMapper.map(dbTournament, TournamentDTO.class), HttpStatus.OK);
+        TournamentDTO tournamentDTO = modelMapper.map(dbTournament, TournamentDTO.class);
+        tournamentDTO.setWeeks(gameRepository.getWeeksByTournament(dbTournament.getTournamentId()).orElse(new ArrayList<>()));
 
+        return new ResponseEntity<>(tournamentDTO, HttpStatus.OK);
+
+    }
+
+    @Override
+    public ResponseEntity<TournamentDTO> getTournament() {
+        Tournament dbTournament = tournamentRepository.findActive().orElse(null);
+        if (dbTournament == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        TournamentDTO tournamentDTO = modelMapper.map(dbTournament, TournamentDTO.class);
+        tournamentDTO.setWeeks(gameRepository.getWeeksByTournament(dbTournament.getTournamentId()).orElse(new ArrayList<>()));
+        return new ResponseEntity<>(tournamentDTO, HttpStatus.OK);
     }
 
     @Override
@@ -121,12 +141,6 @@ public class TournamentServiceImpl implements TournamentService {
         return !Objects.equals(tournament.getTournamentId(), dbTournament.getTournamentId());
     }
 
-    /*
-     * Update the DB entity with the Request data
-     *
-     * @param request
-     * @param db
-     */
     private void updateTournament(Tournament request, Tournament db) {
         if (!request.getName().equals(db.getName())) {
             db.setName(request.getName());
@@ -142,6 +156,9 @@ public class TournamentServiceImpl implements TournamentService {
         }
         if (!request.getUrl().equals(db.getUrl())) {
             db.setUrl(request.getUrl());
+        }
+        if (request.getIsActive() != db.getIsActive()) {
+            db.setIsActive(request.getIsActive());
         }
         tournamentRepository.save(db);
     }

@@ -34,4 +34,7 @@ public class Tournament {
 
     @Column(name = "url")
     private String url;
+
+    @Column(name = "isActive")
+    private Boolean isActive;
 }

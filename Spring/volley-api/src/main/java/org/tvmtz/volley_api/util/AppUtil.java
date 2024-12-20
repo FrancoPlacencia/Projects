@@ -20,4 +20,6 @@ public class AppUtil {
     public static boolean isUuidNull(UUID uuid) {
         return uuid == null || isNullOrEmptyString(uuid.toString());
     }
+
+
 }

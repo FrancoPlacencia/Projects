@@ -74,14 +74,31 @@ mkdir util
 
 ## Admin Module
 
-### Admin Components
+### Components
 
 ```sh
 pwd # ../volley-ui/src/app/admin/components
+ng generate component admin-tournament --skip-tests
+ng generate component admin-team --skip-tests
+ng generate component admin-game --skip-tests
+ng generate component admin-player --skip-tests
+
 ng generate component tournament --skip-tests
+ng generate component category --skip-tests
 ng generate component team --skip-tests
 ng generate component game --skip-tests
+ng generate component week --skip-tests
 ng generate component player --skip-tests
+ng generate component standing --skip-tests
+
+ng generate service tournament --skip-tests
+ng generate service team --skip-tests
+ng generate service week --skip-tests
+ng generate service player --skip-tests
+
+ng generate
+
+ng generate component landing --skip-tests
 ```
 
 ### Admin Models
@@ -99,10 +116,7 @@ ng generate interface player --type=model
 
 ```sh
 pwd # ../volley-ui/src/app/admin/services
-ng generate service tournament --skip-tests
-ng generate service team --skip-tests
-ng generate service week --skip-tests
-ng generate service player --skip-tests
+
 ```
 
 ## Common Module

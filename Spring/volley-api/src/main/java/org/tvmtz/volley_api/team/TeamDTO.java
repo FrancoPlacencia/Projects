@@ -22,17 +22,28 @@ public class TeamDTO {
     @NotNull(message = "The tournament ID is required.")
     private Integer tournamentId;
 
-    @NotBlank(message = "The description is required.")
-    @Size(max = 250, message = "The description must be 250 chars max.")
+    private Integer teamNumber;
+
+    @NotBlank(message = "The team name is required.")
+    @Size(max = 20, message = "The name must be 20 chars max.")
     private String name;
 
-    @NotBlank(message = "The description is required.")
-    @Size(max = 250, message = "The description must be 250 chars max.")
+    @NotBlank(message = "The initials is required.")
+    @Size(max = 250, message = "The initials must be 8 chars max.")
     private String initials;
 
-    @NotBlank(message = "The description is required.")
-    @Size(max = 250, message = "The description must be 250 chars max.")
+    @NotBlank(message = "The category is required.")
+    @Size(max = 10, message = "The category must be 10 chars max.")
     private String category;
+
+    private Integer gamesWon;
+    private Integer gamesLost;
+
+    private Integer setsWon;
+    private Integer setsLost;
+
+    private Integer pointsWon;
+    private Integer pointsLost;
 
     private List<Player> players;
 

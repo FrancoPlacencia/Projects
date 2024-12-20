@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SetStat {
     private Integer setNumber;
-    private Boolean isWinner;
+    private String state;
     private Integer points;
 }

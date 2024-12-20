@@ -1,4 +1,4 @@
-CALL usp_get_week_template(11, @template) 
+CALL usp_get_week_template(14, @template) 
 
 CALL usp_get_category_template('FEMENIL',@template);
 CALL usp_get_category_template('VARONIL',@template);

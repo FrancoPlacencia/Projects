@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.tvmtz.volley_api.common.CommonResponse;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -29,9 +30,9 @@ public class TeamController {
         return teamService.getTeams(id, category);
     }
 
-    @GetMapping("/teamsAll")
-    public ResponseEntity<List<TeamDTO>> getTeamsAll(@RequestParam Integer id) {
-        return teamService.getTeamsAll(id);
+    @GetMapping("/standings")
+    public ResponseEntity<Map<String, List<StandingDTO>>> getStandings(@RequestParam Integer id) {
+        return teamService.getStandings(id);
     }
 
     @GetMapping("/teamOptions")

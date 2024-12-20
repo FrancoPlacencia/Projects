@@ -15,14 +15,18 @@ INNER JOIN teams t1 ON t1.team_id = games.team_1
 INNER JOIN teams t2 ON t2.team_id = games.team_2
 
 WHERE games.tournament_id = 2
-AND games.week_number = 11
+AND games.week_number = 12
 AND games.game_date LIKE '2024-11-26%'
 
-SELECT COUNT(*) FROM GAMES;
+SELECT *
+		FROM tournaments
+		WHERE is_active = true
 
-DELETE FROM games WHERE week_number = 11 AND game_id = 644
+SELECT * FROM teams WHERE tournament_id = 2 AND category ='MIXTO' ORDER BY name ASC;
+
+ 
 29- 59
-
+SELECT * FROM tournaments 
 INSERT INTO games (
 	tournament_id,category,week_number,
 	game_date,game_place,

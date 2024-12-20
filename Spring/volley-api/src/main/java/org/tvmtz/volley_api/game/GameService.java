@@ -10,9 +10,11 @@ public interface GameService {
 
     ResponseEntity<CommonResponse> createGame(GameDTO gameDto);
 
-    ResponseEntity<List<GameDTO>> getGames(Integer tournamentId, Integer weekNumber);
-
-    ResponseEntity<List<WeekOptionDTO>> getWeekOptions(Integer tournamentId);
+    ResponseEntity<List<GameDTO>> getGameWeeks(Integer tournamentId, Integer weekNumber);
 
     ResponseEntity<CommonResponse> updateGame(GameDTO gameDto);
+
+    ResponseEntity<CommonResponse> deleteGame(Integer id);
+    
+    ResponseEntity<List<GameDTO>> getGames(Integer tournamentId);
 }

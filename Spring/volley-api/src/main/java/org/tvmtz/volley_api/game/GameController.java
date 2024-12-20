@@ -22,14 +22,15 @@ public class GameController {
     }
 
     // READ
-    @GetMapping("/games")
+    @GetMapping("/gamesByWeek")
     public ResponseEntity<List<GameDTO>> getGames(@RequestParam Integer id, @RequestParam Integer weekNumber) {
-        return gameService.getGames(id, weekNumber);
+        return gameService.getGameWeeks(id, weekNumber);
     }
 
-    @GetMapping("/gameWeeks")
-    public ResponseEntity<List<WeekOptionDTO>> getWeekOptions(@RequestParam Integer id) {
-        return gameService.getWeekOptions(id);
+    // READ
+    @GetMapping("/games")
+    public ResponseEntity<List<GameDTO>> getGames(@RequestParam Integer id) {
+        return gameService.getGames(id);
     }
 
     // UPDATE
@@ -37,4 +38,11 @@ public class GameController {
     public ResponseEntity<CommonResponse> updateGame(@Valid @RequestBody GameDTO gameDto) {
         return gameService.updateGame(gameDto);
     }
+
+    // DELETE
+    @DeleteMapping("/admin/game")
+    public ResponseEntity<CommonResponse> deleteGame(@RequestParam Integer id) {
+        return gameService.deleteGame(id);
+    }
+
 }

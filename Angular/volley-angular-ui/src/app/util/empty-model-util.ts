@@ -1,9 +1,11 @@
-import { TeamStat } from '../admin/model/team-stat.model';
-import { Team } from '../admin/model/team.model';
-import { Game } from '../admin/model/game.model';
-import { SetStat } from '../admin/model/set-stats.model';
-import { Tournament } from '../admin/model/tournament.model';
-import { Player } from '../admin/model/player.model';
+import { TeamStat } from '../model/team-stat.model';
+import { Team } from '../model/team.model';
+import { Game } from '../model/game.model';
+import { SetStat } from '../model/set-stats.model';
+import { Tournament } from '../model/tournament.model';
+import { Player } from '../model/player.model';
+import { TournamentApp } from '../model/tournament-app.model';
+import { Standing } from '../model/standing.model';
 
 export function emptyTournament(): Tournament {
   let tournament: Tournament = {
@@ -12,16 +14,34 @@ export function emptyTournament(): Tournament {
     description: '',
     rounds: 0,
     url: '',
+    isActive: false,
+    weeks: [],
   };
   return tournament;
 }
 
+export function emptyTournamentApp(): TournamentApp {
+  let tournamentApp: TournamentApp = {
+    tournament: emptyTournament(),
+    standings: new Map<string, Standing[]>(),
+    weeks: new Map<number, Map<string, Game[]>>(),
+  };
+  return tournamentApp;
+}
+
 export function emptyTeam(): Team {
   let team: Team = {
+    teamNumber: 0,
     name: '',
     initials: '',
     category: '',
     isActive: true,
+    gamesWon: 0,
+    gamesLost: 0,
+    setsWon: 0,
+    setsLost: 0,
+    pointsWon: 0,
+    pointsLost: 0,
     players: [],
   };
   return team;
@@ -38,7 +58,7 @@ export function emptyTeamStats(): TeamStat {
     score: 0,
     sets: 0,
     points: 0,
-    isWinner: false,
+    state: '',
     setStats: setStats,
     players: [],
   };
@@ -50,7 +70,7 @@ export function emptyGame(): Game {
     tournamentId: 0,
     category: '',
     weekNumber: 0,
-    gameDate: '',
+    gameDate: new Date(),
     gamePlace: '',
     teamStats: [emptyTeamStats(), emptyTeamStats()],
     byDefault: false,
@@ -61,7 +81,7 @@ export function emptyGame(): Game {
 export function emptySetStat(setNumber: number): SetStat {
   let setStat: SetStat = {
     setNumber: setNumber,
-    isWinner: false,
+    state: '',
     points: 0,
   };
   return setStat;

@@ -12,9 +12,7 @@ import org.tvmtz.volley_api.tournament.TournamentService;
 import org.tvmtz.volley_api.util.AppConstants;
 import org.tvmtz.volley_api.util.AppUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -47,10 +45,42 @@ public class TeamServiceImpl implements TeamService {
         return new ResponseEntity<>(commonResponse, HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<List<StandingDTO>> getStandings(Integer id, String category) {
+        List<Standing> standings = teamRepository.getStandings(id, category).orElse(new ArrayList<>());
+        List<StandingDTO> standingDTOS = new ArrayList<>();
+        for (Standing standing : standings) {
+            standingDTOS.add(modelMapper.map(standing, StandingDTO.class));
+        }
+        return new ResponseEntity<>(standingDTOS, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Map<String, List<StandingDTO>>> getStandings(Integer id) {
+        Map<String, List<StandingDTO>> standingsMap = new HashMap<>();
+        List<String> categories = new ArrayList<>();
+        categories.add("FEMENIL");
+        categories.add("VARONIL");
+        categories.add("MIXTO");
+        for (String category : categories) {
+            List<Standing> standings = teamRepository.getStandings(id, category).orElse(new ArrayList<>());
+            List<StandingDTO> standingDTOS = new ArrayList<>();
+            for (Standing standing : standings) {
+                standingDTOS.add(modelMapper.map(standing, StandingDTO.class));
+            }
+            standingsMap.put(category, standingDTOS);
+        }
+        return new ResponseEntity<>(standingsMap, HttpStatus.OK);
+    }
 
     @Override
     public ResponseEntity<List<TeamDTO>> getTeams(Integer tournamentId, String category) {
-        List<Team> teams = teamRepository.findByTournamentAndCategory(tournamentId, category).orElse(new ArrayList<>());
+        List<Team> teams;
+        if (AppUtil.isNullOrEmptyString(category)) {
+            teams = teamRepository.findByTournament(tournamentId).orElse(new ArrayList<>());
+        } else {
+            teams = teamRepository.findByTournamentAndCategory(tournamentId, category).orElse(new ArrayList<>());
+        }
         if (teams.isEmpty()) {
             return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
         }
@@ -58,11 +88,18 @@ public class TeamServiceImpl implements TeamService {
         for (Team team : teams) {
             teamDTOS.add(TeamDTO.builder()
                     .teamId(team.getTeamId())
+                    .teamNumber(team.getTeamNumber())
                     .name(team.getName())
                     .initials(team.getInitials())
                     .category(team.getCategory())
                     .isActive(team.getIsActive())
                     .tournamentId(team.getTournament().getTournamentId())
+                    .gamesWon(team.getGamesWon())
+                    .gamesLost(team.getGamesLost())
+                    .setsWon(team.getSetsWon())
+                    .setsLost(team.getSetsLost())
+                    .pointsWon(team.getPointsWon())
+                    .pointsLost(team.getPointsLost())
                     .players(playerRepository.findByTeam(team.getTeamId()).orElse(new ArrayList<>()))
                     .build());
         }
@@ -125,20 +162,7 @@ public class TeamServiceImpl implements TeamService {
         commonResponse = CommonResponse.builder().response(AppConstants.TEAM + " " + AppConstants.DELETED).build();
         return new ResponseEntity<>(commonResponse, HttpStatus.OK);
     }
-
-    @Override
-    public ResponseEntity<List<TeamDTO>> getTeamsAll(Integer tournamentId) {
-        List<Team> teams = teamRepository.findByTournament(tournamentId).orElse(new ArrayList<>());
-        if (teams.isEmpty()) {
-            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
-        }
-        List<TeamDTO> teamDTOS = new ArrayList<>();
-        for (Team team : teams) {
-            teamDTOS.add(modelMapper.map(team, TeamDTO.class));
-        }
-        return new ResponseEntity<>(teamDTOS, HttpStatus.OK);
-    }
-
+    
     @Override
     public ResponseEntity<List<TeamOptionsDTO>> getTeamOptions(Integer tournamentId) {
         List<Team> teams = teamRepository.findByTournament(tournamentId).orElse(new ArrayList<>());

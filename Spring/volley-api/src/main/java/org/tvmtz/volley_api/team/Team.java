@@ -26,6 +26,14 @@ public class Team {
     @Column(name = "team_id")
     private Integer teamId;
 
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "tournament_id")
+    private Tournament tournament;
+
+    @Column(name = "team_number")
+    private Integer teamNumber;
+
     @Column(name = "name")
     private String name;
 
@@ -38,13 +46,25 @@ public class Team {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "tournament_id")
-    private Tournament tournament;
+    @Column(name = "games_won")
+    private Integer gamesWon;
+
+    @Column(name = "games_lost")
+    private Integer gamesLost;
+
+    @Column(name = "sets_won")
+    private Integer setsWon;
+
+    @Column(name = "sets_lost")
+    private Integer setsLost;
+
+    @Column(name = "points_won")
+    private Integer pointsWon;
+
+    @Column(name = "points_lost")
+    private Integer pointsLost;
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    //@JsonManagedReference
     @JsonIgnoreProperties("team")
     private List<Player> players;
 

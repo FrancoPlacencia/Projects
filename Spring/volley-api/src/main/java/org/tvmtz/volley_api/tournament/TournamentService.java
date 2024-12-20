@@ -13,8 +13,11 @@ public interface TournamentService {
 
     ResponseEntity<TournamentDTO> getTournament(Integer tournamentId);
 
+    ResponseEntity<TournamentDTO> getTournament();
+
     ResponseEntity<CommonResponse> updateTournament(TournamentDTO tournament);
 
     ResponseEntity<CommonResponse> deleteTournament(Integer tournamentId);
+
 
 }

@@ -22,11 +22,11 @@ public class GameDTO {
     private String category;
 
     private Date gameDate;
+    
     private String gamePlace;
 
     private Boolean byDefault;
 
     private List<TeamStat> teamStats;
-
 
 }

@@ -1,0 +1,83 @@
+$sidevar-width: "100px";
+$grow: 1.1;
+$effect: 0.3s;
+
+h1 {
+  padding: 0 1rem;
+}
+
+h2 {
+  padding: 1rem;
+}
+
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  /*position: fixed;
+  top:0;
+  z-index: 2;
+  */
+
+  img {
+    height: 5rem;
+  }
+
+  .logo {
+    padding-left: 10%;
+    display: flex;
+    text-align: left;
+    transition: $effect ease;
+  }
+
+  .logo :hover {
+    -webkit-transform: scale($grow);
+    -ms-transform: scale($grow);
+    transform: scale($grow);
+    transition: $effect ease;
+  }
+
+  .login {
+    display: flex;
+    align-content: center;
+    padding-right: 10%;
+  }
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+// Move the content down so that it won't be hidden by the toolbar
+mat-sidenav {
+  padding-top: 3.5rem;
+  transition: width 0.3s ease;
+  @media screen and (min-width: 600px) {
+    padding-top: 4rem;
+  }
+
+  .entry {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+}
+
+// Move the content down so that it won't be hidden by the toolbar
+mat-sidenav-content {
+  padding-top: 3.5rem;
+  margin-left: 75px !important;
+  @media screen and (min-width: 600px) {
+    padding-top: 4rem;
+  }
+}
+
+.expanded {
+  width: 400px;
+}
+
+.collapsed {
+  width: 75px;
+}

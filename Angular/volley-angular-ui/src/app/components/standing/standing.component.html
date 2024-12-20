@@ -1,0 +1,74 @@
+@if (dataSource) {
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8"
+    [ngClass]="{
+      'fem-table': category === 'FEMENIL',
+      'var-table': category === 'VARONIL',
+      'mix-table': category === 'MIXTO',
+    }"
+  >
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef>#</th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+        [ngClass]="{
+          'playoff-standings': element.position <= 4,
+        }"
+      >
+        {{ element.position }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>EQUIPO</th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+        [ngClass]="{
+          'playoff-standings': element.position <= 4,
+        }"
+      >
+        {{ element.team }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="games">
+      <th mat-header-cell *matHeaderCellDef>JUEGOS</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.teamJG }} - {{ element.teamJP }}
+        @if (element.teamDJ > 0) {
+          (+{{ element.teamDJ }})
+        } @else {
+          ({{ element.teamDJ }})
+        }
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="sets">
+      <th mat-header-cell *matHeaderCellDef>SETS</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.teamSG }} - {{ element.teamSP }}
+        @if (element.teamDS > 0) {
+          (+{{ element.teamDS }})
+        } @else {
+          ({{ element.teamDS }})
+        }
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="points">
+      <th mat-header-cell *matHeaderCellDef>PUNTOS</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.teamPG }} - {{ element.teamPP }}
+        @if (element.teamDP > 0) {
+          (+{{ element.teamDP }})
+        } @else {
+          ({{ element.teamDP }})
+        }
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnsHeader"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsHeader"></tr>
+  </table>
+} @else {
+  <h4>Loading...</h4>
+}

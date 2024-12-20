@@ -29,9 +29,15 @@ public class TournamentController {
         return tournamentService.getTournaments();
     }
 
-    @GetMapping("/tournament")
+
+    @GetMapping("/tournamentById")
     public ResponseEntity<TournamentDTO> getTournament(@RequestParam Integer id) {
         return tournamentService.getTournament(id);
+    }
+
+    @GetMapping("/tournament")
+    public ResponseEntity<TournamentDTO> getActiveTournament() {
+        return tournamentService.getTournament();
     }
 
     // UPDATE

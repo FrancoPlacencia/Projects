@@ -31,7 +31,8 @@ public interface PlayerRepository extends JpaRepository<Player, Integer> {
             value = "SELECT players.* " +
                     "FROM players " +
                     "WHERE team_id = :teamId " +
-                    "AND number = :number ",
+                    "AND number = :number " +
+                    "ORDER BY number",
             nativeQuery = true
     )
     Optional<Player> findByTeamIdAndNumber(Integer teamId, Integer number);

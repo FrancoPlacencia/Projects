@@ -1,0 +1,66 @@
+@use "volley-colors" as volley-colors;
+
+mat-toolbar {
+  border-bottom: 2px volley-colors.$blue solid;
+  background: volley-colors.$background-gray !important;
+}
+
+.mat-expansion-panel-body {
+  padding: 0 !important;
+}
+
+mat-expansion-panel-header {
+  background-color: volley-colors.$week-color !important;
+
+  svg {
+    fill: white !important;
+  }
+  mat-panel-title {
+    font-size: large !important;
+    font-weight: 500 !important;
+  }
+}
+
+mat-card {
+  background-color: volley-colors.$background-ligth-gray !important;
+  mat-card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    img {
+      height: 5rem;
+    }
+  }
+
+  mat-card-content {
+    text-align: left;
+    padding: 0 !important;
+
+    h5 {
+      font-size: 1.125rem !important;
+      font-weight: 400 !important;
+      margin: 0;
+      color: volley-colors.$gray;
+    }
+  }
+
+  mat-card-footer {
+    padding-top: 1rem;
+  }
+}
+
+mat-icon {
+  font-size: 1.25rem;
+}
+
+mat-form-field {
+  mat-icon {
+    color: #adb5bd;
+    padding-right: 10px;
+  }
+}

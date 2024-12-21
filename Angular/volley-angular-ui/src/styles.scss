@@ -257,9 +257,7 @@ html {
 
   @include mat.expansion-overrides(
     (
-      container-background-color: #eeeeee,
-      container-text-color: volley-colors.$dark-gray,
-      header-text-color: volley-colors.$dark-gray,
+      header-text-color: volley-colors.$week-light-color,
     )
   );
 }
@@ -356,11 +354,15 @@ html {
 
 html,
 body {
+  /*
   background: linear-gradient(
     90deg,
     volley-colors.$blue 0%,
     volley-colors.$light-blue 100%
   );
+*/
+  background: white;
+
   height: 100%;
 }
 body {

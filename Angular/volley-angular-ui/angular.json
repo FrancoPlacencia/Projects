@@ -39,8 +39,12 @@
                 "bundleName": "volley-styles"
                },
                {
-                "input":"src/global-styles/volley-colors.scss",
-                "bundleName": "volley-colors"
+                "input":"src/global-styles/volley-styles.scss",
+                "bundleName": "volley-styles"
+               },
+               {
+                "input":"src/global-styles/material-styles.scss",
+                "bundleName": "material-styles"
                },
                {
                 "input":"src/global-styles/theme-colors.scss",

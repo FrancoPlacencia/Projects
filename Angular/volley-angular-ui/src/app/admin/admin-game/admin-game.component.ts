@@ -27,28 +27,13 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
   MatNativeDateModule,
+  provideNativeDateAdapter,
 } from '@angular/material/core';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { GameService } from '../../services/game.service';
 import { Game } from '../../model/game.model';
 
-import {
-  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-  MomentDateAdapter,
-  provideMomentDateAdapter,
-} from '@angular/material-moment-adapter';
-
-// Depending on whether rollup is used, moment needs to be imported differently.
-// Since Moment.js doesn't have a default export, we normally need to import using the `* as`
-// syntax. However, rollup creates a synthetic default module and we thus need to import it using
-// the `default as` syntax.
-import * as _moment from 'moment';
-// tslint:disable-next-line:no-duplicate-imports
-import { default as _rollupMoment } from 'moment';
 import { Team } from '../../model/team.model';
 import { TeamOption } from '../../model/team-option.model';
 import { TeamStat } from '../../model/team-stat.model';
@@ -64,38 +49,12 @@ import { DialogMessageTypes } from '../../common/model/dialog-message-types';
 import { PlayerOption } from '../../model/player-option.model';
 import { CommonResponse } from '../../common/model/common-response.dto';
 import { MatExpansionModule } from '@angular/material/expansion';
-
-const moment = _rollupMoment || _moment;
-
-// See the Moment.js docs for the meaning of these formats:
-// https://momentjs.com/docs/#/displaying/format/
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'LL',
-    timeInput: 'LL',
-  },
-  display: {
-    dateInput: 'DD MMM YYYY',
-    monthYearLabel: 'MMM YYYY',
-
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMM YYYY',
-
-    timeInput: 'hh:mm A',
-    timeOptionLabel: 'hh:mm A',
-  },
-};
+import { WeekComponent } from '../../components/week/week.component';
+import { generateGameWeekDay, generateGameWeeks } from '../../util/game-util';
 
 @Component({
   selector: 'app-admin-game',
-  providers: [
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
-    },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-  ],
+  providers: [provideNativeDateAdapter()],
   imports: [
     CommonModule,
     FormsModule,
@@ -113,6 +72,7 @@ export const MY_FORMATS = {
     MatNativeDateModule,
     MatTimepickerModule,
     MatExpansionModule,
+    WeekComponent,
   ],
   templateUrl: './admin-game.component.html',
   styleUrl: './admin-game.component.scss',
@@ -169,13 +129,12 @@ export class AdminGameComponent {
   public gameId: number | undefined;
 
   public game: Game = emptyGame();
-
-  public dateStart: _moment.Moment = moment().set({
-    hour: 17,
-    minute: 0,
-    second: 0,
-  });
-
+  /*
+  public dateStart: dayjs.Dayjs = dayjs()
+    .set('hour', 17)
+    .set('minute', 0)
+    .set('second', 0);
+*/
   private femTeamsOptions: TeamOption[] = [];
   private femTeams: Team[] = [];
 
@@ -187,6 +146,8 @@ export class AdminGameComponent {
 
   @ViewChild('inputForm') inputForm: any;
 
+  public weeks: Map<string, Game[]> = new Map<string, Game[]>();
+
   constructor(
     private teamService: TeamService,
     private gamesService: GameService,
@@ -196,6 +157,8 @@ export class AdminGameComponent {
     //private router: Router,
     private route: ActivatedRoute,
   ) {
+    let time = new Date();
+    time.setHours(17, 30, 0);
     // Get data from URL
     this.route.queryParamMap.subscribe((params) => {
       this.tournamentId = Number(params.get('id')!);
@@ -203,12 +166,11 @@ export class AdminGameComponent {
 
       this.getTeams();
     });
-
     // Create the form group from DTO
     this.formGroup = this.formBuilder.group({
       category: [this.game.category, Validators.required],
-      gameDate: [this.dateStart, Validators.required],
-      gameTime: [this.dateStart, Validators.required],
+      gameDate: [time, Validators.required],
+      gameTime: [time, Validators.required],
       gamePlace: [this.game.gamePlace, Validators.required],
       byDefault: [this.game.byDefault, Validators.required],
 
@@ -276,18 +238,24 @@ export class AdminGameComponent {
 
     this.formGroup
       .get('gameDate')!
-      .valueChanges.subscribe((selectedValue: _moment.Moment) => {
+      .valueChanges.subscribe((selectedValue: any) => {
+        /*
         this.dateStart.set('year', selectedValue.get('year'));
         this.dateStart.set('month', selectedValue.get('month'));
         this.dateStart.set('date', selectedValue.get('date'));
-        console.log('gameDate ', this.dateStart);
+        
+        this.dateStart = dayjs(selectedValue);
+        */
+        this.game.gameDate = selectedValue;
+        console.log('gameDate ', typeof selectedValue, this.game.gameDate);
       });
     this.formGroup
       .get('gameTime')!
-      .valueChanges.subscribe((selectedValue: _moment.Moment) => {
-        this.dateStart.set('hour', selectedValue.get('hour'));
-        this.dateStart.set('minute', selectedValue.get('minute'));
-        console.log('gameTime ', this.dateStart);
+      .valueChanges.subscribe((selectedValue: Date) => {
+        this.game.gameDate = selectedValue;
+        //this.dateStart.set('hour', selectedValue.getHours());
+        console.log('valueChange hour', selectedValue.getHours());
+        //this.dateStart.set('minute', dayjs(selectedValue).get('minute'));
       });
     this.formGroup.get('gamePlace')!.valueChanges.subscribe((selectedValue) => {
       this.game.gamePlace = selectedValue;
@@ -374,15 +342,15 @@ ITS NOT ASSIGNING THE VALUE
     resetFormGroup(this.formGroup);
     this.getGames();
 
-    this.formGroup.get('gameTime')?.setValue(this.dateStart);
-    this.formGroup.get('gameDate')?.setValue(this.dateStart);
+    this.formGroup.get('gameTime')?.setValue('');
+    this.formGroup.get('gameDate')?.setValue('');
   }
 
   public submit(): void {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.status === 'VALID') {
       //this.dateStart.utcOffset();
-      this.game.gameDate = this.dateStart.toDate();
+      // this.game.gameDate = this.dateStart.toDate();
       //.utc().utcOffset('-06:00').format('YYYY-MM-DD HH:mm:ss');
       console.log(this.game.gameDate);
       this.isProcessing = startProcessing(this.formGroup, this.dialog);
@@ -396,9 +364,8 @@ ITS NOT ASSIGNING THE VALUE
 
     let dateT = new Date(game.gameDate);
     this.formGroup.get('category')?.setValue(game.category);
-    this.formGroup.get('gameTime')?.setValue(moment(dateT));
-
-    this.formGroup.get('gameDate')?.setValue(moment(dateT));
+    this.formGroup.get('gameTime')?.setValue(dateT);
+    this.formGroup.get('gameDate')?.setValue(dateT);
     this.formGroup.get('gamePlace')?.setValue(game.gamePlace);
     console.log(game.byDefault);
     this.formGroup.get('byDefault')?.setValue(game.byDefault);
@@ -469,6 +436,8 @@ ITS NOT ASSIGNING THE VALUE
       .subscribe({
         next: (games: Game[]) => {
           console.log(games);
+          this.weeks = generateGameWeekDay(games);
+          /*
           if (games && games.length > 0) {
             let mondayGames: Game[] = [];
             let tuesdayGames: Game[] = [];
@@ -504,9 +473,10 @@ ITS NOT ASSIGNING THE VALUE
             this.gamesMatrix.push(fridayGames);
             console.log(this.gamesMatrix);
             // this.games = games;
+            
           } else {
             this.errorMessage = 'Nothing to display';
-          }
+          }*/
         },
         error: (e: any) => {
           this.errorMessage = 'Unable to load the Data!';
@@ -568,8 +538,7 @@ ITS NOT ASSIGNING THE VALUE
   }
 
   private updateGame(): void {
-    //this.game.gameDate = this.dateStart.toDate().toString();
-    console.log('updateGame ', this.game);
+    console.log('updateGame', this.game);
     this.gamesService.putGame(this.game).subscribe({
       next: (result: CommonResponse) => {
         console.log(result);

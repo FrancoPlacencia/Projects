@@ -142,6 +142,7 @@ ng generate interface sidenav-element
 
 pwd # ../volley-ui/src/app
 ng generate component home --skip-tests
+ng generate component games --skip-tests
 ```
 
 ## Util Module
@@ -152,3 +153,5 @@ touch form-util.ts
 touch message-util.ts
 touch response-util.ts
 ```
+
+npm install --save-dev prettier

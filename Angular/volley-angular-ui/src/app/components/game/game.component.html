@@ -24,6 +24,28 @@
       }
       &nbsp;{{ game.gameDate | date: "EEEE, d MMM h:mm a" | uppercase }}
     </div>
+    @if (isAdmin) {
+      <div class="match-action">
+        <button
+          mat-flat-button
+          class="danger-button"
+          type="button"
+          (click)="delete(game)"
+          [disabled]="isProcessing"
+        >
+          <mat-icon>delete</mat-icon>Borrar
+        </button>
+        <button
+          mat-flat-button
+          class="primary-button"
+          type="button"
+          (click)="edit(game)"
+          [disabled]="isProcessing"
+        >
+          <mat-icon>edit</mat-icon>Editar
+        </button>
+      </div>
+    }
   </div>
   @for (teamStat of game.teamStats; track $index) {
     <div class="match-details">

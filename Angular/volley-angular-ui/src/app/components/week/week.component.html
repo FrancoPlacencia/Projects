@@ -3,7 +3,6 @@
     <mat-expansion-panel
       [expanded]="step() === gamesDayIndex"
       (opened)="setStep(gamesDayIndex)"
-      hideToggle
     >
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -12,7 +11,12 @@
       </mat-expansion-panel-header>
       <div class="match-container">
         @for (game of gamesDay[1]; track game) {
-          <app-game [game]="game"></app-game>
+          <app-game
+            [game]="game"
+            [isAdmin]="false"
+            (parentEdit)="edit($event)"
+            (parentDelete)="delete($event)"
+          ></app-game>
         } @empty {
           <h3>No game</h3>
         }

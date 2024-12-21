@@ -1,0 +1,29 @@
+<form [formGroup]="formGroup" (ngSubmit)="submit()">
+  <main>
+    <mat-card class="box full">
+      <mat-card-content>
+        <div class="flex-input">
+          <!-- CATEGORY -->
+          <mat-form-field class="full">
+            <mat-label>Categoria</mat-label>
+            <mat-select formControlName="category">
+              <mat-option value="FEMENIL">Femenil</mat-option>
+              <mat-option value="VARONIL">Varonil</mat-option>
+              <mat-option value="MIXTO">Mixto</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-flat-button class="warning-button" type="submit">
+            <mat-icon>search</mat-icon>Buscar
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </main>
+</form>
+<div class="match-container">
+  @for (game of games; track $index) {
+    <app-game [game]="game" [isAdmin]="false"></app-game>
+  } @empty {
+    <h3>No game</h3>
+  }
+</div>

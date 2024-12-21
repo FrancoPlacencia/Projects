@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { Game } from '../../model/game.model';
@@ -14,6 +14,19 @@ import { GameComponent } from '../game/game.component';
 })
 export class WeekComponent {
   @Input() days: Map<string, Game[]> = new Map<string, Game[]>();
+
+  @Output('parentEdit') parentEdit: EventEmitter<any> = new EventEmitter();
+
+  @Output('parentDelete') parentDelete: EventEmitter<any> = new EventEmitter();
+
+  public edit(game: Game): void {
+    console.log('Week edit');
+    this.parentEdit.emit(game);
+  }
+  public delete(game: Game): void {
+    console.log('Week delete');
+    this.parentDelete.emit(game);
+  }
 
   step = signal(0);
 

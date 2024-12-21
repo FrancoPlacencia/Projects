@@ -26,38 +26,9 @@ import { GameComponent } from '../game/game.component';
 import { Game } from '../../model/game.model';
 import { GameService } from '../../services/game.service';
 import { TournamentComponent } from '../tournament/tournament.component';
-
-import {
-  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-  MomentDateAdapter,
-  provideMomentDateAdapter,
-} from '@angular/material-moment-adapter';
-import * as _moment from 'moment';
-import { default as _rollupMoment } from 'moment';
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-} from '@angular/material/core';
 import { WeekComponent } from '../week/week.component';
-
-const moment = _rollupMoment || _moment;
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'LL',
-    timeInput: 'LL',
-  },
-  display: {
-    dateInput: 'DD MMM YYYY',
-    monthYearLabel: 'MMM YYYY',
-
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMM YYYY',
-
-    timeInput: 'hh:mm A',
-    timeOptionLabel: 'hh:mm A',
-  },
-};
+import { generateGameWeeks } from '../../util/game-util';
+import { GamesComponent } from '../games/games.component';
 
 const daysOfWeek: string[] = [
   'DOMINGO',
@@ -69,16 +40,23 @@ const daysOfWeek: string[] = [
   'SABADO',
 ];
 
+const months: string[] = [
+  'ENERO',
+  'FEBRERO',
+  'MARZO',
+  'ABRIL',
+  'MAYO',
+  'JUNIO',
+  'JULIO',
+  'AGOSTO',
+  'SEPTIEMBRE',
+  'OCTUBRE',
+  'NOVIEMBRE',
+  'DICIEMBRE',
+];
+
 @Component({
   selector: 'app-landing',
-  providers: [
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
-    },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-  ],
   imports: [
     CommonModule,
     MatTabsModule,
@@ -87,6 +65,7 @@ const daysOfWeek: string[] = [
     MatIconModule,
     StandingComponent,
     WeekComponent,
+    GamesComponent,
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
@@ -112,6 +91,8 @@ export class LandingComponent {
 
   public tournamentApp: TournamentApp = emptyTournamentApp();
 
+  public games: Game[] = [];
+
   @ViewChild('weeksTab', { static: false }) weeksTab?: MatTabGroup;
 
   constructor(
@@ -136,7 +117,6 @@ export class LandingComponent {
   private getActiveTournament(): void {
     this.tournamentService.getTournament().subscribe({
       next: (tournament: Tournament) => {
-        console.log('tournament ', tournament);
         this.tournamentApp.tournament = tournament;
         this.getStandings();
         this.getWeeks();
@@ -177,48 +157,13 @@ export class LandingComponent {
         .getGames(this.tournamentApp.tournament.tournamentId)
         .subscribe({
           next: (games: Game[]) => {
-            this.tournamentApp.weeks = this.generateGameWeeks(games);
+            this.games = games;
+            this.tournamentApp.weeks = generateGameWeeks(games);
             this.weeksTab!.selectedIndex =
               this.tournamentApp.tournament.weeks.length - 1;
-            console.log(this.tournamentApp);
           },
           error: (e: any) => {},
         });
     }
-  }
-
-  private generateGameWeeks(games: Game[]): Map<number, Map<string, Game[]>> {
-    // Add all games in a map with the week as key
-    let weeksMap: Map<number, Game[]> = new Map<number, Game[]>();
-    games.forEach((game: Game) => {
-      if (weeksMap.has(game.weekNumber)) {
-        weeksMap.get(game.weekNumber)?.push(game);
-      } else {
-        weeksMap.set(game.weekNumber, [game]);
-      }
-    });
-
-    // Iterates the map to generate a new map inside
-    let weeksDayMap: Map<number, Map<string, Game[]>> = new Map<
-      number,
-      Map<string, Game[]>
-    >();
-    for (let [key, value] of weeksMap) {
-      weeksDayMap.set(key, this.generateGameWeekDay(value));
-    }
-    return weeksDayMap;
-  }
-
-  private generateGameWeekDay(games: Game[]): Map<string, Game[]> {
-    let weekDayMap: Map<string, Game[]> = new Map<string, Game[]>();
-    games.forEach((game: Game) => {
-      let day = daysOfWeek[moment(game.gameDate).day()];
-      if (weekDayMap.has(day)) {
-        weekDayMap.get(day)?.push(game);
-      } else {
-        weekDayMap.set(day, [game]);
-      }
-    });
-    return weekDayMap;
   }
 }

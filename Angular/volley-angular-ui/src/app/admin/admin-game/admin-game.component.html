@@ -166,12 +166,17 @@
         </mat-card>
       </main>
     </form>
+    <app-week
+      [days]="weeks"
+      (parentEdit)="edit($event)"
+      (parentDelete)="delete($event)"
+    ></app-week>
+    <!--
     <mat-accordion>
       @for (games of gamesMatrix; track games; let gamesDayIndex = $index) {
         <mat-expansion-panel
           [expanded]="step() === gamesDayIndex"
           (opened)="setStep(gamesDayIndex)"
-          hideToggle
         >
           <mat-expansion-panel-header>
             <mat-panel-title>
@@ -297,5 +302,6 @@
         </mat-expansion-panel>
       }
     </mat-accordion>
+    -->
   </div>
 </div>

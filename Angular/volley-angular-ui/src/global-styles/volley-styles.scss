@@ -5,7 +5,7 @@
 }
 
 .almost-full {
-  width: 80% !important;
+  width: 90% !important;
 }
 
 .flex-input {
@@ -260,10 +260,35 @@ td {
   color: #282828;
   font-weight: 550 !important;
 }
-
+.losser {
+  color: #7d7d7d;
+  font-weight: 500 !important;
+}
 .default {
   text-decoration: line-through;
-  color: #db412d;
+  color: #b37979;
+}
+
+.qualified {
+  color: green;
+}
+.semqualified {
+  color: orange;
+}
+.disqualified {
+  color: red;
+}
+.winner-selected {
+  color: green;
+  font-weight: 550 !important;
+}
+.losser-selected {
+  color: #9ac09c;
+  font-weight: 500 !important;
+}
+.default-selected {
+  text-decoration: line-through;
+  color: #c84646;
 }
 
 .match-players {
@@ -283,10 +308,6 @@ td {
   padding: 2px 4px 2px 4px;
   font-size: 12px;
   color: #282828;
-}
-.losser {
-  color: #7d7d7d;
-  font-weight: 500 !important;
 }
 
 .game-played {

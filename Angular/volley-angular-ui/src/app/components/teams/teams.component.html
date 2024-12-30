@@ -27,10 +27,11 @@
     </mat-card>
   </main>
 </form>
-<div class="match-container">
-  @for (game of games; track $index) {
-    <app-game [game]="game" [isAdmin]="false" [teamFilter]="teamId"></app-game>
-  } @empty {
-    <h4>Select something and click search.</h4>
-  }
-</div>
+
+@for (team of teams; track $index) {
+  <app-team [team]="team" [teamFilter]="teamId"></app-team>
+} @empty {
+  <mat-card>
+    <mat-card-header>Select something and click search.</mat-card-header>
+  </mat-card>
+}

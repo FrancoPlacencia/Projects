@@ -6,6 +6,7 @@ import { Tournament } from '../model/tournament.model';
 import { Player } from '../model/player.model';
 import { TournamentApp } from '../model/tournament-app.model';
 import { Standing } from '../model/standing.model';
+import { TeamOption } from '../model/team-option.model';
 
 export function emptyTournament(): Tournament {
   let tournament: Tournament = {
@@ -25,6 +26,8 @@ export function emptyTournamentApp(): TournamentApp {
     tournament: emptyTournament(),
     standings: new Map<string, Standing[]>(),
     weeks: new Map<number, Map<string, Game[]>>(),
+    teams: new Map<string, Team[]>(),
+    teamOptions: new Map<string, TeamOption[]>(),
   };
   return tournamentApp;
 }
@@ -93,6 +96,9 @@ export function emptyPlayer(): Player {
     name: '',
     lastName: '',
     number: 0,
+    gamesPlayed: 0,
+    gamesTotal: 0,
+    gamesPercentage: 0,
   };
   return player;
 }

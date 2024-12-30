@@ -7,5 +7,9 @@ export interface Player {
   lastName?: string;
   number: number;
 
+  gamesPlayed: number;
+  gamesTotal: number;
+  gamesPercentage: number;
+
   gamePlayed?: boolean;
 }

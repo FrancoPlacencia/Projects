@@ -162,18 +162,29 @@ public class TeamServiceImpl implements TeamService {
         commonResponse = CommonResponse.builder().response(AppConstants.TEAM + " " + AppConstants.DELETED).build();
         return new ResponseEntity<>(commonResponse, HttpStatus.OK);
     }
-    
+
     @Override
-    public ResponseEntity<List<TeamOptionsDTO>> getTeamOptions(Integer tournamentId) {
+    public ResponseEntity<Map<String, List<TeamOptionsDTO>>> getTeamOptions(Integer tournamentId) {
         List<Team> teams = teamRepository.findByTournament(tournamentId).orElse(new ArrayList<>());
         if (teams.isEmpty()) {
-            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
+            return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
         }
-        List<TeamOptionsDTO> teamDTOS = new ArrayList<>();
+        Map<String, List<TeamOptionsDTO>> teamOptions = new HashMap<>();
         for (Team team : teams) {
-            teamDTOS.add(TeamOptionsDTO.builder().teamId(team.getTeamId()).name(team.getName()).category(team.getCategory()).build());
+            TeamOptionsDTO teamOptionsDTO = TeamOptionsDTO.builder()
+                    .teamId(team.getTeamId())
+                    .name(team.getName())
+                    .category(team.getCategory())
+                    .build();
+            if (teamOptions.containsKey(team.getCategory())) {
+                teamOptions.get(team.getCategory()).add(teamOptionsDTO);
+            } else {
+                List<TeamOptionsDTO> teamDTOS = new ArrayList<>();
+                teamDTOS.add(teamOptionsDTO);
+                teamOptions.put(team.getCategory(), teamDTOS);
+            }
         }
-        return new ResponseEntity<>(teamDTOS, HttpStatus.OK);
+        return new ResponseEntity<>(teamOptions, HttpStatus.OK);
     }
 
     private boolean teamExists(Team team) {

@@ -22,7 +22,6 @@ public interface TeamService {
 
     ResponseEntity<CommonResponse> deleteTeam(Integer teamId);
 
-    ResponseEntity<List<TeamOptionsDTO>> getTeamOptions(Integer tournamentId);
-
+    ResponseEntity<Map<String, List<TeamOptionsDTO>>> getTeamOptions(Integer tournamentId);
 
 }

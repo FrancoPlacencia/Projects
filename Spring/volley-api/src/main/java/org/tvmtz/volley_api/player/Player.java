@@ -29,14 +29,23 @@ public class Player {
     @ToString.Exclude
     private Team team;
 
+    @Column(name = "number")
+    private Integer number;
+
     @Column(name = "name")
     private String name;
 
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "number")
-    private Integer number;
+    @Column(name = "games_played")
+    private Integer gamesPlayed;
+
+    @Column(name = "games_total")
+    private Integer gamesTotal;
+
+    @Column(name = "games_percentage")
+    private Integer gamesPercentage;
 
     @Transient
     private Boolean gamePlayed;

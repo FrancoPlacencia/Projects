@@ -22,9 +22,10 @@ import { Team } from './../../model/team.model';
 import { Game } from '../../model/game.model';
 
 import { GameComponent } from '../game/game.component';
+import { TeamComponent } from '../team/team.component';
 
 @Component({
-  selector: 'app-games',
+  selector: 'app-teams',
   imports: [
     CommonModule,
     FormsModule,
@@ -34,19 +35,20 @@ import { GameComponent } from '../game/game.component';
     MatSelectModule,
     MatIconModule,
     MatButtonModule,
-    GameComponent,
-  ],
-  templateUrl: './games.component.html',
-  styleUrl: './games.component.scss',
-})
-export class GamesComponent {
-  @Input() public inputGames: Game[] = [];
-  public games: Game[] = [];
 
+    TeamComponent,
+  ],
+  templateUrl: './teams.component.html',
+  styleUrl: './teams.component.scss',
+})
+export class TeamsComponent {
+  @Input() public teamsMap: Map<string, Team[]> = new Map<string, Team[]>();
   @Input() public teamOptionsMap: Map<string, TeamOption[]> = new Map<
     string,
     TeamOption[]
   >();
+
+  public teams: Team[] = [];
   public teamOptions: TeamOption[] = [];
 
   public category: string = '';
@@ -59,13 +61,12 @@ export class GamesComponent {
       category: [this.category, Validators.required],
       team: [{ value: this.teamId, disabled: true }, Validators.required],
     });
-
     this.formGroup
       .get('category')!
       .valueChanges.subscribe((selectedValue: string) => {
-        this.formGroup.get('team')!.enable();
         this.teamOptions = this.teamOptionsMap.get(selectedValue)! ?? [];
         this.category = selectedValue;
+        this.formGroup.get('team')!.enable();
         this.filterCategory();
       });
 
@@ -79,23 +80,17 @@ export class GamesComponent {
   }
 
   private filterCategory(): void {
-    this.games = [];
-    this.inputGames.forEach((game: Game) => {
-      if (game.category === this.category) {
-        this.games.push(game);
-      }
-    });
+    this.teams = this.teamsMap.get(this.category) ?? [];
+    console.log(this.teams);
   }
 
   private filterTeams() {
-    let _games: Game[] = this.games;
-    this.games = [];
-    _games.forEach((game: Game) => {
-      game.teamStats.forEach((teamStat: TeamStat) => {
-        if (teamStat.teamId == this.teamId) {
-          this.games.push(game);
-        }
-      });
+    let _teams: Team[] = this.teams;
+    this.teams = [];
+    _teams.forEach((team: Team) => {
+      if (team.teamId == this.teamId) {
+        this.teams.push(team);
+      }
     });
   }
 }

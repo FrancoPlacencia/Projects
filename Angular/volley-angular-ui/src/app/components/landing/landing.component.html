@@ -37,13 +37,19 @@
         <ng-template mat-tab-label>
           <mat-icon>sports_volleyball</mat-icon>&nbsp;Juegos
         </ng-template>
-        <app-games [games]="games"></app-games>
+        <app-games
+          [inputGames]="games"
+          [teamOptionsMap]="tournamentApp.teamOptions"
+        ></app-games>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon>groups</mat-icon>&nbsp;Equipos
         </ng-template>
-        <div>Content Equipos</div>
+        <app-teams
+          [teamsMap]="tournamentApp.teams"
+          [teamOptionsMap]="tournamentApp.teamOptions"
+        ></app-teams>
       </mat-tab>
     </mat-tab-group>
   </div>

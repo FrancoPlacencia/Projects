@@ -114,7 +114,13 @@ public class PlayerServiceImpl implements PlayerService {
         List<PlayerOptionsDTO> playerOptionsDTOS = new ArrayList<>();
         for (Player player : players) {
             player.setGamePlayed(gamePlayers.contains(player));
-            playerOptionsDTOS.add(modelMapper.map(player, PlayerOptionsDTO.class));
+            playerOptionsDTOS.add(
+                    PlayerOptionsDTO.builder()
+                            .playerId(player.getPlayerId())
+                            .number(player.getNumber())
+                            .name(player.getName() + " " + player.getLastName())
+                            .gamePlayed(player.getGamePlayed())
+                            .build());
         }
         return playerOptionsDTOS;
     }

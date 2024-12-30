@@ -146,10 +146,8 @@
                           playerIndex + 1
                         }}"
                         >{{ teamStat.players[playerIndex].number }} -
-                        {{
-                          teamStat.players[playerIndex].name
-                        }}</mat-slide-toggle
-                      >
+                        {{ teamStat.players[playerIndex].name }}
+                      </mat-slide-toggle>
                     } @else {
                       <mat-slide-toggle
                         formControlName="team{{ teamIndex + 1 }}Player{{
@@ -168,140 +166,9 @@
     </form>
     <app-week
       [days]="weeks"
+      [isAdmin]="true"
       (parentEdit)="edit($event)"
       (parentDelete)="delete($event)"
     ></app-week>
-    <!--
-    <mat-accordion>
-      @for (games of gamesMatrix; track games; let gamesDayIndex = $index) {
-        <mat-expansion-panel
-          [expanded]="step() === gamesDayIndex"
-          (opened)="setStep(gamesDayIndex)"
-        >
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              {{ daysOfGames[gamesDayIndex] }}
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-
-          <div class="match-container">
-            @for (game of games; track game) {
-              <div
-                class="match-box"
-                [ngClass]="{
-                  'mix-bc': game.category === 'MIXTO',
-                  'var-bc': game.category === 'VARONIL',
-                  'fem-bc': game.category === 'FEMENIL',
-                }"
-              >
-                <div class="match-info">
-                  <div
-                    [ngClass]="{
-                      'mix-color': game.category === 'MIXTO',
-                      'var-color': game.category === 'VARONIL',
-                      'fem-color': game.category === 'FEMENIL',
-                    }"
-                    class="match-category"
-                  >
-                    {{ game.category }}
-                  </div>
-                  <div class="match-place">
-                    @if (game.gamePlace === "ARRIBA") {
-                      <span class="arrow-up">
-                        <mat-icon>arrow_circle_up</mat-icon>
-                        {{ game.gamePlace }}
-                      </span>
-                    } @else {
-                      <span class="arrow-down">
-                        <mat-icon>arrow_circle_down</mat-icon>
-                        {{ game.gamePlace }}
-                      </span>
-                    }
-                    &nbsp;{{
-                      game.gameDate | date: "EEEE, d MMM h:mm a" | uppercase
-                    }}
-                  </div>
-                  <div class="match-action">
-                    <button
-                      mat-flat-button
-                      class="danger-button"
-                      type="button"
-                      (click)="delete(game)"
-                      [disabled]="isProcessing"
-                    >
-                      <mat-icon>delete</mat-icon>Borrar
-                    </button>
-                    <button
-                      mat-flat-button
-                      class="primary-button"
-                      type="button"
-                      (click)="edit(game)"
-                      [disabled]="isProcessing"
-                    >
-                      <mat-icon>edit</mat-icon>Editar
-                    </button>
-                  </div>
-                </div>
-                @for (teamStat of game.teamStats; track $index) {
-                  <div class="match-details">
-                    <div
-                      [ngClass]="{
-                        winner: teamStat.state === 'WINNER',
-                        losser: teamStat.state === 'LOSSER',
-                        default: teamStat.state === 'DEFAULT',
-                      }"
-                      class="match-team"
-                    >
-                      {{ teamStat.teamName }}
-                    </div>
-                    <div class="match-results">
-                      <div
-                        [ngClass]="{
-                          winner: teamStat.state === 'WINNER',
-                          losser: teamStat.state === 'LOSSER',
-                          default: teamStat.state === 'DEFAULT',
-                        }"
-                        class="match-sets"
-                      >
-                        {{ teamStat.sets }}
-                      </div>
-                      @for (setStat of teamStat.setStats; track $index) {
-                        @if (setStat.state != "PENDING") {
-                          <div
-                            [ngClass]="{
-                              winner: setStat.state === 'WINNER',
-                              losser: setStat.state === 'LOSSER',
-                              default: setStat.state === 'DEFAULT',
-                            }"
-                            class="match-points"
-                          >
-                            {{ setStat.points }}
-                          </div>
-                        }
-                      }
-                    </div>
-                    <div class="match-players">
-                      @for (player of teamStat.players; track $index) {
-                        <div
-                          [ngClass]="player.gamePlayed ? 'game-played' : ''"
-                          class="match-player"
-                        >
-                          {{ player.number }}
-                        </div>
-                      } @empty {
-                        <div><span>-</span></div>
-                      }
-                    </div>
-                  </div>
-                }
-              </div>
-            } @empty {
-              <h3>Please create a game</h3>
-            }
-          </div>
-        </mat-expansion-panel>
-      }
-    </mat-accordion>
-    -->
   </div>
 </div>

@@ -50,7 +50,11 @@ import { PlayerOption } from '../../model/player-option.model';
 import { CommonResponse } from '../../common/model/common-response.dto';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { WeekComponent } from '../../components/week/week.component';
-import { generateGameWeekDay, generateGameWeeks } from '../../util/game-util';
+import {
+  generateGameWeekDay,
+  generateGameWeeks,
+  generateTeamMap,
+} from '../../util/game-util';
 
 @Component({
   selector: 'app-admin-game',
@@ -100,53 +104,25 @@ export class AdminGameComponent {
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
   ];
 
-  public daysOfWeek: string[] = [
-    'DOMINGO',
-    'LUNES',
-    'MARTES',
-    'MIERCOLES',
-    'JUEVES',
-    'VIERNES',
-    'SABADO',
-  ];
-
-  public daysOfGames: string[] = [
-    'LUNES',
-    'MARTES',
-    'MIERCOLES',
-    'JUEVES',
-    'VIERNES',
-  ];
-
   public categoryRequired: boolean = true;
-
-  // public games: Game[] = [];
 
   public gamesMatrix: Game[][] = [[]];
 
   public teamOptions: TeamOption[] = [];
+  public teamOptionsMap: Map<string, TeamOption[]> = new Map<
+    string,
+    TeamOption[]
+  >();
 
   public gameId: number | undefined;
 
   public game: Game = emptyGame();
-  /*
-  public dateStart: dayjs.Dayjs = dayjs()
-    .set('hour', 17)
-    .set('minute', 0)
-    .set('second', 0);
-*/
-  private femTeamsOptions: TeamOption[] = [];
-  private femTeams: Team[] = [];
-
-  private varTeamsOptions: TeamOption[] = [];
-  private varTeams: Team[] = [];
-
-  private mixTeamsOptions: TeamOption[] = [];
-  private mixTeams: Team[] = [];
 
   @ViewChild('inputForm') inputForm: any;
 
   public weeks: Map<string, Game[]> = new Map<string, Game[]>();
+
+  private teamsMap: Map<string, Team[]> = new Map<string, Team[]>();
 
   constructor(
     private teamService: TeamService,
@@ -243,7 +219,7 @@ export class AdminGameComponent {
         this.dateStart.set('year', selectedValue.get('year'));
         this.dateStart.set('month', selectedValue.get('month'));
         this.dateStart.set('date', selectedValue.get('date'));
-        
+
         this.dateStart = dayjs(selectedValue);
         */
         this.game.gameDate = selectedValue;
@@ -294,38 +270,6 @@ export class AdminGameComponent {
           });
       }
     }
-
-    /*
-ITS NOT ASSIGNING THE VALUE
-    this.game.teamStats.forEach((teamStats, i) => {
-      // TEAM AND PLAYERS
-      this.formGroup
-        .get('team' + (i + 1))!
-        .valueChanges.subscribe((selectedValue) => {
-          teamStats.players = this.setPlayersByCategory(selectedValue);
-          teamStats.teamId = selectedValue;
-          this.enablePlayers(teamStats, i);
-        });
-      // SETS
-      teamStats.setStats.forEach((setStat, j) => {
-        this.formGroup
-          .get('team' + (i + 1) + 'Set' + (j + 1))!
-          .valueChanges.subscribe((selectedValue) => {
-            setStat.points = selectedValue;
-          });
-      });
-      // PLAYERS
-      for (let p = 0; p < 20; p++) {
-        this.formGroup
-          .get('team' + (i + 1) + 'Player' + (p + 1))!
-          .valueChanges.subscribe((selectedValue) => {
-            if (p < teamStats.players.length) {
-              teamStats.players[p].gamePlayed = selectedValue;
-            }
-          });
-      }
-    });
-*/
   }
 
   ngOnInit(): void {
@@ -349,31 +293,28 @@ ITS NOT ASSIGNING THE VALUE
   public submit(): void {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.status === 'VALID') {
-      //this.dateStart.utcOffset();
-      // this.game.gameDate = this.dateStart.toDate();
-      //.utc().utcOffset('-06:00').format('YYYY-MM-DD HH:mm:ss');
-      console.log(this.game.gameDate);
       this.isProcessing = startProcessing(this.formGroup, this.dialog);
       this.isNew ? this.createGame() : this.updateGame();
     }
   }
 
   public edit(game: Game): void {
+    console.log(game);
     this.inputForm.nativeElement.focus();
     this.isNew = false;
+
+    this.gameId = game.gameId;
+    this.game.gameId = game.gameId;
+    this.game.category = game.category;
+    this.game.tournamentId = this.tournamentId;
+    this.game.weekNumber = this.weekNumber;
 
     let dateT = new Date(game.gameDate);
     this.formGroup.get('category')?.setValue(game.category);
     this.formGroup.get('gameTime')?.setValue(dateT);
     this.formGroup.get('gameDate')?.setValue(dateT);
     this.formGroup.get('gamePlace')?.setValue(game.gamePlace);
-    console.log(game.byDefault);
     this.formGroup.get('byDefault')?.setValue(game.byDefault);
-
-    this.gameId = game.gameId;
-    this.game.gameId = game.gameId;
-    this.game.tournamentId = this.tournamentId;
-    this.game.weekNumber = this.weekNumber;
 
     for (let i = 0; i < game.teamStats.length; i++) {
       let teamStat: TeamStat = game.teamStats[i];
@@ -435,48 +376,7 @@ ITS NOT ASSIGNING THE VALUE
       .getGamesWeek(this.tournamentId, Number(this.weekNumber))
       .subscribe({
         next: (games: Game[]) => {
-          console.log(games);
           this.weeks = generateGameWeekDay(games);
-          /*
-          if (games && games.length > 0) {
-            let mondayGames: Game[] = [];
-            let tuesdayGames: Game[] = [];
-            let wednesdayGames: Game[] = [];
-            let thursdayGames: Game[] = [];
-            let fridayGames: Game[] = [];
-            games.forEach((game: Game) => {
-              console.log(this.daysOfWeek[moment(game.gameDate).day()]);
-              switch (this.daysOfWeek[moment(game.gameDate).day()]) {
-                case 'LUNES':
-                  mondayGames.push(game);
-                  break;
-                case 'MARTES':
-                  tuesdayGames.push(game);
-                  break;
-                case 'MIERCOLES':
-                  wednesdayGames.push(game);
-                  break;
-                case 'JUEVES':
-                  thursdayGames.push(game);
-                  break;
-                case 'VIERNES':
-                  fridayGames.push(game);
-                  break;
-                default:
-                  break;
-              }
-            });
-            this.gamesMatrix.push(mondayGames);
-            this.gamesMatrix.push(tuesdayGames);
-            this.gamesMatrix.push(wednesdayGames);
-            this.gamesMatrix.push(thursdayGames);
-            this.gamesMatrix.push(fridayGames);
-            console.log(this.gamesMatrix);
-            // this.games = games;
-            
-          } else {
-            this.errorMessage = 'Nothing to display';
-          }*/
         },
         error: (e: any) => {
           this.errorMessage = 'Unable to load the Data!';
@@ -487,32 +387,17 @@ ITS NOT ASSIGNING THE VALUE
 
   private getTeams(): void {
     this.teamService.getTeamOptions(this.tournamentId).subscribe({
-      next: (teamOptions: TeamOption[]) => {
-        teamOptions.forEach((element: TeamOption) => {
-          switch (element.category) {
-            case 'FEMENIL':
-              this.femTeamsOptions.push(element);
-              break;
-            case 'VARONIL':
-              this.varTeamsOptions.push(element);
-              break;
-            case 'MIXTO':
-              this.mixTeamsOptions.push(element);
-              break;
-            default:
-              break;
-          }
-        });
+      next: (teamOptions: Map<string, TeamOption[]>) => {
+        this.teamOptionsMap = new Map(Object.entries(teamOptions));
       },
-      error: (e: any) => {
-        this.femTeamsOptions = [];
-        this.varTeamsOptions = [];
-        this.mixTeamsOptions = [];
-      },
+      error: (e: any) => {},
     });
 
     this.teamService.getTeams(this.tournamentId, '').subscribe({
       next: (teams: Team[]) => {
+        console.log(teams);
+        this.teamsMap = generateTeamMap(teams);
+        /*
         teams.forEach((element: Team) => {
           switch (element.category) {
             case 'FEMENIL':
@@ -528,26 +413,20 @@ ITS NOT ASSIGNING THE VALUE
               break;
           }
         });
+        */
       },
-      error: (e: any) => {
-        this.femTeams = [];
-        this.varTeams = [];
-        this.mixTeams = [];
-      },
+      error: (e: any) => {},
     });
   }
 
   private updateGame(): void {
-    console.log('updateGame', this.game);
     this.gamesService.putGame(this.game).subscribe({
       next: (result: CommonResponse) => {
-        console.log(result);
         this.isProcessing = endProcessing(this.formGroup, this.dialog);
         openDialog(this.dialog, DialogMessageTypes.SUCCESS, result.response);
         this.reset();
       },
       error: (e: any) => {
-        console.log(e.error);
         this.isProcessing = endProcessing(this.formGroup, this.dialog);
         openErrorDialog(this.dialog, e.status, e.error.response);
       },
@@ -571,7 +450,7 @@ ITS NOT ASSIGNING THE VALUE
   private convertToPlayerOptions(player: Player): PlayerOption {
     let playerOption: PlayerOption = {
       playerId: player.playerId,
-      name: player.name,
+      name: player.name + ' ' + player.lastName,
       number: player.number,
       gamePlayed: player.gamePlayed,
     };
@@ -581,6 +460,11 @@ ITS NOT ASSIGNING THE VALUE
   private setPlayersByCategory(teamId: number): PlayerOption[] {
     let _playerOptions: PlayerOption[] = [];
     let _players: Player[];
+    _players =
+      this.teamsMap
+        .get(this.game.category)!
+        .find((team) => team.teamId === teamId)?.players ?? [];
+    /*
     switch (this.game.category) {
       case 'FEMENIL':
         _players =
@@ -598,6 +482,7 @@ ITS NOT ASSIGNING THE VALUE
         _players = [];
         break;
     }
+        */
     _players.forEach((p) => {
       _playerOptions.push(this.convertToPlayerOptions(p));
     });
@@ -606,20 +491,7 @@ ITS NOT ASSIGNING THE VALUE
   }
 
   private updateCategoryOption(): void {
-    switch (this.game.category) {
-      case 'FEMENIL':
-        this.teamOptions = this.femTeamsOptions;
-        break;
-      case 'VARONIL':
-        this.teamOptions = this.varTeamsOptions;
-        break;
-      case 'MIXTO':
-        this.teamOptions = this.mixTeamsOptions;
-        break;
-      default:
-        this.teamOptions = [];
-        break;
-    }
+    this.teamOptions = this.teamOptionsMap.get(this.game.category)! ?? [];
   }
 
   private disableFields(): void {

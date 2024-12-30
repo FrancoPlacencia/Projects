@@ -15,73 +15,58 @@ INNER JOIN teams t1 ON t1.team_id = games.team_1
 INNER JOIN teams t2 ON t2.team_id = games.team_2
 
 WHERE games.tournament_id = 2
-AND games.week_number = 12
+AND games.week_number = 14
+AND games.game_id = 754
 AND games.game_date LIKE '2024-11-26%'
 
+
+(754,2,'MIXTO',14,'2024-12-17 19:30:00','ABAJO',53,1,2,61,21,25,15,0,0,49,0,1,46,25,12,9,0,0,0),
 SELECT *
 		FROM tournaments
 		WHERE is_active = true
 
 SELECT * FROM teams WHERE tournament_id = 2 AND category ='MIXTO' ORDER BY name ASC;
 
- 
-29- 59
-SELECT * FROM tournaments 
-INSERT INTO games (
-	tournament_id,category,week_number,
-	game_date,game_place,
-	team_1,team_2
-)
-SELECT 
-	2 AS tournament_id,
-	'MIXTO' AS category,
-	9 AS week_number,
-	STR_TO_DATE(CONCAT(TRIM('11/8/2024'),' ',TRIM(REPLACE('6:00 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,
-	TRIM('ABAJO') AS game_place,
-	fn_get_team_id('MIXTO','LOS OLVIDADOS') AS team_1,
-	fn_get_team_id('MIXTO','GALACTICOS') AS team_2 
-FROM DUAL;
 
 
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'MIXTO' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/25/2024'),' ',TRIM(REPLACE('5:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ARRIBA') AS game_place,fn_get_team_id('MIXTO','VENGADORES') AS team_1,fn_get_team_id('MIXTO','RENCOROSOS') AS team_2 FROM DUAL;
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'MIXTO' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/25/2024'),' ',TRIM(REPLACE('6:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ARRIBA') AS game_place,fn_get_team_id('MIXTO','RENCOROSOS') AS team_1,fn_get_team_id('MIXTO','MIXTICOS') AS team_2 FROM DUAL;
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'MIXTO' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/25/2024'),' ',TRIM(REPLACE('7:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ARRIBA') AS game_place,fn_get_team_id('MIXTO','LOS DEL BASQUET') AS team_1,fn_get_team_id('MIXTO','MIXTICOS') AS team_2 FROM DUAL;
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'MIXTO' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/25/2024'),' ',TRIM(REPLACE('8:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ARRIBA') AS game_place,fn_get_team_id('MIXTO','LOS DEL BASQUET') AS team_1,fn_get_team_id('MIXTO','PECHOCHOS') AS team_2 FROM DUAL;
-
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'MIXTO' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/25/2024'),' ',TRIM(REPLACE('5:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ABAJO') AS game_place,fn_get_team_id('MIXTO','LOS OLVIDADOS') AS team_1,fn_get_team_id('MIXTO','MIXTICOS') AS team_2 FROM DUAL;
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'MIXTO' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/25/2024'),' ',TRIM(REPLACE('6:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ABAJO') AS game_place,fn_get_team_id('MIXTO','VENGADORES') AS team_1,fn_get_team_id('MIXTO','LOS DEL BASQUET') AS team_2 FROM DUAL;
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'VARONIL' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/25/2024'),' ',TRIM(REPLACE('7:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ABAJO') AS game_place,fn_get_team_id('VARONIL','CHIQUE') AS team_1,fn_get_team_id('VARONIL','CUERVOS') AS team_2 FROM DUAL;
+SELECT *
+FROM players p
+WHERE player_id = 24
 
 
+UPDATE players
+SET games_played = 11
+WHERE player_id = 24
 
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'FEMENIL' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/26/2024'),' ',TRIM(REPLACE('5:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ARRIBA') AS game_place,fn_get_team_id('FEMENIL','LAS PEQUES') AS team_1,fn_get_team_id('FEMENIL','VENUS') AS team_2 FROM DUAL;
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'FEMENIL' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/26/2024'),' ',TRIM(REPLACE('6:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ARRIBA') AS game_place,fn_get_team_id('FEMENIL','LAS PEQUES') AS team_1,fn_get_team_id('FEMENIL','PANTERAS') AS team_2 FROM DUAL;
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'VARONIL' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/26/2024'),' ',TRIM(REPLACE('7:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ARRIBA') AS game_place,fn_get_team_id('VARONIL','CIERVOS') AS team_1,fn_get_team_id('VARONIL','TOROS') AS team_2 FROM DUAL;
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'MIXTO' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/26/2024'),' ',TRIM(REPLACE('8:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ARRIBA') AS game_place,fn_get_team_id('MIXTO','L@S PEQUES') AS team_1,fn_get_team_id('MIXTO','FENIX') AS team_2 FROM DUAL;
+UPDATE players,(
+	SELECT sum(total_games) AS total_games, team_id AS team_id
+	FROM (
+		SELECT count(*) AS total_games, team_1 AS team_id
+		FROM games
+		INNER JOIN teams t1 ON t1.team_id = games.team_1
+		WHERE games.tournament_id = 2
+		GROUP BY games.team_1
+		UNION ALL
+		SELECT count(*) AS total_games, team_2 AS team
+		FROM games
+		INNER JOIN teams t2 ON t2.team_id = games.team_2
+		WHERE games.tournament_id = 2
+		GROUP BY games.team_2
+	) AS games_grouped
+	GROUP BY team_id
+) AS games
 
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'VARONIL' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/26/2024'),' ',TRIM(REPLACE('5:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ABAJO') AS game_place,fn_get_team_id('VARONIL','REENCUENTRO') AS team_1,fn_get_team_id('VARONIL','ARDILLAS') AS team_2 FROM DUAL;
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'VARONIL' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/26/2024'),' ',TRIM(REPLACE('6:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ABAJO') AS game_place,fn_get_team_id('VARONIL','CIERVOS') AS team_1,fn_get_team_id('VARONIL','REENCUENTRO') AS team_2 FROM DUAL;
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'MIXTO' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/26/2024'),' ',TRIM(REPLACE('7:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ABAJO') AS game_place,fn_get_team_id('MIXTO','L@S PEQUES') AS team_1,fn_get_team_id('MIXTO','GALACTICOS') AS team_2 FROM DUAL;
-
-
-
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'FEMENIL' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/27/2024'),' ',TRIM(REPLACE('5:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ARRIBA') AS game_place,fn_get_team_id('FEMENIL','MONARCAS') AS team_1,fn_get_team_id('FEMENIL','TIX') AS team_2 FROM DUAL;
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'FEMENIL' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/27/2024'),' ',TRIM(REPLACE('6:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ARRIBA') AS game_place,fn_get_team_id('FEMENIL','GALACTICAS') AS team_1,fn_get_team_id('FEMENIL','NOVAS') AS team_2 FROM DUAL;
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'FEMENIL' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/27/2024'),' ',TRIM(REPLACE('7:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ARRIBA') AS game_place,fn_get_team_id('FEMENIL','PANTERAS') AS team_1,fn_get_team_id('FEMENIL','PREPA') AS team_2 FROM DUAL;
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'FEMENIL' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/27/2024'),' ',TRIM(REPLACE('8:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ARRIBA') AS game_place,fn_get_team_id('MIXTO','ROJAS MIX') AS team_1,fn_get_team_id('MIXTO','MIXED SQUIRRELS') AS team_2 FROM DUAL;
-
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'MIXTO' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/27/2024'),' ',TRIM(REPLACE('5:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ABAJO') AS game_place,fn_get_team_id('MIXTO','LA SELECCIÓN') AS team_1,fn_get_team_id('MIXTO','GALACTICOS') AS team_2 FROM DUAL;
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'MIXTO' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/27/2024'),' ',TRIM(REPLACE('6:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ABAJO') AS game_place,fn_get_team_id('MIXTO','ROJAS MIX') AS team_1,fn_get_team_id('MIXTO','LOS OLVIDADOS') AS team_2 FROM DUAL;
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'MIXTO' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/27/2024'),' ',TRIM(REPLACE('7:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ABAJO') AS game_place,fn_get_team_id('MIXTO','MIXED SQUIRRELS') AS team_1,fn_get_team_id('MIXTO','PECHOCHOS') AS team_2 FROM DUAL;
-
-
-
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'MIXTO' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/28/2024'),' ',TRIM(REPLACE('5:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ABAJO') AS game_place,fn_get_team_id('MIXTO','RENCOROSOS') AS team_1,fn_get_team_id('MIXTO','WINNERS') AS team_2 FROM DUAL;
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'MIXTO' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/28/2024'),' ',TRIM(REPLACE('6:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ABAJO') AS game_place,fn_get_team_id('MIXTO','WINNERS') AS team_1,fn_get_team_id('MIXTO','FENIX') AS team_2 FROM DUAL;
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'MIXTO' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/28/2024'),' ',TRIM(REPLACE('7:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ABAJO') AS game_place,fn_get_team_id('MIXTO','FENIX') AS team_1,fn_get_team_id('MIXTO','LOS OLVIDADOS') AS team_2 FROM DUAL;
+SET games_total = games.total_games
+WHERE players.team_id  = games.team_id 
 
 
+UPDATE players,(
+	SELECT count(*) AS played, players.player_id  AS player_id
+	FROM players
+	INNER JOIN games_played 
+	ON players.player_id = games_played.player_id
+	GROUP BY players.player_id
+) AS games
+SET games_played = games.played
+WHERE games.player_id = players.player_id 
 
-
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'MIXTO' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/29/2024'),' ',TRIM(REPLACE('6:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ABAJO') AS game_place,fn_get_team_id('MIXTO','LOS OLVIDADOS') AS team_1,fn_get_team_id('MIXTO','VIKINGOS') AS team_2 FROM DUAL;
-INSERT INTO games (tournament_id,category,week_number,game_date,game_place,team_1,team_2) SELECT 2 AS tournament_id,'MIXTO' AS category,11 AS week_number,STR_TO_DATE(CONCAT(TRIM('11/29/2024'),' ',TRIM(REPLACE('7:30 P.M.','.',''))), '%m/%d/%Y %h:%i %p') AS game_date,TRIM('ABAJO') AS game_place,fn_get_team_id('MIXTO','VIKINGOS') AS team_1,fn_get_team_id('MIXTO','PECHOCHOS') AS team_2 FROM DUAL;

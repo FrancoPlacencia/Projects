@@ -38,9 +38,11 @@ export class TeamService {
     return this.http.get<Map<string, Standing[]>>(url);
   }
 
-  public getTeamOptions(tournamentId: number): Observable<TeamOption[]> {
+  public getTeamOptions(
+    tournamentId: number,
+  ): Observable<Map<string, TeamOption[]>> {
     const url = `${this.SERVER_URL}/teamOptions?id=${tournamentId}`;
-    return this.http.get<TeamOption[]>(url);
+    return this.http.get<Map<string, TeamOption[]>>(url);
   }
 
   // UPDATE

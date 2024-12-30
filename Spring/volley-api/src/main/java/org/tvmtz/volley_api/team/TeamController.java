@@ -36,7 +36,7 @@ public class TeamController {
     }
 
     @GetMapping("/teamOptions")
-    public ResponseEntity<List<TeamOptionsDTO>> getTeamsOptions(@RequestParam Integer id) {
+    public ResponseEntity<Map<String, List<TeamOptionsDTO>>> getTeamsOptions(@RequestParam Integer id) {
         return teamService.getTeamOptions(id);
     }
 

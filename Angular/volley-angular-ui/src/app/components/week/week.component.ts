@@ -14,7 +14,7 @@ import { GameComponent } from '../game/game.component';
 })
 export class WeekComponent {
   @Input() days: Map<string, Game[]> = new Map<string, Game[]>();
-
+  @Input() isAdmin: boolean = false;
   @Output('parentEdit') parentEdit: EventEmitter<any> = new EventEmitter();
 
   @Output('parentDelete') parentDelete: EventEmitter<any> = new EventEmitter();

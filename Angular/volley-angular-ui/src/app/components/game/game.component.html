@@ -51,9 +51,16 @@
     <div class="match-details">
       <div
         [ngClass]="{
-          winner: teamStat.state === 'WINNER',
-          losser: teamStat.state === 'LOSSER',
-          default: teamStat.state === 'DEFAULT',
+          winner: teamStat.state === 'WINNER' && teamStat.teamId != teamFilter,
+          losser: teamStat.state === 'LOSSER' && teamStat.teamId != teamFilter,
+          default:
+            teamStat.state === 'DEFAULT' && teamStat.teamId != teamFilter,
+          'winner-selected':
+            teamStat.state === 'WINNER' && teamStat.teamId == teamFilter,
+          'losser-selected':
+            teamStat.state === 'LOSSER' && teamStat.teamId == teamFilter,
+          'default-selected':
+            teamStat.state === 'DEFAULT' && teamStat.teamId == teamFilter,
         }"
         class="match-team"
       >

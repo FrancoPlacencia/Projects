@@ -13,7 +13,7 @@
         @for (game of gamesDay[1]; track game) {
           <app-game
             [game]="game"
-            [isAdmin]="false"
+            [isAdmin]="isAdmin"
             (parentEdit)="edit($event)"
             (parentDelete)="delete($event)"
           ></app-game>

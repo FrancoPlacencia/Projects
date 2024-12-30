@@ -1,3 +1,4 @@
+import { TeamOption } from './../../model/team-option.model';
 import { TournamentApp } from './../../model/tournament-app.model';
 // @angular
 import { Component, ViewChild } from '@angular/core';
@@ -27,8 +28,10 @@ import { Game } from '../../model/game.model';
 import { GameService } from '../../services/game.service';
 import { TournamentComponent } from '../tournament/tournament.component';
 import { WeekComponent } from '../week/week.component';
-import { generateGameWeeks } from '../../util/game-util';
+import { generateGameWeeks, generateTeamMap } from '../../util/game-util';
 import { GamesComponent } from '../games/games.component';
+import { TeamComponent } from '../team/team.component';
+import { TeamsComponent } from '../teams/teams.component';
 
 const daysOfWeek: string[] = [
   'DOMINGO',
@@ -66,6 +69,8 @@ const months: string[] = [
     StandingComponent,
     WeekComponent,
     GamesComponent,
+    TeamComponent,
+    TeamsComponent,
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
@@ -105,21 +110,18 @@ export class LandingComponent {
     this.getActiveTournament();
   }
 
-  public submit(tournament: Tournament): void {
-    this.router.navigate(['../tournament'], {
-      relativeTo: this.route,
-      queryParams: {
-        id: tournament.tournamentId,
-      },
-    });
-  }
-
   private getActiveTournament(): void {
     this.tournamentService.getTournament().subscribe({
       next: (tournament: Tournament) => {
-        this.tournamentApp.tournament = tournament;
-        this.getStandings();
-        this.getWeeks();
+        if (tournament && tournament.tournamentId) {
+          this.tournamentApp.tournament = tournament;
+          this.getTeamOptions(tournament.tournamentId);
+          this.getWeeks(tournament.tournamentId);
+          this.getStandings(tournament.tournamentId);
+          this.getTeams(tournament.tournamentId);
+        } else {
+          this.errorMessage = 'Unable to load the data!';
+        }
       },
       error: (e: any) => {
         this.errorMessage = 'Unable to load the data!';
@@ -127,43 +129,45 @@ export class LandingComponent {
     });
   }
 
-  private getStandings(): void {
-    if (
-      this.tournamentApp &&
-      this.tournamentApp.tournament &&
-      this.tournamentApp.tournament.tournamentId
-    ) {
-      this.teamService
-        .getStandings(this.tournamentApp.tournament.tournamentId)
-        .subscribe({
-          next: (standings: Map<string, Standing[]>) => {
-            this.tournamentApp.standings = new Map(Object.entries(standings));
-            this.tournamentApp.standings.forEach((value, key) => {
-              this.mapDataSource.set(key, new MatTableDataSource(value));
-            });
-          },
-          error: (e: any) => {},
+  private getStandings(tournamentId: number): void {
+    this.teamService.getStandings(tournamentId).subscribe({
+      next: (standings: Map<string, Standing[]>) => {
+        this.tournamentApp.standings = new Map(Object.entries(standings));
+        this.tournamentApp.standings.forEach((value, key) => {
+          this.mapDataSource.set(key, new MatTableDataSource(value));
         });
-    }
+      },
+      error: (e: any) => {},
+    });
   }
 
-  private getWeeks() {
-    if (
-      this.tournamentApp &&
-      this.tournamentApp.tournament &&
-      this.tournamentApp.tournament.tournamentId
-    ) {
-      this.gameService
-        .getGames(this.tournamentApp.tournament.tournamentId)
-        .subscribe({
-          next: (games: Game[]) => {
-            this.games = games;
-            this.tournamentApp.weeks = generateGameWeeks(games);
-            this.weeksTab!.selectedIndex =
-              this.tournamentApp.tournament.weeks.length - 1;
-          },
-          error: (e: any) => {},
-        });
-    }
+  private getWeeks(tournamentId: number) {
+    this.gameService.getGames(tournamentId).subscribe({
+      next: (games: Game[]) => {
+        this.games = games;
+        this.tournamentApp.weeks = generateGameWeeks(games);
+        this.weeksTab!.selectedIndex =
+          this.tournamentApp.tournament.weeks.length - 1;
+      },
+      error: (e: any) => {},
+    });
+  }
+
+  private getTeamOptions(tournamentId: number) {
+    this.teamService.getTeamOptions(tournamentId).subscribe({
+      next: (teamOptions: Map<string, TeamOption[]>) => {
+        this.tournamentApp.teamOptions = new Map(Object.entries(teamOptions));
+      },
+      error: (e: any) => {},
+    });
+  }
+
+  private getTeams(tournamentId: number) {
+    this.teamService.getTeams(tournamentId, '').subscribe({
+      next: (teams: Team[]) => {
+        this.tournamentApp.teams = generateTeamMap(teams);
+      },
+      error: (e: any) => {},
+    });
   }
 }

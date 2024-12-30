@@ -14,6 +14,7 @@ CREATE TABLE tournaments (
 	rounds 			INTEGER NOT NULL DEFAULT 0,
 	url 			VARCHAR(255) NOT NULL,
 	is_active		BOOLEAN NOT NULL DEFAULT FALSE,
+	
 	CONSTRAINT PK_tournaments PRIMARY KEY (tournament_id),
 	CONSTRAINT UC_tournaments UNIQUE(name, year)
 );
@@ -43,11 +44,14 @@ CREATE TABLE teams (
 );
 
 CREATE TABLE players (
-	player_id 	INTEGER NOT NULL AUTO_INCREMENT,
-	team_id		INTEGER NOT NULL,
-	name 		varchar(100) NOT NULL,
-	last_name	varchar(100) DEFAULT '',
-	number		INTEGER NOT NULL,
+	player_id 			INTEGER NOT NULL AUTO_INCREMENT,
+	team_id				INTEGER NOT NULL,
+	number				INTEGER NOT NULL,
+	name 				VARCHAR(100) NOT NULL,
+	last_name			VARCHAR(100) DEFAULT '',
+	games_played		INTEGER DEFAULT 0,
+	games_total			INTEGER DEFAULT 0,
+	games_percentage	INTEGER DEFAULT 0,
 	
 	CONSTRAINT PK_players PRIMARY KEY (player_id),
 	CONSTRAINT FK_player_team FOREIGN KEY (team_id) REFERENCES teams(team_id),
@@ -63,7 +67,6 @@ CREATE TABLE games (
 	game_date  		DATETIME NOT NULL,
 	game_place 		VARCHAR(10) NOT NULL,
 	
-	
 	team_1 			INTEGER NOT NULL,
 	team_1_score 	INTEGER DEFAULT 0,
 	team_1_sets 	INTEGER DEFAULT 0,
@@ -75,7 +78,6 @@ CREATE TABLE games (
 	team_1_set_4_pts INTEGER DEFAULT 0,
 	team_1_set_5_pts INTEGER DEFAULT 0,
 
-	
 	team_2 			INTEGER NOT NULL,
 	team_2_score 	INTEGER DEFAULT 0,	
 	team_2_sets 	INTEGER DEFAULT 0,
@@ -88,19 +90,19 @@ CREATE TABLE games (
 	team_2_set_5_pts INTEGER DEFAULT 0,
 	
 	by_default BOOLEAN DEFAULT FALSE, 
-	CONSTRAINT PK_games PRIMARY KEY (game_id),
 	
+	CONSTRAINT PK_games PRIMARY KEY (game_id),
 	CONSTRAINT FK_games_tournament FOREIGN KEY (tournament_id) REFERENCES tournaments (tournament_id),
 	CONSTRAINT FK_games_team_1 FOREIGN KEY (team_1) REFERENCES teams(team_id),
 	CONSTRAINT FK_games_team_2 FOREIGN KEY (team_2) REFERENCES teams(team_id),
 	CONSTRAINT UC_games_match UNIQUE (tournament_id,category,week_number,game_date,team_1,team_2)
 );
 
-
 CREATE TABLE games_played (
 	games_played_id INTEGER NOT NULL AUTO_INCREMENT,
 	player_id 		INTEGER NOT NULL,
 	game_id			INTEGER NOT NULL,
+	
 	CONSTRAINT PK_games_played PRIMARY KEY (games_played_id),
 	CONSTRAINT FK_games_played_player FOREIGN KEY (player_id) REFERENCES players(player_id)  ON DELETE CASCADE,
 	CONSTRAINT FK_games_played_game FOREIGN KEY (game_id) REFERENCES games(game_id) ON DELETE CASCADE,

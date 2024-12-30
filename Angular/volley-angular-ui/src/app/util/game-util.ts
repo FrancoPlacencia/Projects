@@ -1,9 +1,5 @@
 import { Game } from '../model/game.model';
-
-import * as timezone from 'dayjs/plugin/timezone';
-import * as utc from 'dayjs/plugin/utc';
-
-import dayjs from 'dayjs';
+import { Team } from '../model/team.model';
 
 const daysOfWeek: string[] = [
   'DOMINGO',
@@ -68,4 +64,16 @@ export function generateGameWeekDay(games: Game[]): Map<string, Game[]> {
     }
   });
   return weekDayMap;
+}
+
+export function generateTeamMap(teams: Team[]) {
+  let teamMap: Map<string, Team[]> = new Map<string, Team[]>();
+  teams.forEach((team: Team) => {
+    if (teamMap.has(team.category)) {
+      teamMap.get(team.category)?.push(team);
+    } else {
+      teamMap.set(team.category, [team]);
+    }
+  });
+  return teamMap;
 }

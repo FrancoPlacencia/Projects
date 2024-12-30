@@ -143,6 +143,7 @@ ng generate interface sidenav-element
 pwd # ../volley-ui/src/app
 ng generate component home --skip-tests
 ng generate component games --skip-tests
+ng generate component teams --skip-tests
 ```
 
 ## Util Module

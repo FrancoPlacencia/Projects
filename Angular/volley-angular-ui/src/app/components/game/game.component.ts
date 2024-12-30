@@ -18,6 +18,8 @@ export class GameComponent {
 
   @Input() isAdmin: boolean = false;
 
+  @Input() teamFilter: number = 0;
+
   @Output() isProcessing: boolean = false;
 
   @Output('parentEdit') parentEdit: EventEmitter<any> = new EventEmitter();

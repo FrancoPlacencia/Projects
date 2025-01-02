@@ -1,3 +1,4 @@
+// @angular
 import { Component } from '@angular/core';
 import {
   FormBuilder,
@@ -6,12 +7,32 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
+// @angular/material
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
+
+// Models
+import { Tournament } from '../../model/tournament.model';
 import { Team } from '../../model/team.model';
+
+// Services
 import { TeamService } from '../../services/team.service';
 import { TournamentService } from '../../services/tournament.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+
+// Utils
+import { emptyTeam } from '../../util/empty-model-util';
+import { AppConstant } from '../../util/app-constant';
 import {
   endProcessing,
   resetFormGroup,
@@ -22,21 +43,14 @@ import {
   openDialog,
   openErrorDialog,
 } from '../../util/message-util';
-import { DialogMessageTypes } from '../../common/model/dialog-message-types';
-import { Tournament } from '../../model/tournament.model';
-import { CommonModule } from '@angular/common';
 
-// @angular/material
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatSelectModule } from '@angular/material/select';
-import { emptyTeam } from '../../util/empty-model-util';
+// Common
+import { DialogMessageTypes } from '../../common/model/dialog-message-types';
 import { CommonResponse } from '../../common/model/common-response.dto';
+import {
+  navigateToPlayer,
+  navigateToTournament,
+} from '../../util/navigate-util';
 
 @Component({
   selector: 'app-admin-team',
@@ -106,9 +120,9 @@ export class AdminTeamComponent {
     });
     // Create the form group from DTO
     this.formGroup = this.formBuilder.group({
-      teamNumber: [this.team.teamNumber, Validators.required],
-      name: [this.team.name, Validators.required],
-      initials: [this.team.initials, Validators.required],
+      teamNumber: [undefined, Validators.required],
+      name: [undefined, Validators.required],
+      initials: [undefined, Validators.required],
     });
     // Subscribe changes of Form Group to the DTO
     this.formGroup
@@ -179,20 +193,34 @@ export class AdminTeamComponent {
 
   public configure(team: Team): void {
     if (team.teamId) {
+      navigateToPlayer(
+        team.tournamentId!,
+        team.category,
+        team.teamId,
+        this.router,
+        this.route,
+      );
+      /*
       this.router.navigate(['../player'], {
         relativeTo: this.route,
         queryParams: {
           id: team.teamId,
+          tournament: team.tournamentId,
+          category: team.category,
         },
       });
+      */
     }
+  }
+
+  public tournament(): void {
+    navigateToTournament(this.router, this.route);
   }
 
   // ======================================================
   // PRIVATE FUNCTIONS
   // ======================================================
   private createTeam(): void {
-    console.log(this.team);
     this.teamService.postTeam(this.team).subscribe({
       next: (result: CommonResponse) => {
         this.isProcessing = endProcessing(this.formGroup, this.dialog);
@@ -214,11 +242,11 @@ export class AdminTeamComponent {
           this.dataSource = new MatTableDataSource(teams);
         } else {
           this.dataSource = undefined;
-          this.errorMessage = 'Nothing to display';
+          this.errorMessage = AppConstant.NOTHING_TO_DISPLAY;
         }
       },
       error: (e: any) => {
-        this.errorMessage = 'Unable to load the Data!';
+        this.errorMessage = AppConstant.UNABLE_TO_LOAD;
       },
     });
     this.tableLoaded = true;

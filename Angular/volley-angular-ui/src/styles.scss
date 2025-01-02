@@ -182,69 +182,69 @@ html {
   }
 
   .fem-button {
-    @include mat.fab-overrides(
+    @include mat.button-overrides(
       (
-        container-color: volley-colors.$fem-color,
-        foreground-color: volley-colors.$fem-light-color,
+        filled-label-text-color: volley-colors.$fem-light-color,
+        filled-container-color: volley-colors.$fem-color,
       )
     );
   }
   .fem-button:hover {
-    @include mat.fab-overrides(
+    @include mat.button-overrides(
       (
-        container-color: volley-colors.$fem-light-color,
-        foreground-color: volley-colors.$fem-color,
+        filled-label-text-color: volley-colors.$fem-color,
+        filled-container-color: volley-colors.$fem-light-color,
       )
     );
   }
 
   .var-button {
-    @include mat.fab-overrides(
+    @include mat.button-overrides(
       (
-        container-color: volley-colors.$var-color,
-        foreground-color: volley-colors.$var-light-color,
+        filled-label-text-color: volley-colors.$var-light-color,
+        filled-container-color: volley-colors.$var-color,
       )
     );
   }
   .var-button:hover {
-    @include mat.fab-overrides(
+    @include mat.button-overrides(
       (
-        container-color: volley-colors.$var-light-color,
-        foreground-color: volley-colors.$var-color,
+        filled-label-text-color: volley-colors.$var-color,
+        filled-container-color: volley-colors.$var-light-color,
       )
     );
   }
 
   .mix-button {
-    @include mat.fab-overrides(
+    @include mat.button-overrides(
       (
-        container-color: volley-colors.$mix-color,
-        foreground-color: volley-colors.$mix-light-color,
+        filled-label-text-color: volley-colors.$mix-light-color,
+        filled-container-color: volley-colors.$mix-color,
       )
     );
   }
   .mix-button:hover {
-    @include mat.fab-overrides(
+    @include mat.button-overrides(
       (
-        container-color: volley-colors.$mix-light-color,
-        foreground-color: volley-colors.$mix-color,
+        filled-label-text-color: volley-colors.$mix-color,
+        filled-container-color: volley-colors.$mix-light-color,
       )
     );
   }
 
   .week-button {
-    @include mat.fab-overrides(
+    @include mat.button-overrides(
       (
-        container-color: volley-colors.$week-color,
-        foreground-color: volley-colors.$week-light-color,
+        filled-label-text-color: volley-colors.$week-light-color,
+        filled-container-color: volley-colors.$week-color,
       )
     );
   }
   .week-button:hover {
-    @include mat.fab-overrides(
+    @include mat.button-overrides(
       (
-        container-color: volley-colors.$week-light-color,
-        foreground-color: volley-colors.$week-color,
+        filled-label-text-color: volley-colors.$week-color,
+        filled-container-color: volley-colors.$week-light-color,
       )
     );
   }

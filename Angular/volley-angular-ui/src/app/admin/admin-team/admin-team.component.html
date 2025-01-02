@@ -2,10 +2,10 @@
   <div class="wrapper almost-full">
     <form [formGroup]="formGroup" (ngSubmit)="submit()">
       <header>
-        <h1 [class]="categoryClass">
-          <mat-icon>groups</mat-icon>&nbsp;Equipos - {{ category }}
-        </h1>
-        <h1>{{ tournamentName }}</h1>
+        <h1><mat-icon>groups</mat-icon> {{ category | titlecase }}</h1>
+        <button mat-flat-button class="week-button" (click)="tournament()">
+          <mat-icon>emoji_events</mat-icon>Torneos
+        </button>
         <div class="action-section">
           <button
             mat-flat-button
@@ -20,7 +20,7 @@
               <mat-icon>add</mat-icon>Agregar Equipo
             </button>
           } @else {
-            <button mat-flat-button class="warning-button" type="submit">
+            <button mat-flat-button class="success-button" type="submit">
               <mat-icon>save</mat-icon>Actualizar Equipo
             </button>
           }
@@ -38,7 +38,6 @@
                 <mat-icon matTextPrefix>tag</mat-icon>
                 <input
                   matInput
-                  placeholder="Numero de Equipo"
                   formControlName="teamNumber"
                   type="number"
                   maxlength="2"
@@ -54,7 +53,6 @@
                 <input
                   class="upper-case"
                   matInput
-                  placeholder="Nombre del Equipo"
                   formControlName="name"
                   required
                 />
@@ -68,10 +66,9 @@
                 <input
                   class="upper-case"
                   matInput
-                  placeholder="Iniciales"
                   formControlName="initials"
                   type="text"
-                  maxlength="5"
+                  maxlength="8"
                   required
                 />
                 @if (formGroup!.controls["initials"].errors?.["required"]) {
@@ -133,11 +130,10 @@
               </div>
             </td>
           </ng-container>
-
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef>Action</th>
             <td mat-cell *matCellDef="let element">
-              <div>
+              <div class="action-buttons">
                 <button
                   mat-flat-button
                   class="danger-button"
@@ -145,7 +141,7 @@
                   (click)="delete(element)"
                   [disabled]="isProcessing"
                 >
-                  <mat-icon>delete_outline</mat-icon>Eliminar
+                  <mat-icon>delete_outline</mat-icon> Eliminar
                 </button>
                 &nbsp;
                 <button
@@ -155,7 +151,7 @@
                   (click)="edit(element)"
                   [disabled]="isProcessing"
                 >
-                  <mat-icon>edit</mat-icon>Editar
+                  <mat-icon>edit</mat-icon> Editar
                 </button>
                 &nbsp;
                 <button
@@ -165,7 +161,7 @@
                   (click)="configure(element)"
                   [disabled]="isProcessing"
                 >
-                  <mat-icon>settings</mat-icon>Jugadores
+                  <mat-icon>manage_accounts</mat-icon> Jugadores
                 </button>
               </div>
             </td>

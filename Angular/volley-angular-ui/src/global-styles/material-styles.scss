@@ -2,7 +2,6 @@
 
 mat-toolbar {
   border-bottom: 2px volley-colors.$blue solid;
-  background: volley-colors.$background-gray !important;
 }
 
 .mat-expansion-panel-body {
@@ -22,7 +21,7 @@ mat-expansion-panel-header {
 }
 
 mat-card {
-  background-color: volley-colors.$background-ligth-gray;
+  background-color: volley-colors.$background-ligth-gray !important;
 
   mat-card-header {
     padding: 20px !important;

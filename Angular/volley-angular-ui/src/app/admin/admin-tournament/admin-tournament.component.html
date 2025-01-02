@@ -20,12 +20,12 @@
               color="accent"
               type="submit"
             >
-              <mat-icon>add</mat-icon>Nuevo Tourneo Church
+              <mat-icon>add</mat-icon>Nuevo Tourneo
             </button>
           } @else {
             <button
               mat-flat-button
-              class="warning-button"
+              class="success-button"
               color="accent"
               type="submit"
             >
@@ -44,26 +44,15 @@
               <mat-form-field floatLabel="always" class="full">
                 <mat-label>Nombre</mat-label>
                 <mat-icon matTextPrefix>emoji_events</mat-icon>
-                <input
-                  matInput
-                  placeholder="Nombre del torneo"
-                  formControlName="name"
-                  required
-                />
+                <input matInput formControlName="name" required />
                 @if (formGroup!.controls["name"].errors?.["required"]) {
-                  <mat-error>Nombre del torneo es requerido.</mat-error>
+                  <mat-error>El nombre del torneo es requerido.</mat-error>
                 }
               </mat-form-field>
               <mat-form-field floatLabel="always" class="full">
                 <mat-label>URL</mat-label>
                 <mat-icon matTextPrefix>link</mat-icon>
-                <input
-                  matInput
-                  placeholder="URL"
-                  formControlName="url"
-                  type="text"
-                  required
-                />
+                <input matInput formControlName="url" type="text" required />
                 @if (formGroup!.controls["url"].errors?.["required"]) {
                   <mat-error>La URL es requerida.</mat-error>
                 }
@@ -75,13 +64,12 @@
                 <mat-icon matTextPrefix>description</mat-icon>
                 <input
                   matInput
-                  placeholder="Descripción"
                   formControlName="description"
                   type="text"
                   required
                 />
                 @if (formGroup!.controls["description"].errors?.["required"]) {
-                  <mat-error>Descripcion es requerida.</mat-error>
+                  <mat-error>La descripcion es requerida.</mat-error>
                 }
               </mat-form-field>
             </div>
@@ -91,7 +79,6 @@
                 <mat-icon matTextPrefix>calendar_month</mat-icon>
                 <input
                   matInput
-                  placeholder="Año"
                   formControlName="year"
                   type="number"
                   maxlength="4"
@@ -106,7 +93,7 @@
                   formGroup!.controls["year"].errors?.["max"] ||
                   formGroup!.controls["year"].errors?.["min"]
                 ) {
-                  <mat-error>El año debe de estar entre 2000 y 2100</mat-error>
+                  <mat-error>El año debe de estar entre 2000 y 2100.</mat-error>
                 }
               </mat-form-field>
               <mat-form-field floatLabel="always" class="full">
@@ -114,14 +101,13 @@
                 <mat-icon matTextPrefix>tag</mat-icon>
                 <input
                   matInput
-                  placeholder="Rondas"
                   formControlName="rounds"
                   type="number"
                   maxlength="4"
                   required
                 />
                 @if (formGroup!.controls["rounds"].errors?.["required"]) {
-                  <mat-error>Numero de Rondas es requerido.</mat-error>
+                  <mat-error>El numero de rondas es requerido.</mat-error>
                 }
               </mat-form-field>
             </div>
@@ -130,68 +116,6 @@
                 >Torneo Activo</mat-slide-toggle
               >
             </div>
-            <!--
-            @if (!isNew) {
-              <div class="flex-input">
-                <button
-                  mat-fab
-                  extended
-                  class="fem-button"
-                  type="button"
-                  (click)="team('FEMENIL')"
-                  [disabled]="isProcessing"
-                >
-                  <mat-icon>groups</mat-icon>FEMENIL
-                </button>
-                <button
-                  mat-fab
-                  extended
-                  class="var-button"
-                  type="button"
-                  (click)="team('VARONIL')"
-                  [disabled]="isProcessing"
-                >
-                  <mat-icon>groups</mat-icon>VARONIL
-                </button>
-                <button
-                  mat-fab
-                  extended
-                  class="mix-button"
-                  type="button"
-                  (click)="team('MIXTO')"
-                  [disabled]="isProcessing"
-                >
-                  <mat-icon>groups</mat-icon>MIXTO
-                </button>
-                <button
-                  mat-fab
-                  extended
-                  type="button"
-                  (click)="newGameWeek()"
-                  [disabled]="isProcessing"
-                >
-                  <mat-icon>add</mat-icon>NUEVO
-                </button>
-              </div>
-              <br />
-              <div class="flex-input-weeks">
-                @for (week of tournamentWeeks; track $index) {
-                  <button
-                    mat-fab
-                    extended
-                    class="week-button"
-                    type="button"
-                    (click)="gameWeek(week)"
-                    [disabled]="isProcessing"
-                  >
-                    <mat-icon>date_range</mat-icon>JORNADA {{ week.weekNumber }}
-                  </button>
-                } @empty {
-                  <h5>No Week Added</h5>
-                }
-              </div>
-            }
-            -->
           </mat-card-content>
         </mat-card>
       </main>
@@ -260,7 +184,6 @@
             </button>
           </td>
         </ng-container>
-
         <ng-container matColumnDef="expand">
           <th mat-header-cell *matHeaderCellDef aria-label="row actions">
             &nbsp;
@@ -282,8 +205,6 @@
             </button>
           </td>
         </ng-container>
-
-        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
         <ng-container matColumnDef="expandedDetail">
           <td
             mat-cell
@@ -299,7 +220,7 @@
               <div class="element-expanded">
                 <div class="flex-input">
                   <button
-                    mat-fab
+                    mat-flat-button
                     extended
                     class="fem-button"
                     type="button"
@@ -309,7 +230,7 @@
                     <mat-icon>groups</mat-icon>FEMENIL
                   </button>
                   <button
-                    mat-fab
+                    mat-flat-button
                     extended
                     class="var-button"
                     type="button"
@@ -319,7 +240,7 @@
                     <mat-icon>groups</mat-icon>VARONIL
                   </button>
                   <button
-                    mat-fab
+                    mat-flat-button
                     extended
                     class="mix-button"
                     type="button"
@@ -329,7 +250,7 @@
                     <mat-icon>groups</mat-icon>MIXTO
                   </button>
                   <button
-                    mat-fab
+                    mat-flat-button
                     extended
                     type="button"
                     (click)="
@@ -340,11 +261,10 @@
                     <mat-icon>add</mat-icon>NUEVO
                   </button>
                 </div>
-
                 <div class="flex-input-weeks">
                   @for (week of element.weeks; track $index) {
                     <button
-                      mat-fab
+                      mat-flat-button
                       extended
                       class="week-button"
                       type="button"
@@ -362,7 +282,6 @@
             </div>
           </td>
         </ng-container>
-
         <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
         <tr
           mat-row

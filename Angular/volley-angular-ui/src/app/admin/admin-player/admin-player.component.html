@@ -2,10 +2,10 @@
   <div class="wrapper almost-full">
     <form [formGroup]="formGroup" (ngSubmit)="submit()">
       <header>
-        <h1>
-          <mat-icon>people</mat-icon>&nbsp;Jugadores - Equipo
-          {{ teamName }}
-        </h1>
+        <h1><mat-icon>people</mat-icon> {{ teamName | titlecase }}</h1>
+        <button mat-flat-button class="week-button" (click)="toTournament()">
+          <mat-icon>emoji_events</mat-icon>Torneos
+        </button>
         <div class="action-section">
           <button
             mat-flat-button
@@ -20,7 +20,7 @@
               <mat-icon>add</mat-icon>Agregar Jugador
             </button>
           } @else {
-            <button mat-flat-button class="warning-button" type="submit">
+            <button mat-flat-button class="success-button" type="submit">
               <mat-icon>save</mat-icon>Actualizar Jugador
             </button>
           }
@@ -38,35 +38,31 @@
                 <mat-icon matTextPrefix>tag</mat-icon>
                 <input
                   matInput
-                  placeholder="Numero"
                   formControlName="number"
                   type="number"
                   maxlength="3"
                   max="999"
-                  min="0"
+                  min="1"
                   required
                 />
                 @if (formGroup!.controls["number"].errors?.["required"]) {
-                  <mat-error>Año es requerido.</mat-error>
+                  <mat-error>Numero del jugador requerido.</mat-error>
                 }
                 @if (
                   formGroup!.controls["number"].errors?.["max"] ||
                   formGroup!.controls["number"].errors?.["min"]
                 ) {
-                  <mat-error>El año debe de estar entre 2000 y 2100</mat-error>
+                  <mat-error
+                    >Numero del jugador debe ser entre 1 al 999</mat-error
+                  >
                 }
               </mat-form-field>
               <mat-form-field floatLabel="always" class="full">
                 <mat-label>Nombre</mat-label>
                 <mat-icon matTextPrefix>description</mat-icon>
-                <input
-                  matInput
-                  placeholder="Nombre"
-                  formControlName="name"
-                  required
-                />
+                <input matInput formControlName="name" required />
                 @if (formGroup!.controls["name"].errors?.["required"]) {
-                  <mat-error>Nombre del equipo es requerido.</mat-error>
+                  <mat-error>Nombre del jugador es requerido.</mat-error>
                 }
               </mat-form-field>
               <mat-form-field floatLabel="always" class="full">
@@ -74,13 +70,12 @@
                 <mat-icon matTextPrefix>description</mat-icon>
                 <input
                   matInput
-                  placeholder="Apellidos"
                   formControlName="lastName"
                   type="text"
                   required
                 />
                 @if (formGroup!.controls["lastName"].errors?.["required"]) {
-                  <mat-error>El apellido es requerida.</mat-error>
+                  <mat-error>El apellido del jugador es requerido.</mat-error>
                 }
               </mat-form-field>
             </div>

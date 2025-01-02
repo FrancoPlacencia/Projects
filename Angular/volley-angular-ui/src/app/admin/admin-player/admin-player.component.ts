@@ -18,7 +18,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Player } from '../../model/player.model';
 import { Team } from '../../model/team.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TeamService } from '../../services/team.service';
 import { PlayerService } from '../../services/player.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -35,6 +35,7 @@ import {
 import { DialogMessageTypes } from '../../common/model/dialog-message-types';
 import { emptyPlayer } from '../../util/empty-model-util';
 import { CommonResponse } from '../../common/model/common-response.dto';
+import { navigateToTeam, navigateToTournament } from '../../util/navigate-util';
 
 @Component({
   selector: 'app-admin-player',
@@ -81,9 +82,12 @@ export class AdminPlayerComponent {
   public teamName: string = '';
   public playerId: number | undefined;
   private teamId: number = 0;
+  private tournamentId: number = 0;
+  public category: string = '';
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private formBuilder: FormBuilder,
     private teamService: TeamService,
     private playerService: PlayerService,
@@ -92,13 +96,24 @@ export class AdminPlayerComponent {
     // Get data from URL
     this.route.queryParamMap.subscribe((params) => {
       this.teamId = Number(params.get('id')!);
+      this.tournamentId = Number(params.get('tournament')!);
+      this.category = params.get('category')!;
       this.getTeam();
+      console.log(this.tournamentId);
     });
     // Create the form group from DTO
     this.formGroup = this.formBuilder.group({
-      name: [this.player.name, Validators.required],
-      lastName: [this.player.lastName, Validators.required],
-      number: [this.player.number, Validators.required],
+      number: [
+        undefined,
+        [
+          Validators.required,
+          Validators.maxLength,
+          Validators.max,
+          Validators.min,
+        ],
+      ],
+      name: [undefined, Validators.required],
+      lastName: [undefined, Validators.required],
     });
     // Subscribe changes of Form Group to the DTO
     this.formGroup
@@ -162,6 +177,10 @@ export class AdminPlayerComponent {
         }
       });
     }
+  }
+
+  public toTournament(): void {
+    navigateToTournament(this.router, this.route);
   }
 
   // ======================================================

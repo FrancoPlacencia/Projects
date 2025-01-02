@@ -19,7 +19,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: left;
+  justify-content: space-between;
   gap: 10px;
   padding-top: 10px;
 }
@@ -28,16 +28,40 @@
 .container {
   display: flex;
   flex-direction: row;
-  height: 100%;
+  height: auto;
   width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  background-repeat: no-repeat;
+
+  background-image: linear-gradient(
+      to right,
+      volley-colors.$week-light-color,
+      volley-colors.$week-light-color
+    ),
+    linear-gradient(
+      to right,
+      volley-colors.$week-color,
+      volley-colors.$week-color
+    );
+
+  background-position:
+    0 0,
+    0 180px;
+
+  background-size:
+    100% 180px,
+    100% 10px;
 }
 
 .wrapper {
   display: flex;
   flex-direction: column;
+  text-align: center;
   h4 {
     color: volley-colors.$week-color;
-    font-weight: 400;
+    font-weight: 500;
   }
 }
 
@@ -106,6 +130,10 @@ header {
   border-radius: 1rem !important;
 }
 
+table {
+  border-bottom: 1px solid rgb(128, 128, 128) !important;
+}
+
 th {
   font-size: 1.125rem;
 }
@@ -124,6 +152,11 @@ td {
     font-weight: 400 !important;
     margin: 0;
   }
+}
+
+.action-buttons {
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .mat-mdc-header-cell {
@@ -184,7 +217,7 @@ td {
   display: grid;
   grid-template-columns: 50% 50%;
   justify-content: center;
-  background: volley-colors.$background-gray;
+  background: volley-colors.$background-ligth-gray !important;
 }
 .match-box {
   display: flex;
@@ -215,6 +248,11 @@ td {
   letter-spacing: 0.5px;
   line-height: 14px;
 }
+.match-time {
+  padding: 5px 10px;
+  font-size: 1.2rem;
+  color: volley-colors.$black;
+}
 
 .match-action {
   text-align: right;
@@ -223,7 +261,7 @@ td {
 .match-details {
   padding-top: 5px;
   display: grid;
-  grid-template-columns: 40% 20% 40%;
+  grid-template-columns: 30% 20% 50%;
   align-items: center;
   justify-content: space-between;
 }
@@ -232,6 +270,7 @@ td {
   font-size: 20px;
   font-weight: 450;
   color: #282828;
+  text-align: right;
 }
 .match-results {
   display: flex;
@@ -294,7 +333,8 @@ td {
 .match-players {
   display: flex;
   flex-direction: row;
-  justify-content: right;
+  justify-content: left;
+  flex-wrap: wrap;
   gap: 5px;
 }
 

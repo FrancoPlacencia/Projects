@@ -1,0 +1,184 @@
+<div class="container top-center-flex">
+  <div class="wrapper almost-full">
+    <form [formGroup]="formGroup" (ngSubmit)="submit()">
+      <header>
+        <h1><mat-icon>groups</mat-icon> {{ category | titlecase }}</h1>
+        <div class="action-section">
+          <button mat-flat-button class="week-button" (click)="tournament()">
+            <mat-icon>emoji_events</mat-icon>Torneos
+          </button>
+          <button mat-flat-button class="week-button" (click)="playoff()">
+            <mat-icon>format_list_numbered_rtl</mat-icon>Eliminatorias
+          </button>
+        </div>
+        <div class="action-section">
+          <button
+            mat-flat-button
+            class="info-button"
+            type="button"
+            (click)="reset()"
+          >
+            <mat-icon>restart_alt</mat-icon>Limpiar campos
+          </button>
+          @if (isNew) {
+            <button mat-flat-button class="success-button" type="submit">
+              <mat-icon>add</mat-icon>Agregar Equipo
+            </button>
+          } @else {
+            <button mat-flat-button class="success-button" type="submit">
+              <mat-icon>save</mat-icon>Actualizar Equipo
+            </button>
+          }
+        </div>
+      </header>
+      <main>
+        <mat-card class="box full">
+          <mat-card-content>
+            @if (teamId) {
+              <h5>ID - {{ teamId }}</h5>
+            }
+            <div class="flex-input">
+              <mat-form-field floatLabel="always" class="full">
+                <mat-label>Numero de Equipo</mat-label>
+                <mat-icon matTextPrefix>tag</mat-icon>
+                <input
+                  matInput
+                  formControlName="teamNumber"
+                  type="number"
+                  maxlength="2"
+                  required
+                />
+                @if (formGroup!.controls["teamNumber"].errors?.["required"]) {
+                  <mat-error>Numero de Equipo es requerido.</mat-error>
+                }
+              </mat-form-field>
+              <mat-form-field floatLabel="always" class="full">
+                <mat-label>Nombre</mat-label>
+                <mat-icon matTextPrefix>description</mat-icon>
+                <input
+                  class="upper-case"
+                  matInput
+                  formControlName="name"
+                  required
+                />
+                @if (formGroup!.controls["name"].errors?.["required"]) {
+                  <mat-error>Nombre del equipo es requerido.</mat-error>
+                }
+              </mat-form-field>
+              <mat-form-field floatLabel="always" class="full">
+                <mat-label>Iniciales</mat-label>
+                <mat-icon matTextPrefix>article</mat-icon>
+                <input
+                  class="upper-case"
+                  matInput
+                  formControlName="initials"
+                  type="text"
+                  maxlength="8"
+                  required
+                />
+                @if (formGroup!.controls["initials"].errors?.["required"]) {
+                  <mat-error>Las iniciales son requeridas.</mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </main>
+    </form>
+    @if (tableLoaded) {
+      @if (dataSource) {
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="number">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let element">
+              <div>
+                {{ element.teamNumber }}
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let element">
+              <div>
+                {{ element.name }}
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="initials">
+            <th mat-header-cell *matHeaderCellDef>Iniciales</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.initials }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let element">
+              <div>
+                {{ element.teamId }}
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="players">
+            <th mat-header-cell *matHeaderCellDef>Players</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="match-players">
+                @for (player of element.players; track $index) {
+                  <div
+                    [ngClass]="player.gamePlayed ? 'game-played' : ''"
+                    class="match-player"
+                  >
+                    {{ player.number }}
+                  </div>
+                } @empty {
+                  <div><span>-</span></div>
+                }
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="action-buttons">
+                <button
+                  mat-flat-button
+                  class="danger-button"
+                  type="button"
+                  (click)="delete(element)"
+                  [disabled]="isProcessing"
+                >
+                  <mat-icon>delete_outline</mat-icon> Eliminar
+                </button>
+                &nbsp;
+                <button
+                  mat-flat-button
+                  class="primary-button"
+                  type="button"
+                  (click)="edit(element)"
+                  [disabled]="isProcessing"
+                >
+                  <mat-icon>edit</mat-icon> Editar
+                </button>
+                &nbsp;
+                <button
+                  mat-flat-button
+                  class="secondary-button"
+                  type="button"
+                  (click)="configure(element)"
+                  [disabled]="isProcessing"
+                >
+                  <mat-icon>manage_accounts</mat-icon> Jugadores
+                </button>
+              </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsHeader"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnsHeader"></tr>
+        </table>
+      } @else {
+        <h4 class="color-white">{{ errorMessage }}</h4>
+      }
+    } @else {
+      <h4 class="color-white">Loading...</h4>
+    }
+  </div>
+</div>

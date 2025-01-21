@@ -1,0 +1,82 @@
+<div class="container top-center-flex">
+  <div class="wrapper almost-full">
+    <form [formGroup]="formGroup" (ngSubmit)="submit()">
+      <header>
+        <h1><mat-icon>groups</mat-icon> {{ category | titlecase }}</h1>
+        <div class="action-section">
+          <button mat-flat-button class="week-button" (click)="tournament()">
+            <mat-icon>emoji_events</mat-icon>Torneos
+          </button>
+        </div>
+        <div class="action-section">
+          <button
+            mat-flat-button
+            class="info-button"
+            type="button"
+            (click)="reset()"
+          >
+            <mat-icon>restart_alt</mat-icon>Limpiar campos
+          </button>
+
+          <button mat-flat-button class="success-button" type="submit">
+            <mat-icon>add</mat-icon>Agregar Equipo
+          </button>
+
+          <button mat-flat-button class="success-button" type="submit">
+            <mat-icon>save</mat-icon>Actualizar Equipo
+          </button>
+        </div>
+      </header>
+      <main>
+        <mat-card class="box full">
+          <mat-card-content>
+            <div class="flex-input">
+              <mat-form-field floatLabel="always" class="full">
+                <mat-label>Numero de Equipo</mat-label>
+                <mat-icon matTextPrefix>tag</mat-icon>
+                <input
+                  matInput
+                  formControlName="teamNumber"
+                  type="number"
+                  maxlength="2"
+                  required
+                />
+                @if (formGroup!.controls["teamNumber"].errors?.["required"]) {
+                  <mat-error>Numero de Equipo es requerido.</mat-error>
+                }
+              </mat-form-field>
+              <mat-form-field floatLabel="always" class="full">
+                <mat-label>Nombre</mat-label>
+                <mat-icon matTextPrefix>description</mat-icon>
+                <input
+                  class="upper-case"
+                  matInput
+                  formControlName="name"
+                  required
+                />
+                @if (formGroup!.controls["name"].errors?.["required"]) {
+                  <mat-error>Nombre del equipo es requerido.</mat-error>
+                }
+              </mat-form-field>
+              <mat-form-field floatLabel="always" class="full">
+                <mat-label>Iniciales</mat-label>
+                <mat-icon matTextPrefix>article</mat-icon>
+                <input
+                  class="upper-case"
+                  matInput
+                  formControlName="initials"
+                  type="text"
+                  maxlength="8"
+                  required
+                />
+                @if (formGroup!.controls["initials"].errors?.["required"]) {
+                  <mat-error>Las iniciales son requeridas.</mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </main>
+    </form>
+  </div>
+</div>

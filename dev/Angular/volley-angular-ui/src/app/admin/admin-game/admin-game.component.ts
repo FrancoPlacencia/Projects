@@ -10,7 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   endProcessing,
   resetFormGroup,
@@ -55,6 +55,7 @@ import {
   generateGameWeeks,
   generateTeamMap,
 } from '../../util/game-util';
+import { navigateToTournament } from '../../util/navigate-util';
 
 @Component({
   selector: 'app-admin-game',
@@ -124,13 +125,16 @@ export class AdminGameComponent {
 
   private teamsMap: Map<string, Team[]> = new Map<string, Team[]>();
 
+  public stage: string = '';
+  public playoff: boolean = false;
+  public stageText: string = '';
   constructor(
     private teamService: TeamService,
     private gamesService: GameService,
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
 
-    //private router: Router,
+    private router: Router,
     private route: ActivatedRoute,
   ) {
     let time = new Date();
@@ -140,7 +144,23 @@ export class AdminGameComponent {
     this.route.queryParamMap.subscribe((params) => {
       this.tournamentId = Number(params.get('id')!);
       this.weekNumber = Number(params.get('weekNumber')!);
-
+      this.stage = params.get('stage') ?? '';
+      this.playoff = this.weekNumber === 0 && this.stage != '';
+      switch (this.stage) {
+        case 'QUARTER':
+          this.stageText = 'Cuartos de Final';
+          break;
+        case 'SEMI':
+          this.stageText = 'Semi-Finales';
+          break;
+        case 'FINAL':
+          this.stageText = 'Finales';
+          break;
+        default:
+          this.stageText = '';
+          break;
+      }
+      this.getGames();
       this.getTeams();
     });
 
@@ -217,15 +237,7 @@ export class AdminGameComponent {
     this.formGroup
       .get('gameDate')!
       .valueChanges.subscribe((selectedValue: any) => {
-        /*
-        this.dateStart.set('year', selectedValue.get('year'));
-        this.dateStart.set('month', selectedValue.get('month'));
-        this.dateStart.set('date', selectedValue.get('date'));
-
-        this.dateStart = dayjs(selectedValue);
-        */
         this.game.gameDate = selectedValue;
-        console.log('valueChange date ', typeof selectedValue, this.game);
       });
     this.formGroup
       .get('gameTime')!
@@ -233,7 +245,6 @@ export class AdminGameComponent {
         this.game.gameDate.setHours(selectedValue.getHours());
         this.game.gameDate.setMinutes(selectedValue.getMinutes());
         //this.dateStart.set('hour', selectedValue.getHours());
-        console.log('valueChange hour', typeof selectedValue, this.game);
         //this.dateStart.set('minute', dayjs(selectedValue).get('minute'));
       });
     this.formGroup.get('gamePlace')!.valueChanges.subscribe((selectedValue) => {
@@ -276,7 +287,7 @@ export class AdminGameComponent {
   }
 
   ngOnInit(): void {
-    this.getGames();
+    // this.getGames();
   }
 
   public reset(): void {
@@ -297,7 +308,6 @@ export class AdminGameComponent {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.status === 'VALID') {
       this.isProcessing = startProcessing(this.formGroup, this.dialog);
-      console.log('submit ', this.game);
       this.isNew ? this.createGame() : this.updateGame();
     }
   }
@@ -309,8 +319,13 @@ export class AdminGameComponent {
     this.gameId = game.gameId;
     this.game.gameId = game.gameId;
     this.game.category = game.category;
+    this.game.stage = game.stage;
     this.game.tournamentId = this.tournamentId;
-    this.game.weekNumber = this.weekNumber;
+    if (this.playoff) {
+      this.game.weekNumber = game.weekNumber;
+    } else {
+      this.game.weekNumber = this.weekNumber;
+    }
 
     // let dateT = new Date(game.gameDate);
     this.game.gameDate = new Date(game.gameDate);
@@ -355,76 +370,93 @@ export class AdminGameComponent {
     }
   }
 
+  public tournament(): void {
+    navigateToTournament(this.router, this.route);
+  }
+
   // ======================================================
   // PRIVATE FUNCTIONS
   // ======================================================
   private createGame(): void {
     this.game.tournamentId = this.tournamentId;
     this.game.weekNumber = this.weekNumber;
-    this.gamesService.postGame(this.game).subscribe({
-      next: (result: CommonResponse) => {
-        this.isProcessing = endProcessing(this.formGroup, this.dialog);
-        openDialog(this.dialog, DialogMessageTypes.SUCCESS, result.response);
-        this.reset();
-      },
-      error: (e: any) => {
-        this.isProcessing = endProcessing(this.formGroup, this.dialog);
-        openErrorDialog(this.dialog, e.status, e.error);
-      },
-    });
+    if (!this.playoff) {
+      this.gamesService.postGame(this.game).subscribe({
+        next: (result: CommonResponse) => {
+          this.isProcessing = endProcessing(this.formGroup, this.dialog);
+          openDialog(this.dialog, DialogMessageTypes.SUCCESS, result.response);
+          this.reset();
+        },
+        error: (e: any) => {
+          this.isProcessing = endProcessing(this.formGroup, this.dialog);
+          openErrorDialog(this.dialog, e.status, e.error);
+        },
+      });
+    }
   }
 
   private getGames(): void {
     this.gamesMatrix = [];
-    this.gamesService
-      .getGamesWeek(this.tournamentId, Number(this.weekNumber))
-      .subscribe({
-        next: (games: Game[]) => {
-          this.weeks = generateGameWeekDay(games);
-        },
-        error: (e: any) => {
-          this.errorMessage = 'Unable to load the Data!';
-        },
-      });
+    if (this.playoff) {
+      this.gamesService
+        .getGamesPlayoff(this.tournamentId, this.stage)
+        .subscribe({
+          next: (games: Game[]) => {
+            this.weeks = generateGameWeekDay(games);
+            console.log(this.weeks);
+          },
+          error: (e: any) => {
+            this.errorMessage = 'Unable to load the Data!';
+          },
+        });
+    } else {
+      this.gamesService
+        .getGamesWeek(this.tournamentId, Number(this.weekNumber))
+        .subscribe({
+          next: (games: Game[]) => {
+            this.weeks = generateGameWeekDay(games);
+          },
+          error: (e: any) => {
+            this.errorMessage = 'Unable to load the Data!';
+          },
+        });
+    }
     this.tableLoaded = true;
   }
 
   private getTeams(): void {
-    this.teamService.getTeamOptions(this.tournamentId).subscribe({
-      next: (teamOptions: Map<string, TeamOption[]>) => {
-        this.teamOptionsMap = new Map(Object.entries(teamOptions));
-      },
-      error: (e: any) => {},
-    });
+    if (this.playoff) {
+      this.teamService.getTeamOptions(this.tournamentId, this.stage).subscribe({
+        next: (teamOptions: Map<string, TeamOption[]>) => {
+          this.teamOptionsMap = new Map(Object.entries(teamOptions));
+        },
+        error: (e: any) => {},
+      });
 
-    this.teamService.getTeams(this.tournamentId, '').subscribe({
-      next: (teams: Team[]) => {
-        console.log(teams);
-        this.teamsMap = generateTeamMap(teams);
-        /*
-        teams.forEach((element: Team) => {
-          switch (element.category) {
-            case 'FEMENIL':
-              this.femTeams.push(element);
-              break;
-            case 'VARONIL':
-              this.varTeams.push(element);
-              break;
-            case 'MIXTO':
-              this.mixTeams.push(element);
-              break;
-            default:
-              break;
-          }
-        });
-        */
-      },
-      error: (e: any) => {},
-    });
+      this.teamService.getTeams(this.tournamentId, '', this.stage).subscribe({
+        next: (teams: Team[]) => {
+          this.teamsMap = generateTeamMap(teams);
+        },
+        error: (e: any) => {},
+      });
+    } else {
+      this.teamService.getTeamOptions(this.tournamentId, 'REGULAR').subscribe({
+        next: (teamOptions: Map<string, TeamOption[]>) => {
+          this.teamOptionsMap = new Map(Object.entries(teamOptions));
+        },
+        error: (e: any) => {},
+      });
+
+      this.teamService.getTeams(this.tournamentId, '', 'REGULAR').subscribe({
+        next: (teams: Team[]) => {
+          this.teamsMap = generateTeamMap(teams);
+        },
+        error: (e: any) => {},
+      });
+    }
   }
 
   private updateGame(): void {
-    console.log(this.game);
     this.gamesService.putGame(this.game).subscribe({
       next: (result: CommonResponse) => {
         this.isProcessing = endProcessing(this.formGroup, this.dialog);

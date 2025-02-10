@@ -26,8 +26,13 @@ export class TeamService {
     return this.http.get<Team>(url);
   }
 
-  public getTeams(tournamentId: number, category: string): Observable<Team[]> {
-    const url = `${this.SERVER_URL}/teams?id=${tournamentId}&category=${category}`;
+  public getTeams(
+    tournamentId: number,
+    category: string,
+    stage: string,
+  ): Observable<Team[]> {
+    const url = `${this.SERVER_URL}/teams?id=${tournamentId}&category=${category}&stage=${stage}`;
+    console.log(url);
     return this.http.get<Team[]>(url);
   }
 
@@ -40,8 +45,17 @@ export class TeamService {
 
   public getTeamOptions(
     tournamentId: number,
+    stage: string,
   ): Observable<Map<string, TeamOption[]>> {
-    const url = `${this.SERVER_URL}/teamOptions?id=${tournamentId}`;
+    const url = `${this.SERVER_URL}/teamOptions?id=${tournamentId}&stage=${stage}`;
+    return this.http.get<Map<string, TeamOption[]>>(url);
+  }
+
+  public getPlayoffTeamOptions(
+    tournamentId: number,
+    stage: string,
+  ): Observable<Map<string, TeamOption[]>> {
+    const url = `${this.SERVER_URL}/playoffTeamOptions?id=${tournamentId}&stage=${stage}`;
     return this.http.get<Map<string, TeamOption[]>>(url);
   }
 

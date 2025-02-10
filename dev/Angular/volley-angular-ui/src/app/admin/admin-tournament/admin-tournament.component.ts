@@ -94,6 +94,12 @@ export class AdminTournamentComponent {
     'name',
     'year',
     'rounds',
+    'stage',
+    'regular',
+    'elimination',
+    'femElimination',
+    'varElimination',
+    'mixElimination',
     'active',
     'action',
   ];
@@ -130,23 +136,65 @@ export class AdminTournamentComponent {
           Validators.min,
         ],
       ],
+      stage: [undefined, Validators.required],
+      regularSets: [undefined, Validators.required],
+      eliminationSets: [undefined, Validators.required],
+      femElimination: [undefined, Validators.required],
+      varElimination: [undefined, Validators.required],
+      mixElimination: [undefined, Validators.required],
       url: [undefined, Validators.required],
-      isActive: [undefined, Validators.required],
-    });
-    this.formGroup.get('name')!.valueChanges.subscribe((selectedValue) => {
-      this.tournament.name = selectedValue;
-    });
-    this.formGroup.get('year')!.valueChanges.subscribe((selectedValue) => {
-      this.tournament.year = selectedValue;
+      isActive: [false, Validators.required],
     });
     this.formGroup
+      .get('name')!
+      .valueChanges.subscribe((selectedValue: string) => {
+        this.tournament.name = selectedValue;
+      });
+    this.formGroup
+      .get('year')!
+      .valueChanges.subscribe((selectedValue: number) => {
+        this.tournament.year = selectedValue;
+      });
+    this.formGroup
       .get('description')!
-      .valueChanges.subscribe((selectedValue) => {
+      .valueChanges.subscribe((selectedValue: string) => {
         this.tournament.description = selectedValue;
       });
-    this.formGroup.get('rounds')!.valueChanges.subscribe((selectedValue) => {
-      this.tournament.rounds = selectedValue;
-    });
+    this.formGroup
+      .get('rounds')!
+      .valueChanges.subscribe((selectedValue: number) => {
+        this.tournament.rounds = selectedValue;
+      });
+    this.formGroup
+      .get('stage')!
+      .valueChanges.subscribe((selectedValue: string) => {
+        this.tournament.stage = selectedValue;
+      });
+    this.formGroup
+      .get('regularSets')!
+      .valueChanges.subscribe((selectedValue: number) => {
+        this.tournament.regularSets = selectedValue;
+      });
+    this.formGroup
+      .get('eliminationSets')!
+      .valueChanges.subscribe((selectedValue: number) => {
+        this.tournament.eliminationSets = selectedValue;
+      });
+    this.formGroup
+      .get('femElimination')!
+      .valueChanges.subscribe((selectedValue: number) => {
+        this.tournament.femElimination = selectedValue;
+      });
+    this.formGroup
+      .get('varElimination')!
+      .valueChanges.subscribe((selectedValue: number) => {
+        this.tournament.varElimination = selectedValue;
+      });
+    this.formGroup
+      .get('mixElimination')!
+      .valueChanges.subscribe((selectedValue: number) => {
+        this.tournament.mixElimination = selectedValue;
+      });
     this.formGroup.get('url')!.valueChanges.subscribe((selectedValue) => {
       this.tournament.url = selectedValue;
     });
@@ -167,6 +215,7 @@ export class AdminTournamentComponent {
   }
 
   public submit(): void {
+    console.log(this.tournament);
     this.formGroup.markAllAsTouched();
     if (this.formGroup.status === 'VALID') {
       this.isProcessing = startProcessing(this.formGroup, this.dialog);
@@ -182,6 +231,12 @@ export class AdminTournamentComponent {
     this.formGroup.get('year')?.setValue(tournament.year);
     this.formGroup.get('description')?.setValue(tournament.description);
     this.formGroup.get('rounds')?.setValue(tournament.rounds);
+    this.formGroup.get('stage')?.setValue(tournament.stage);
+    this.formGroup.get('regularSets')?.setValue(tournament.regularSets);
+    this.formGroup.get('eliminationSets')?.setValue(tournament.eliminationSets);
+    this.formGroup.get('femElimination')?.setValue(tournament.femElimination);
+    this.formGroup.get('varElimination')?.setValue(tournament.varElimination);
+    this.formGroup.get('mixElimination')?.setValue(tournament.mixElimination);
     this.formGroup.get('url')?.setValue(tournament.url);
     this.formGroup.get('isActive')?.setValue(tournament.isActive);
   }
@@ -238,6 +293,16 @@ export class AdminTournamentComponent {
     */
   }
 
+  public eliminations(tournamentId: number, stage: string): void {
+    this.router.navigate(['../game'], {
+      relativeTo: this.route,
+      queryParams: {
+        id: tournamentId,
+        stage: stage,
+      },
+    });
+  }
+
   // ======================================================
   // PRIVATE FUNCTIONS
   // ======================================================
@@ -259,6 +324,7 @@ export class AdminTournamentComponent {
     this.tournamentService.getTournaments().subscribe({
       next: (tournaments: Tournament[]) => {
         if (tournaments && tournaments.length > 0) {
+          console.log(tournaments);
           this.dataSource = new MatTableDataSource(tournaments);
         } else {
           this.dataSource = undefined;

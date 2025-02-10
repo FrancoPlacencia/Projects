@@ -6,7 +6,11 @@
           <mat-icon>sports_volleyball</mat-icon>&nbsp;Jornada {{ weekNumber }}
           {{ formGroup.valid }}
         </h1>
-        <h1>{{ tournamentName }}</h1>
+        <div>
+          <button mat-flat-button class="week-button" (click)="tournament()">
+            <mat-icon>emoji_events</mat-icon>Torneos
+          </button>
+        </div>
         <div class="action-section">
           <button
             mat-flat-button

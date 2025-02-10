@@ -245,20 +245,22 @@ export class AdminTeamComponent {
   }
 
   private getTeams(): void {
-    this.teamService.getTeams(this.tournamnetId, this.category!).subscribe({
-      next: (teams: Team[]) => {
-        if (teams && teams.length > 0) {
-          console.log(teams);
-          this.dataSource = new MatTableDataSource(teams);
-        } else {
-          this.dataSource = undefined;
-          this.errorMessage = AppConstant.NOTHING_TO_DISPLAY;
-        }
-      },
-      error: (e: any) => {
-        this.errorMessage = AppConstant.UNABLE_TO_LOAD;
-      },
-    });
+    this.teamService
+      .getTeams(this.tournamnetId, this.category!, 'REGULAR')
+      .subscribe({
+        next: (teams: Team[]) => {
+          if (teams && teams.length > 0) {
+            console.log(teams);
+            this.dataSource = new MatTableDataSource(teams);
+          } else {
+            this.dataSource = undefined;
+            this.errorMessage = AppConstant.NOTHING_TO_DISPLAY;
+          }
+        },
+        error: (e: any) => {
+          this.errorMessage = AppConstant.UNABLE_TO_LOAD;
+        },
+      });
     this.tableLoaded = true;
   }
 

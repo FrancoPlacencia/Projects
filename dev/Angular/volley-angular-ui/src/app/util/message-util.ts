@@ -15,7 +15,7 @@ import { DialogMessageTypes } from '../common/model/dialog-message-types';
  */
 export function openDialogMessage(
   dialog: MatDialog,
-  dialogMessage: DialogMessage
+  dialogMessage: DialogMessage,
 ): MatDialogRef<any> {
   return dialog.open(DialogMessageComponent, dialogMessage.getDialogJson());
 }
@@ -28,7 +28,7 @@ export function openDialogMessage(
 export function openDialog(
   dialog: MatDialog,
   type: string,
-  message: string
+  message: string,
 ): void {
   let dialogMessage = new DialogMessage(type, message, '');
   openDialogMessage(dialog, dialogMessage);
@@ -42,7 +42,7 @@ export function openDialog(
 export function openErrorDialog(
   dialog: MatDialog,
   status: number,
-  message: string
+  message: string,
 ): MatDialogRef<any> {
   let errorType: string = '';
   let errorTitle: string;
@@ -78,12 +78,12 @@ export function openErrorDialog(
 export function openConfirmDialog(
   dialog: MatDialog,
   action: string,
-  element: string
+  element: string,
 ): MatDialogRef<any> {
   let dialogMessage = new DialogMessage(
     DialogMessageTypes.CONFIRM,
     `¿${action} ${element}?`,
-    DialogMessageTypes.DELETE_MESSAGE
+    DialogMessageTypes.DELETE_MESSAGE,
   );
   return openDialogMessage(dialog, dialogMessage);
 }
@@ -92,7 +92,7 @@ export function openLoadingDialog(dialog: MatDialog) {
   let dialogMessage = new DialogMessage(
     DialogMessageTypes.LOADING,
     DialogMessageTypes.LOADING_TITLE,
-    DialogMessageTypes.LOADING_DATA_MESSAGE
+    DialogMessageTypes.LOADING_DATA_MESSAGE,
   );
   return openDialogMessage(dialog, dialogMessage);
 }

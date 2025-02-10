@@ -82,6 +82,7 @@ ng generate component admin-tournament --skip-tests
 ng generate component admin-team --skip-tests
 ng generate component admin-game --skip-tests
 ng generate component admin-player --skip-tests
+ng generate component admin-playoff --skip-tests
 
 ng generate component tournament --skip-tests
 ng generate component category --skip-tests

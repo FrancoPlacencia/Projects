@@ -116,9 +116,6 @@ public class JwtService {
                 .compact();
     }
 
-
-
-
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String userName = extractUserName(token);
         //log.info("REQ userName " +  userName);

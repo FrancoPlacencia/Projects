@@ -69,7 +69,6 @@ const months: string[] = [
     StandingComponent,
     WeekComponent,
     GamesComponent,
-    TeamComponent,
     TeamsComponent,
   ],
   templateUrl: './landing.component.html',
@@ -154,7 +153,7 @@ export class LandingComponent {
   }
 
   private getTeamOptions(tournamentId: number) {
-    this.teamService.getTeamOptions(tournamentId).subscribe({
+    this.teamService.getTeamOptions(tournamentId, 'REGULAR').subscribe({
       next: (teamOptions: Map<string, TeamOption[]>) => {
         this.tournamentApp.teamOptions = new Map(Object.entries(teamOptions));
       },
@@ -163,7 +162,7 @@ export class LandingComponent {
   }
 
   private getTeams(tournamentId: number) {
-    this.teamService.getTeams(tournamentId, '').subscribe({
+    this.teamService.getTeams(tournamentId, '', 'REGULAR').subscribe({
       next: (teams: Team[]) => {
         this.tournamentApp.teams = generateTeamMap(teams);
       },

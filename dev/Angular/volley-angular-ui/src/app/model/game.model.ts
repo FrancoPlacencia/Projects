@@ -5,6 +5,7 @@ export interface Game {
   tournamentId: number;
   weekNumber: number;
   category: string;
+  stage: string;
 
   gameDate: Date;
   gamePlace: string;

@@ -30,6 +30,11 @@ export class GameService {
     return this.http.get<Game[]>(url);
   }
 
+  public getGamesPlayoff(id: number, stage: string): Observable<Game[]> {
+    const url = `${AppConstant.SERVER_URL}/gamesPlayoff?id=${id}&stage=${stage}`;
+    return this.http.get<Game[]>(url);
+  }
+
   public getGames(id: number): Observable<Game[]> {
     const url = `${AppConstant.SERVER_URL}/games?id=${id}`;
     return this.http.get<Game[]>(url);

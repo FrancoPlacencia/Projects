@@ -15,10 +15,10 @@ public interface TeamRepository extends JpaRepository<Team, Integer> {
     Optional<Team> findUnique(Integer tournamentId, String name, String category);
 
     @Query(
-            value = "SELECT * FROM teams WHERE tournament_id = :tournamentId AND category = :category ORDER BY team_number",
+            value = "SELECT * FROM teams WHERE tournament_id = :tournamentId AND category = :category AND stage = :stage ORDER BY team_number",
             nativeQuery = true
     )
-    Optional<List<Team>> findByTournamentAndCategory(Integer tournamentId, String category);
+    Optional<List<Team>> findByTournamentAndCategoryAndStage(Integer tournamentId, String category, String stage);
 
     @Query(
             value = "SELECT * FROM teams WHERE tournament_id = :tournamentId ORDER BY name",

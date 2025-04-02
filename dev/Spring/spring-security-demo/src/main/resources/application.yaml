@@ -1,13 +1,13 @@
 logging:
   level:
-    root: DEBUG
+    root: INFO
     org.springframework.web: INFO
     org.springframework.security: DEBUG
 spring:
   application:
     name: spring-security-demo
   jpa:
-    show-sql: true
+    show-sql: false
     hibernate:
       # update don't create and drop
       ddl-auto: update

@@ -72,7 +72,7 @@
                     formControlName="gameTime"
                   />
                   <mat-timepicker-toggle matIconSuffix [for]="timePicker" />
-                  <mat-timepicker #timePicker />
+                  <mat-timepicker interval="15min" #timePicker />
                 </mat-form-field>
                 <!-- PLACE -->
                 <mat-form-field class="full">
@@ -96,6 +96,21 @@
                 let teamIndex = $index
               ) {
                 <div class="flex-input">
+                  <!-- DYNAMIC SETS -->
+                  @for (
+                    team1Set of team1Sets.controls;
+                    track $index;
+                    let i = $index
+                  ) {
+                    <label for="alias-{{ i }}">Sets:</label>
+                    <input
+                      id="alias-{{ i }}"
+                      type="text"
+                      [formControlName]="i"
+                    />
+                  }
+                </div>
+                <div class="flex-input">
                   <!-- TEAM -->
                   <mat-form-field class="full">
                     <mat-label>Equipo {{ teamIndex + 1 }}</mat-label>
@@ -107,6 +122,7 @@
                       } @empty {}
                     </mat-select>
                   </mat-form-field>
+
                   <!-- SETS -->
                   @for (
                     set of teamStat.setStats;

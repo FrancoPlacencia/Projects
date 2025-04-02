@@ -1,10 +1,10 @@
 package dev.learning.spring_security_demo.auth;
 
 
-import dev.learning.spring_security_demo.auth.dto.AuthResponseDTO;
 import dev.learning.spring_security_demo.auth.dto.LoginRequestDTO;
 import dev.learning.spring_security_demo.auth.dto.RegisterRequestDTO;
 import dev.learning.spring_security_demo.common.CommonResponseDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping(path = "/api/auth")
 public class AuthController {
@@ -19,9 +20,8 @@ public class AuthController {
     @Autowired
     AuthService authService;
 
-
     @PostMapping("login")
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginRequestDTO request) {
+    public ResponseEntity<CommonResponseDTO> login(@RequestBody LoginRequestDTO request) {
         return authService.login(request);
     }
 

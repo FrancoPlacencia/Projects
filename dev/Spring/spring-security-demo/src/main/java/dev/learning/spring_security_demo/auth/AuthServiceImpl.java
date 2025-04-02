@@ -1,6 +1,5 @@
 package dev.learning.spring_security_demo.auth;
 
-import dev.learning.spring_security_demo.auth.dto.AuthResponseDTO;
 import dev.learning.spring_security_demo.auth.dto.LoginRequestDTO;
 import dev.learning.spring_security_demo.auth.dto.RegisterRequestDTO;
 import dev.learning.spring_security_demo.common.CommonResponseDTO;
@@ -18,11 +17,17 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -42,6 +47,9 @@ public class AuthServiceImpl implements AuthService {
 
     //@Autowired
     //JavaMailSender javaMailSender;
+
+    @Autowired
+    JwtEncoder jwtEncoder;
 
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
 
@@ -73,67 +81,76 @@ public class AuthServiceImpl implements AuthService {
      * @return
      */
     @Override
-    public ResponseEntity<AuthResponseDTO> login(LoginRequestDTO request) {
+    public ResponseEntity<CommonResponseDTO> login(LoginRequestDTO request) {
         try {
-            Authentication authentication = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-            log.info("signin-service-authentication {}", authentication);
-            // Unable to authenticate using the credentials
-            if (!authentication.isAuthenticated()) {
-                log.info("INVALID user credentials");
-                throw new UsernameNotFoundException("invalid user request..!!");
-            }
-            // The user was authenticated
             User user = userRepository.findByEmail(request.getEmail()).orElse(null);
-            // NOT_FOUND
+            // NOT FOUND
             if (user == null) {
                 return new ResponseEntity<>(
-                        AuthResponseDTO.builder()
+                        CommonResponseDTO.builder()
                                 .type(ResponseType.WARNING.toString())
                                 .message("User not found")
                                 .build(),
                         HttpStatus.NOT_FOUND
                 );
             }
-            log.info("user FOUND {}", user);
+
             // LOCKED
             if (user.getIsLocked()) {
                 throw new LockedException("User its locked. Please contact an Admin to unlock your user account.");
             }
+
             // INACTIVE
-            // TODO: Add more information about it.
             if (!user.getIsActive()) {
                 return new ResponseEntity<>(
-                        AuthResponseDTO.builder()
+                        CommonResponseDTO.builder()
                                 .type(ResponseType.WARNING.toString())
                                 .message("User is inactive.")
                                 .build(),
                         HttpStatus.BAD_REQUEST
                 );
             }
-            // Generate JWT string
-            String jwt = "HOLA";
-            /*
-            String jwt = jwtService.getToken(user);
+
+            // FOUND
+            Authentication authentication = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+
+            // WRONG CREDENTIALS
+            if (!authentication.isAuthenticated()) {
+                log.info("INVALID user credentials");
+                throw new UsernameNotFoundException("invalid user request..!!");
+            }
+
+            // AUTHENTICATED
             clearAttempts(user);
-             */
-            return new ResponseEntity<>(AuthResponseDTO.builder().token(jwt).build(), HttpStatus.OK);
+            return new ResponseEntity<>(
+                    CommonResponseDTO.builder()
+                            .type(ResponseType.TOKEN.toString())
+                            .message(generateJWT(authentication))
+                            .build(),
+                    HttpStatus.OK
+            );
         } catch (BadCredentialsException badCredentialsException) {
             log.info("ERROR trying to authenticate the user");
             User user = userRepository.findByEmail(request.getEmail()).orElse(null);
             if (user != null) {
-                // incrementAttempts(user);
+                incrementAttempts(user);
                 if (user.getIsLocked()) {
                     throw new LockedException("User its locked. Please contact an Admin to unlock your user account.");
                 }
             }
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         } catch (LockedException exception) {
-            log.info("ERROR user its locked");
-            return new ResponseEntity<>(null, HttpStatus.LOCKED);
+
+            return new ResponseEntity<>(
+                    CommonResponseDTO.builder()
+                            .type(ResponseType.WARNING.toString())
+                            .message(exception.getMessage())
+                            .build(),
+                    HttpStatus.LOCKED
+            );
         }
     }
-
 
     /**
      * creates the user using the request data
@@ -145,10 +162,8 @@ public class AuthServiceImpl implements AuthService {
      */
     @Override
     public ResponseEntity<CommonResponseDTO> register(RegisterRequestDTO request) {
-        ResponseEntity<AuthResponseDTO> authResponseDTOResponseEntity;
         log.info("signup request {}", request);
         try {
-
             User user = User.builder()
                     .username(request.getEmail())
 
@@ -206,74 +221,75 @@ public class AuthServiceImpl implements AuthService {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-/*
-    public ResponseEntity<CommonResponseDTO> forgot(ForgotRequestDTO request) {
-        User user = userRepository.findByEmail(request.getEmail()).orElse(null);
-        // User NOT FOUND
-        if (user == null) {
-            log.info("user NOT FOUND");
-            return CHFSResponseUtil.getCommonResponseEntity(ResponseType.WARNING, CHFSConstants.USER_NOT_FOUND, "Please review your email and try again.", HttpStatus.BAD_REQUEST);
-        }
-        log.info("user FOUND {}", user);
-        if (StringUtils.isEmpty(user.getForgotToken()) || user.getForgotExpiresOn().before(new Date(System.currentTimeMillis()))) {
-            //String token = RandomStringUtils.randomAlphabetic(30);
-            String token = UUID.randomUUID().toString();
-            user.setForgotToken(token);
-            user.setForgotCreatedOn(new Date(System.currentTimeMillis()));
-            user.setForgotExpiresOn(new Date(System.currentTimeMillis() + (3600 * 1000)));
 
+    /*
+        public ResponseEntity<CommonResponseDTO> forgot(ForgotRequestDTO request) {
+            User user = userRepository.findByEmail(request.getEmail()).orElse(null);
+            // User NOT FOUND
+            if (user == null) {
+                log.info("user NOT FOUND");
+                return CHFSResponseUtil.getCommonResponseEntity(ResponseType.WARNING, CHFSConstants.USER_NOT_FOUND, "Please review your email and try again.", HttpStatus.BAD_REQUEST);
+            }
+            log.info("user FOUND {}", user);
+            if (StringUtils.isEmpty(user.getForgotToken()) || user.getForgotExpiresOn().before(new Date(System.currentTimeMillis()))) {
+                //String token = RandomStringUtils.randomAlphabetic(30);
+                String token = UUID.randomUUID().toString();
+                user.setForgotToken(token);
+                user.setForgotCreatedOn(new Date(System.currentTimeMillis()));
+                user.setForgotExpiresOn(new Date(System.currentTimeMillis() + (3600 * 1000)));
+
+                userRepository.save(user);
+                String resetPasswordLink = "/reset-password?token=" + token;
+                log.info(">>> {}", resetPasswordLink);
+                return CHFSResponseUtil.getCommonResponseEntity(ResponseType.SUCCESS, CHFSConstants.USER_FORGOT_PASSWORD, "We have sent a reset password link to your email, please review.", HttpStatus.OK);
+            }
+            return CHFSResponseUtil.getCommonResponseEntity(ResponseType.SUCCESS, CHFSConstants.USER_FORGOT_PASSWORD, "We have already sent password link to your email, please review.", HttpStatus.OK);
+        }
+
+        @Override
+        public ResponseEntity<CommonResponseDTO> reset(ResetRequestDTO request) {
+            if (StringUtils.isEmpty(request.getToken())) {
+                log.info("token not present");
+                return CHFSResponseUtil.getCommonResponseEntity(ResponseType.WARNING, CHFSConstants.USER_NOT_FOUND, "Token its not present.", HttpStatus.BAD_REQUEST);
+            }
+            if (StringUtils.isEmpty(request.getEmail()) ||
+                    StringUtils.isEmpty(request.getPassword())) {
+                log.info("missing mandatory fields");
+                return CHFSResponseUtil.getCommonResponseEntity(ResponseType.WARNING, CHFSConstants.USER_NOT_FOUND, "Missing mandatory fields.", HttpStatus.BAD_REQUEST);
+            }
+            User user = userRepository.findByEmail(request.getEmail()).orElse(null);
+            if (user == null) {
+                log.info("user NOT FOUND");
+                return CHFSResponseUtil.getCommonResponseEntity(ResponseType.WARNING, CHFSConstants.USER_NOT_FOUND, "Please review your email and try again.", HttpStatus.BAD_REQUEST);
+            }
+            log.info("user FOUND {}", user);
+            if (!user.getForgotToken().equals(request.getToken())) {
+                log.info("wrong Token");
+                return CHFSResponseUtil.getCommonResponseEntity(ResponseType.WARNING, CHFSConstants.USER_NOT_FOUND, "Wrong token", HttpStatus.BAD_REQUEST);
+            }
+            if (user.getForgotExpiresOn().before(new Date(System.currentTimeMillis()))) {
+                log.info("expired Token");
+                return CHFSResponseUtil.getCommonResponseEntity(ResponseType.WARNING, CHFSConstants.USER_NOT_FOUND, "Expired token", HttpStatus.BAD_REQUEST);
+            }
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+            user.setForgotToken("");
+            user.setForgotCreatedOn(null);
+            user.setForgotExpiresOn(null);
             userRepository.save(user);
-            String resetPasswordLink = "/reset-password?token=" + token;
-            log.info(">>> {}", resetPasswordLink);
-            return CHFSResponseUtil.getCommonResponseEntity(ResponseType.SUCCESS, CHFSConstants.USER_FORGOT_PASSWORD, "We have sent a reset password link to your email, please review.", HttpStatus.OK);
+            return CHFSResponseUtil.getCommonResponseEntity(ResponseType.SUCCESS, CHFSConstants.USER_FORGOT_PASSWORD, "Password successfully reset.",
+                    HttpStatus.OK);
         }
-        return CHFSResponseUtil.getCommonResponseEntity(ResponseType.SUCCESS, CHFSConstants.USER_FORGOT_PASSWORD, "We have already sent password link to your email, please review.", HttpStatus.OK);
-    }
 
-    @Override
-    public ResponseEntity<CommonResponseDTO> reset(ResetRequestDTO request) {
-        if (StringUtils.isEmpty(request.getToken())) {
-            log.info("token not present");
-            return CHFSResponseUtil.getCommonResponseEntity(ResponseType.WARNING, CHFSConstants.USER_NOT_FOUND, "Token its not present.", HttpStatus.BAD_REQUEST);
+        private void sendPasswordURL(User user) {
+            /
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(user.getEmail());
+            mailMessage.setSubject("Reset Password");
+            mailMessage.setText("To reset your password, click the link below:\n" + "RECOVERY URL");
+            javaMailSender.send(mailMessage);
+            /
         }
-        if (StringUtils.isEmpty(request.getEmail()) ||
-                StringUtils.isEmpty(request.getPassword())) {
-            log.info("missing mandatory fields");
-            return CHFSResponseUtil.getCommonResponseEntity(ResponseType.WARNING, CHFSConstants.USER_NOT_FOUND, "Missing mandatory fields.", HttpStatus.BAD_REQUEST);
-        }
-        User user = userRepository.findByEmail(request.getEmail()).orElse(null);
-        if (user == null) {
-            log.info("user NOT FOUND");
-            return CHFSResponseUtil.getCommonResponseEntity(ResponseType.WARNING, CHFSConstants.USER_NOT_FOUND, "Please review your email and try again.", HttpStatus.BAD_REQUEST);
-        }
-        log.info("user FOUND {}", user);
-        if (!user.getForgotToken().equals(request.getToken())) {
-            log.info("wrong Token");
-            return CHFSResponseUtil.getCommonResponseEntity(ResponseType.WARNING, CHFSConstants.USER_NOT_FOUND, "Wrong token", HttpStatus.BAD_REQUEST);
-        }
-        if (user.getForgotExpiresOn().before(new Date(System.currentTimeMillis()))) {
-            log.info("expired Token");
-            return CHFSResponseUtil.getCommonResponseEntity(ResponseType.WARNING, CHFSConstants.USER_NOT_FOUND, "Expired token", HttpStatus.BAD_REQUEST);
-        }
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setForgotToken("");
-        user.setForgotCreatedOn(null);
-        user.setForgotExpiresOn(null);
-        userRepository.save(user);
-        return CHFSResponseUtil.getCommonResponseEntity(ResponseType.SUCCESS, CHFSConstants.USER_FORGOT_PASSWORD, "Password successfully reset.",
-                HttpStatus.OK);
-    }
-
-    private void sendPasswordURL(User user) {
-        /
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(user.getEmail());
-        mailMessage.setSubject("Reset Password");
-        mailMessage.setText("To reset your password, click the link below:\n" + "RECOVERY URL");
-        javaMailSender.send(mailMessage);
-        /
-    }
-
+    */
     private void unlockUser(User user) {
         log.info("Unlock User");
         user.setIsLocked(false);
@@ -298,6 +314,29 @@ public class AuthServiceImpl implements AuthService {
             userRepository.save(user);
         }
     }
-*/
+
+    /**
+     * @param authentication object
+     * @return String jwtToken
+     */
+    private String generateJWT(Authentication authentication) {
+        Instant now = Instant.now();
+        long expiry = 36000L;
+        // GET SCOPE
+        String scope = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(" "));
+        // GET CLAIMS
+        JwtClaimsSet claims = JwtClaimsSet.builder()
+                .issuer("self")
+                .issuedAt(now)
+                .expiresAt(now.plusSeconds(expiry))
+                .subject(authentication.getName())
+                .claim("scope", scope)
+                .build();
+        // GET TOKEN
+        return this.jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+    }
+
 
 }

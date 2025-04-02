@@ -75,15 +75,15 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public ResponseEntity<List<TeamDTO>> getTeams(Integer tournamentId, String category, String stage) {
+        log.info("Tournament {},category {},stage {}", tournamentId, category, stage);
         List<Team> teams = new ArrayList<>();
-        if (!AppUtil.isNullOrEmptyString(category) && !AppUtil.isNullOrEmptyString(stage)) {
+        if (AppUtil.isNullOrZeroOrLess(tournamentId) || AppUtil.isNullOrEmptyString(stage)) {
             return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
         }
-        if (!AppUtil.isNullOrEmptyString(category) && AppUtil.isNullOrEmptyString(stage)) {
-            teams = teamRepository.findByTournamentAndCategory(tournamentId, category).orElse(new ArrayList<>());
-        }
-        if (AppUtil.isNullOrEmptyString(category) && !AppUtil.isNullOrEmptyString(stage)) {
+        if (AppUtil.isNullOrEmptyString(category)) {
             teams = teamRepository.findByTournamentAndStage(tournamentId, stage).orElse(new ArrayList<>());
+        } else {
+            teams = teamRepository.findByTournamentAndCategoryAndStage(tournamentId, category, stage).orElse(new ArrayList<>());
         }
         if (teams.isEmpty()) {
             return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
@@ -109,6 +109,7 @@ public class TeamServiceImpl implements TeamService {
         }
         return new ResponseEntity<>(teamDTOS, HttpStatus.OK);
     }
+
 
     @Override
     public ResponseEntity<TeamDTO> getTeam(Integer teamId) {

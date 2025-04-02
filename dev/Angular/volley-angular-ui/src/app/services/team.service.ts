@@ -32,7 +32,6 @@ export class TeamService {
     stage: string,
   ): Observable<Team[]> {
     const url = `${this.SERVER_URL}/teams?id=${tournamentId}&category=${category}&stage=${stage}`;
-    console.log(url);
     return this.http.get<Team[]>(url);
   }
 

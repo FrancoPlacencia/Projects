@@ -82,7 +82,7 @@ import { navigateToTournament } from '../../util/navigate-util';
   templateUrl: './admin-game.component.html',
   styleUrl: './admin-game.component.scss',
 })
-export class AdminGameComponent {
+export class AdminGameComponent implements OnInit {
   public tournamentId: number = 0;
   public weekNumber: number = 0;
   public tournamentName!: string;
@@ -100,7 +100,7 @@ export class AdminGameComponent {
   public setsNumber = 5;
 
   public teams: number[] = [1, 2];
-  public sets: number[] = [1, 2, 3, 4, 5];
+  public sets: number[] = [1, 2, 3];
   public players: number[] = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
   ];
@@ -125,9 +125,12 @@ export class AdminGameComponent {
 
   private teamsMap: Map<string, Team[]> = new Map<string, Team[]>();
 
+  private stageSets = 0;
+
   public stage: string = '';
   public playoff: boolean = false;
   public stageText: string = '';
+
   constructor(
     private teamService: TeamService,
     private gamesService: GameService,
@@ -137,33 +140,6 @@ export class AdminGameComponent {
     private router: Router,
     private route: ActivatedRoute,
   ) {
-    let time = new Date();
-    time.setHours(17, 30, 0);
-    this.game.gameDate = time;
-    // Get data from URL
-    this.route.queryParamMap.subscribe((params) => {
-      this.tournamentId = Number(params.get('id')!);
-      this.weekNumber = Number(params.get('weekNumber')!);
-      this.stage = params.get('stage') ?? '';
-      this.playoff = this.weekNumber === 0 && this.stage != '';
-      switch (this.stage) {
-        case 'QUARTER':
-          this.stageText = 'Cuartos de Final';
-          break;
-        case 'SEMI':
-          this.stageText = 'Semi-Finales';
-          break;
-        case 'FINAL':
-          this.stageText = 'Finales';
-          break;
-        default:
-          this.stageText = '';
-          break;
-      }
-      this.getGames();
-      this.getTeams();
-    });
-
     // Create the form group from DTO
     this.formGroup = this.formBuilder.group({
       category: [this.game.category, Validators.required],
@@ -173,6 +149,11 @@ export class AdminGameComponent {
       byDefault: [this.game.byDefault, Validators.required],
 
       team1: [{ value: '', disabled: true }, Validators.required],
+      team1Sets: this.formBuilder.array([
+        { value: 0, disabled: true },
+        Validators.required,
+      ]),
+
       team1Set1: [{ value: 0, disabled: true }, Validators.required],
       team1Set2: [{ value: 0, disabled: true }, Validators.required],
       team1Set3: [{ value: 0, disabled: true }, Validators.required],
@@ -227,6 +208,36 @@ export class AdminGameComponent {
       team2Player19: [{ value: false, disabled: true }],
       team2Player20: [{ value: false, disabled: true }],
     });
+
+    let time = new Date();
+    time.setHours(17, 30, 0);
+    this.game.gameDate = time;
+    // Get data from URL
+    this.route.queryParamMap.subscribe((params) => {
+      this.tournamentId = Number(params.get('id')!);
+      this.weekNumber = Number(params.get('weekNumber')!);
+      this.stage = params.get('stage') ?? '';
+
+      this.playoff = this.weekNumber === 0 && this.stage != '';
+      switch (this.stage) {
+        case 'QUARTER':
+          this.stageText = 'Cuartos de Final';
+          break;
+        case 'SEMI':
+          this.stageText = 'Semi-Finales';
+          break;
+        case 'FINAL':
+          this.stageText = 'Finales';
+          break;
+        default:
+          this.stageText = '';
+          break;
+      }
+      this.stageSets = this.stageText === '' ? 3 : 5;
+      this.getGames();
+      this.getTeams();
+    });
+
     // Subscribe changes of Form Group to the DTO
     this.formGroup.get('category')!.valueChanges.subscribe((selectedValue) => {
       this.game.category = selectedValue;
@@ -287,7 +298,9 @@ export class AdminGameComponent {
   }
 
   ngOnInit(): void {
-    // this.getGames();
+    this.AddTeam1Sets();
+    this.AddTeam1Sets();
+    this.AddTeam1Sets();
   }
 
   public reset(): void {
@@ -381,6 +394,7 @@ export class AdminGameComponent {
     this.game.tournamentId = this.tournamentId;
     this.game.weekNumber = this.weekNumber;
     if (!this.playoff) {
+      console.log(this.game);
       this.gamesService.postGame(this.game).subscribe({
         next: (result: CommonResponse) => {
           this.isProcessing = endProcessing(this.formGroup, this.dialog);
@@ -425,35 +439,23 @@ export class AdminGameComponent {
   }
 
   private getTeams(): void {
-    if (this.playoff) {
-      this.teamService.getTeamOptions(this.tournamentId, this.stage).subscribe({
+    this.teamService
+      .getTeamOptions(this.tournamentId, this.playoff ? this.stage : 'REGULAR')
+      .subscribe({
         next: (teamOptions: Map<string, TeamOption[]>) => {
           this.teamOptionsMap = new Map(Object.entries(teamOptions));
         },
         error: (e: any) => {},
       });
 
-      this.teamService.getTeams(this.tournamentId, '', this.stage).subscribe({
+    this.teamService
+      .getTeams(this.tournamentId, '', this.playoff ? this.stage : 'REGULAR')
+      .subscribe({
         next: (teams: Team[]) => {
           this.teamsMap = generateTeamMap(teams);
         },
         error: (e: any) => {},
       });
-    } else {
-      this.teamService.getTeamOptions(this.tournamentId, 'REGULAR').subscribe({
-        next: (teamOptions: Map<string, TeamOption[]>) => {
-          this.teamOptionsMap = new Map(Object.entries(teamOptions));
-        },
-        error: (e: any) => {},
-      });
-
-      this.teamService.getTeams(this.tournamentId, '', 'REGULAR').subscribe({
-        next: (teams: Team[]) => {
-          this.teamsMap = generateTeamMap(teams);
-        },
-        error: (e: any) => {},
-      });
-    }
   }
 
   private updateGame(): void {
@@ -496,30 +498,14 @@ export class AdminGameComponent {
 
   private setPlayersByCategory(teamId: number): PlayerOption[] {
     let _playerOptions: PlayerOption[] = [];
+    if (this.teamsMap.size === 0) {
+      return _playerOptions;
+    }
     let _players: Player[];
     _players =
       this.teamsMap
         .get(this.game.category)!
         .find((team) => team.teamId === teamId)?.players ?? [];
-    /*
-    switch (this.game.category) {
-      case 'FEMENIL':
-        _players =
-          this.femTeams.find((team) => team.teamId === teamId)?.players ?? [];
-        break;
-      case 'VARONIL':
-        _players =
-          this.varTeams.find((team) => team.teamId === teamId)?.players ?? [];
-        break;
-      case 'MIXTO':
-        _players =
-          this.mixTeams.find((team) => team.teamId === teamId)?.players ?? [];
-        break;
-      default:
-        _players = [];
-        break;
-    }
-        */
     _players.forEach((p) => {
       _playerOptions.push(this.convertToPlayerOptions(p));
     });
@@ -574,5 +560,20 @@ export class AdminGameComponent {
 
   prevStep() {
     this.step.update((i) => i - 1);
+  }
+
+  private buildTeamSets() {
+    for (let i = 0; i > this.stageSets; i++) {
+      console.log('{} - {}', i, this.stageSets);
+      this.AddTeam1Sets();
+    }
+  }
+
+  get team1Sets() {
+    return this.formGroup.get('team1Sets') as FormArray;
+  }
+
+  AddTeam1Sets() {
+    this.team1Sets.push(this.formBuilder.control(''));
   }
 }

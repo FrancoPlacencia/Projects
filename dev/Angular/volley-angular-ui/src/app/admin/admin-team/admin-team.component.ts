@@ -231,6 +231,7 @@ export class AdminTeamComponent {
   // PRIVATE FUNCTIONS
   // ======================================================
   private createTeam(): void {
+    this.team.stage = 'REGULAR';
     this.teamService.postTeam(this.team).subscribe({
       next: (result: CommonResponse) => {
         this.isProcessing = endProcessing(this.formGroup, this.dialog);
@@ -254,10 +255,12 @@ export class AdminTeamComponent {
             this.dataSource = new MatTableDataSource(teams);
           } else {
             this.dataSource = undefined;
+            console.log('nothing to display');
             this.errorMessage = AppConstant.NOTHING_TO_DISPLAY;
           }
         },
         error: (e: any) => {
+          console.log('unable to load');
           this.errorMessage = AppConstant.UNABLE_TO_LOAD;
         },
       });

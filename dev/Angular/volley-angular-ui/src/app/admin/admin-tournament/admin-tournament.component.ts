@@ -9,13 +9,6 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
 
 // @angular/material
 import { MatButtonModule } from '@angular/material/button';
@@ -25,7 +18,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 
@@ -53,7 +45,7 @@ import { DialogMessageTypes } from '../../common/model/dialog-message-types';
 import { CommonResponse } from '../../common/model/common-response.dto';
 import { emptyTournament } from '../../util/empty-model-util';
 import { AppConstant } from '../../util/app-constant';
-import { navigateToTeam, navigateToWeek } from '../../util/navigate-util';
+import { AdminTournamentTableComponent } from '../admin-tournament-table/admin-tournament-table.component';
 
 @Component({
   selector: 'app-admin-tournament',
@@ -68,46 +60,17 @@ import { navigateToTeam, navigateToWeek } from '../../util/navigate-util';
     MatInputModule,
     MatListModule,
     MatSlideToggleModule,
-    MatTableModule,
     MatSelectModule,
+    AdminTournamentTableComponent,
   ],
   templateUrl: './admin-tournament.component.html',
   styleUrl: './admin-tournament.component.scss',
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed,void', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition(
-        'expanded <=> collapsed',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'),
-      ),
-    ]),
-  ],
 })
 export class AdminTournamentComponent {
-  public tableLoaded: boolean = false;
+  public tournaments: Tournament[] = [];
+
   public isProcessing: boolean = false;
   public isNew: boolean = true;
-
-  public columnsToDisplay: string[] = [
-    'id',
-    'name',
-    'year',
-    'rounds',
-    'stage',
-    'regular',
-    'elimination',
-    'femElimination',
-    'varElimination',
-    'mixElimination',
-    'active',
-    'action',
-  ];
-  public columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
-  public dataSource: MatTableDataSource<any> | undefined;
-  public expandedElement: Tournament | null | undefined;
-
-  public errorMessage: string = '';
 
   public formGroup: FormGroup;
 
@@ -215,7 +178,6 @@ export class AdminTournamentComponent {
   }
 
   public submit(): void {
-    console.log(this.tournament);
     this.formGroup.markAllAsTouched();
     if (this.formGroup.status === 'VALID') {
       this.isProcessing = startProcessing(this.formGroup, this.dialog);
@@ -253,56 +215,6 @@ export class AdminTournamentComponent {
     }
   }
 
-  public team(category: string, tournamentId: number): void {
-    /*
-    this.router.navigate(['../team'], {
-      relativeTo: this.route,
-      queryParams: {
-        id: tournamentId,
-        category: category,
-      },
-    });
-    */
-    navigateToTeam(tournamentId, category, this.router, this.route);
-  }
-
-  public gameWeek(tournamentId: number, week: number) {
-    navigateToWeek(tournamentId, week, this.router, this.route);
-    /*
-    this.router.navigate(['../game'], {
-      relativeTo: this.route,
-      queryParams: {
-        id: tournamentId,
-        weekNumber: week,
-      },
-    });
-    */
-  }
-
-  public newGameWeek(tournamentId: number, newWeekNumber: number) {
-    newWeekNumber++;
-    navigateToWeek(tournamentId, newWeekNumber, this.router, this.route);
-    /*
-    this.router.navigate(['../game'], {
-      relativeTo: this.route,
-      queryParams: {
-        id: tournamentId,
-        weekNumber: newWeekNumber,
-      },
-    });
-    */
-  }
-
-  public eliminations(tournamentId: number, stage: string): void {
-    this.router.navigate(['../game'], {
-      relativeTo: this.route,
-      queryParams: {
-        id: tournamentId,
-        stage: stage,
-      },
-    });
-  }
-
   // ======================================================
   // PRIVATE FUNCTIONS
   // ======================================================
@@ -324,18 +236,13 @@ export class AdminTournamentComponent {
     this.tournamentService.getTournaments().subscribe({
       next: (tournaments: Tournament[]) => {
         if (tournaments && tournaments.length > 0) {
-          console.log(tournaments);
-          this.dataSource = new MatTableDataSource(tournaments);
+          this.tournaments = tournaments;
         } else {
-          this.dataSource = undefined;
-          this.errorMessage = AppConstant.NOTHING_TO_DISPLAY;
+          this.tournaments = [];
         }
       },
-      error: (e: any) => {
-        this.errorMessage = AppConstant.UNABLE_TO_LOAD;
-      },
+      error: (e: any) => {},
     });
-    this.tableLoaded = true;
   }
 
   private updateTournament(): void {

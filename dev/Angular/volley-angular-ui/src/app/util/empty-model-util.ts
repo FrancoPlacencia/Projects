@@ -44,6 +44,7 @@ export function emptyTeam(): Team {
     name: '',
     initials: '',
     category: '',
+    stage: '',
     isActive: true,
     gamesWon: 0,
     gamesLost: 0,

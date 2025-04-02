@@ -37,6 +37,21 @@ export function navigateToWeek(
   });
 }
 
+export function navigateEliminations(
+  tournamentId: number,
+  stage: string,
+  router: Router,
+  route: ActivatedRoute,
+) {
+  router.navigate(['../game'], {
+    relativeTo: route,
+    queryParams: {
+      id: tournamentId,
+      stage: stage,
+    },
+  });
+}
+
 export function navigateToPlayer(
   tournamentId: number,
   category: string,

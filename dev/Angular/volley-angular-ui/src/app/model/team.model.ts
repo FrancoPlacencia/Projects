@@ -7,6 +7,7 @@ export interface Team {
   name: string;
   initials: string;
   category: string;
+  stage: string;
   isActive: boolean;
 
   gamesWon: number;

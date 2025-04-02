@@ -1,50 +1,20 @@
-CALL usp_get_week_template(17, @template)
+CALL usp_get_week_template(4, @template)
 
 -- =============================================================================
 -- MIXTO 
 -- =============================================================================
 CALL usp_get_category_template('MIXTO',@template);
--- TEAMS
-CALL usp_get_team_template('MIXTO','FENIX', @template);
-CALL usp_get_team_template('MIXTO','GALACTICOS', @template);
-CALL usp_get_team_template('MIXTO','L@S PEQUES', @template);
--- CALL usp_get_team_template('MIXTO','LA SELECCIÓN', @template);
-CALL usp_get_team_template('MIXTO','LOS DEL BASQUET', @template);
-CALL usp_get_team_template('MIXTO','LOS OLVIDADOS', @template);
-CALL usp_get_team_template('MIXTO','MIXED SQUIRRELS', @template);
-CALL usp_get_team_template('MIXTO','MIXTICOS', @template);
-CALL usp_get_team_template('MIXTO','PECHOCHOS', @template);
-CALL usp_get_team_template('MIXTO','RENCOROSOS', @template);
-CALL usp_get_team_template('MIXTO','ROJAS MIX', @template);
-CALL usp_get_team_template('MIXTO','VENGADORES', @template);
-CALL usp_get_team_template('MIXTO','VIKINGOS', @template);
-CALL usp_get_team_template('MIXTO','WINNERS', @template);
+
 -- =============================================================================
 -- VARONIL 
 -- =============================================================================
 CALL usp_get_category_template('VARONIL',@template);
--- TEAMS
-CALL usp_get_team_template('VARONIL','EL CHIQUE', @template);
-CALL usp_get_team_template('VARONIL','CIERVOS', @template);
-CALL usp_get_team_template('VARONIL','CUERVOS', @template);
-CALL usp_get_team_template('VARONIL','DESPEINADOS', @template);
-CALL usp_get_team_template('VARONIL','LOS UNICOS', @template);
-CALL usp_get_team_template('VARONIL','NEGOS', @template);
-CALL usp_get_team_template('VARONIL','REENCUENTRO', @template);
-CALL usp_get_team_template('VARONIL','TOROS', @template);
+
 -- =============================================================================
 -- FEMENIL 
 -- =============================================================================
 CALL usp_get_category_template('FEMENIL',@template);
--- TEAMS
-CALL usp_get_team_template('FEMENIL','GALACTICAS', @template);
-CALL usp_get_team_template('FEMENIL','LAS PEQUES', @template);
-CALL usp_get_team_template('FEMENIL','MONARCAS', @template);
-CALL usp_get_team_template('FEMENIL','NOVAS', @template);
-CALL usp_get_team_template('FEMENIL','PANTERAS', @template);
--- CALL usp_get_team_template('FEMENIL','COYOTITAS', @template);
-CALL usp_get_team_template('FEMENIL','TIX', @template);
-CALL usp_get_team_template('FEMENIL','VENUS', @template);
+
 
 -- UPDATE LINK
 UPDATE teams
@@ -69,6 +39,27 @@ SET team_1_set_1_pts = 25,team_1_set_2_pts = 25,
 team_2_set_1_pts = 1,team_2_set_2_pts = 1
 WHERE stage = 'THIRD';
 
-SELECT * FROM teams WHERE tournament_id = 2 AND category = 'MIXTO'
+SELECT players.* 
+FROM teams
+INNER JOIN players
+ON players.team_id = teams.team_id
+WHERE tournament_id = 3 AND category = 'VARONIL'
+AND teams.name = 'CUERVOS'
 
 CALL usp_update_team()
+
+SELECT * 
+FROM tournaments
+
+SELECT * FROM games
+
+SELECT * 
+FROM games
+WHERE tournament_id = 3 AND category = 'FEMENIL'
+AND game_date BETWEEN '2025-03-19 00:00:01' AND '2025-03-20 00:00:01'
+
+SELECT COUNT(*)
+FROM teams
+WHERE tournament_id = 3
+AND category = 'MIXTO'
+AND stage = 'REGULAR';

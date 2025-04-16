@@ -58,18 +58,20 @@ export function emptyTeam(): Team {
 }
 
 export function emptyTeamStats(): TeamStat {
+  /*
   let setStats: SetStat[] = [];
   for (let i = 0; i < 5; i++) {
     setStats[i] = emptySetStat(i + 1);
   }
-  let teamStat: TeamStat = {
+    */
+  const teamStat: TeamStat = {
     teamId: 0,
     teamName: '',
     score: 0,
     sets: 0,
     points: 0,
     state: '',
-    setStats: setStats,
+    setStats: [],
     players: [],
   };
   return teamStat;

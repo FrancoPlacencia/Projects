@@ -33,23 +33,23 @@
               }
             ],
             "styles": [
-               "src/styles.scss",
-               {
-                "input":"src/global-styles/volley-styles.scss",
+              "src/styles.scss",
+              {
+                "input": "src/global-styles/volley-styles.scss",
                 "bundleName": "volley-styles"
-               },
-               {
-                "input":"src/global-styles/volley-styles.scss",
+              },
+              {
+                "input": "src/global-styles/volley-styles.scss",
                 "bundleName": "volley-styles"
-               },
-               {
-                "input":"src/global-styles/material-styles.scss",
+              },
+              {
+                "input": "src/global-styles/material-styles.scss",
                 "bundleName": "material-styles"
-               },
-               {
-                "input":"src/global-styles/theme-colors.scss",
+              },
+              {
+                "input": "src/global-styles/theme-colors.scss",
                 "bundleName": "theme-colors"
-               }
+              }
             ],
             "scripts": []
           },
@@ -112,11 +112,23 @@
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "schematicCollections": [
+      "angular-eslint"
+    ]
   }
 }

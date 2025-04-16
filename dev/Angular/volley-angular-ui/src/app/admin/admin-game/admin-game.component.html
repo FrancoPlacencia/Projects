@@ -1,10 +1,10 @@
 <div class="container top-center-flex">
   <div class="wrapper almost-full">
-    <form [formGroup]="formGroup" (ngSubmit)="submit()">
+    <form [formGroup]="gameForm" (ngSubmit)="submit()">
       <header>
         <h1>
           <mat-icon>sports_volleyball</mat-icon>&nbsp;Jornada {{ weekNumber }}
-          {{ formGroup.valid }}
+          {{ gameForm.valid }}<br />
         </h1>
         <div>
           <button mat-flat-button class="week-button" (click)="tournament()">
@@ -31,6 +31,8 @@
           }
         </div>
       </header>
+      TEAM OPTIONS {{ teamOptions | json }}<br />
+      GAME {{ game.teamStats | json }}
       <main>
         <mat-card class="box full">
           <mat-card-content>
@@ -86,17 +88,67 @@
                 <mat-slide-toggle formControlName="byDefault"
                   >Default</mat-slide-toggle
                 >
-                @if (formGroup!.controls["byDefault"].errors?.["required"]) {
+                @if (gameForm!.controls["byDefault"].errors?.["required"]) {
                   <mat-error>Default is required.</mat-error>
                 }
               </div>
+              <!-- TEAM -->
+              <div formArrayName="teams">
+                <!--@for (team of teams; track $index; let teamIndex = $index) {-->
+                @for (
+                  team of teams.controls;
+                  track $index;
+                  let teamIndex = $index
+                ) {
+                  <div [formGroupName]="teamIndex" class="flex-input">
+                    <!-- TEAM -->
+                    <mat-form-field class="full">
+                      <mat-label>Equipo {{ teamIndex + 1 }}</mat-label>
+                      <mat-select formControlName="name">
+                        @for (teamOption of teamOptions; track $index) {
+                          <mat-option [value]="teamOption.teamId">{{
+                            teamOption.name
+                          }}</mat-option>
+                        } @empty {}
+                      </mat-select>
+                    </mat-form-field>
+                    <!-- SETS -->
+                    <div formArrayName="sets" class="flex-input">
+                      @for (
+                        set of sets(teamIndex).controls;
+                        track $index;
+                        let setIndex = $index
+                      ) {
+                        <div [formGroupName]="setIndex">
+                          <mat-form-field floatLabel="always" class="full">
+                            <mat-label>Set {{ setIndex + 1 }}</mat-label>
+                            <mat-icon matTextPrefix>looks_one</mat-icon>
+                            <input
+                              #inputForm
+                              matInput
+                              placeholder="Equipo {{ teamIndex + 1 }} Set {{
+                                setIndex + 1
+                              }}"
+                              formControlName="set"
+                              type="number"
+                              maxlength="2"
+                              required
+                            />
+                          </mat-form-field>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+              <!--
               @for (
                 teamStat of game.teamStats;
                 track $index;
                 let teamIndex = $index
               ) {
                 <div class="flex-input">
-                  <!-- DYNAMIC SETS -->
+                  <!-- DYNAMIC SETS --
                   @for (
                     team1Set of team1Sets.controls;
                     track $index;
@@ -111,7 +163,7 @@
                   }
                 </div>
                 <div class="flex-input">
-                  <!-- TEAM -->
+                  <!-- TEAM --
                   <mat-form-field class="full">
                     <mat-label>Equipo {{ teamIndex + 1 }}</mat-label>
                     <mat-select formControlName="team{{ teamIndex + 1 }}">
@@ -123,7 +175,7 @@
                     </mat-select>
                   </mat-form-field>
 
-                  <!-- SETS -->
+                  <!-- SETS --
                   @for (
                     set of teamStat.setStats;
                     track $index;
@@ -159,7 +211,7 @@
                     track $index;
                     let playerIndex = $index
                   ) {
-                    <!--@for(player of players; track $index; let playerIndex = $index) { -->
+                    <!--@for(player of players; track $index; let playerIndex = $index) { --
                     @if (playerIndex < teamStat.players.length) {
                       <mat-slide-toggle
                         formControlName="team{{ teamIndex + 1 }}Player{{
@@ -179,6 +231,7 @@
                 </div>
                 <br />
               }
+                -->
             </div>
           </mat-card-content>
         </mat-card>

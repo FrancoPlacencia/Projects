@@ -76,6 +76,5 @@ export function generateTeamMap(teams: Team[]) {
       teamMap.set(team.category, [team]);
     }
   });
-  console.log(teamMap);
   return teamMap;
 }

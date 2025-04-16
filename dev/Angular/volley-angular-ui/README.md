@@ -38,9 +38,14 @@ ng add @angular/material
   # Theme - Azure/Blue
   # Global styles  - yes
   # Animations - Include and enable
-
+ng add @angular-eslint/schematics
+npm install prettier --save-dev
+npm install prettier-eslint eslint-config-prettier eslint-plugin-prettier
 npm i @angular/material-moment-adapter
 npm i angular-moment
+
+# To update the angular dependencies
+ng update @angular/cli @angular/core @angular/material --allow-dirty
 
 # Short commands
 ng generate => ng g

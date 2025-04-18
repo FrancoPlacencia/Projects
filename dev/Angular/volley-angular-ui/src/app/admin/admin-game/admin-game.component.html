@@ -39,69 +39,73 @@
             @if (gameId) {
               <h5>ID - {{ gameId }}</h5>
             }
-            <div>
-              <div class="flex-input">
-                <!-- CATEGORY -->
-                <mat-form-field class="full">
-                  <mat-label>Categoria</mat-label>
-                  <mat-select formControlName="category">
-                    <mat-option value="FEMENIL">Femenil</mat-option>
-                    <mat-option value="VARONIL">Varonil</mat-option>
-                    <mat-option value="MIXTO">Mixto</mat-option>
-                  </mat-select>
-                </mat-form-field>
-                <!-- DATE -->
-                <mat-form-field class="full">
-                  <mat-label>Fecha</mat-label>
-                  <input
-                    matInput
-                    [matDatepicker]="datePicker"
-                    formControlName="gameDate"
-                  />
-                  <mat-hint>DD/MM/YYYY</mat-hint>
-                  <mat-datepicker-toggle
-                    matIconSuffix
-                    [for]="datePicker"
-                  ></mat-datepicker-toggle>
-                  <mat-datepicker #datePicker></mat-datepicker>
-                </mat-form-field>
-                <!-- TIME -->
-                <mat-form-field class="full">
-                  <mat-label>Hora del Partido</mat-label>
-                  <input
-                    matInput
-                    [matTimepicker]="timePicker"
-                    formControlName="gameTime"
-                  />
-                  <mat-timepicker-toggle matIconSuffix [for]="timePicker" />
-                  <mat-timepicker interval="15min" #timePicker />
-                </mat-form-field>
-                <!-- PLACE -->
-                <mat-form-field class="full">
-                  <mat-label>Lugar</mat-label>
-                  <mat-select formControlName="gamePlace">
-                    <mat-option value="ARRIBA">Cancha Arriba</mat-option>
-                    <mat-option value="ABAJO">Cancha Abajo</mat-option>
-                  </mat-select>
-                </mat-form-field>
-                <!-- DEFAULT -->
-                <mat-slide-toggle formControlName="byDefault"
-                  >Default</mat-slide-toggle
-                >
-                @if (gameForm!.controls["byDefault"].errors?.["required"]) {
-                  <mat-error>Default is required.</mat-error>
+            <div class="flex-input">
+              <!-- CATEGORY -->
+              <mat-form-field class="full">
+                <mat-label>Categoria</mat-label>
+                <mat-select formControlName="category">
+                  <mat-option value="FEMENIL">FEMENIL</mat-option>
+                  <mat-option value="VARONIL">VARONIL</mat-option>
+                  <mat-option value="MIXTO">MIXTO</mat-option>
+                </mat-select>
+                @if (gameForm.controls["category"].errors?.["required"]) {
+                  <mat-error>Selecciona una categoria.</mat-error>
                 }
-              </div>
-              <!-- TEAM -->
-              <div formArrayName="teams">
-                <!--@for (team of teams; track $index; let teamIndex = $index) {-->
-                @for (
-                  team of teams.controls;
-                  track $index;
-                  let teamIndex = $index
-                ) {
-                  <div [formGroupName]="teamIndex" class="flex-input">
-                    <!-- TEAM -->
+              </mat-form-field>
+              <!-- DATE -->
+              <mat-form-field class="full">
+                <mat-label>Fecha</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="datePicker"
+                  formControlName="gameDate"
+                />
+                <mat-hint>DD/MM/YYYY</mat-hint>
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="datePicker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #datePicker></mat-datepicker>
+              </mat-form-field>
+              <!-- TIME -->
+              <mat-form-field class="full">
+                <mat-label>Hora del Partido</mat-label>
+                <input
+                  matInput
+                  [matTimepicker]="timePicker"
+                  formControlName="gameTime"
+                />
+                <mat-timepicker-toggle matIconSuffix [for]="timePicker" />
+                <mat-timepicker interval="15min" #timePicker />
+              </mat-form-field>
+              <!-- PLACE -->
+              <mat-form-field class="full">
+                <mat-label>Lugar</mat-label>
+                <mat-select formControlName="gamePlace">
+                  <mat-option value="ARRIBA">Cancha Arriba</mat-option>
+                  <mat-option value="ABAJO">Cancha Abajo</mat-option>
+                </mat-select>
+                @if (gameForm.controls["gamePlace"].errors?.["required"]) {
+                  <mat-error>Especifica el Lugar.</mat-error>
+                }
+              </mat-form-field>
+              <!-- DEFAULT -->
+              <mat-slide-toggle formControlName="byDefault"
+                >Default</mat-slide-toggle
+              >
+              @if (gameForm!.controls["byDefault"].errors?.["required"]) {
+                <mat-error>Default is required.</mat-error>
+              }
+            </div>
+            <div formArrayName="teams">
+              @for (
+                team of teams.controls;
+                track $index;
+                let teamIndex = $index
+              ) {
+                <div [formGroupName]="teamIndex" class="team-area full">
+                  <!-- TEAM -->
+                  <div class="flex-input">
                     <mat-form-field class="full">
                       <mat-label>Equipo {{ teamIndex + 1 }}</mat-label>
                       <mat-select formControlName="name">
@@ -112,36 +116,50 @@
                         } @empty {}
                       </mat-select>
                     </mat-form-field>
-                    <!-- SETS -->
-                    <div formArrayName="sets" class="flex-input">
+                    <div formArrayName="players" class="full">
                       @for (
-                        set of sets(teamIndex).controls;
+                        player of players(teamIndex).controls;
                         track $index;
-                        let setIndex = $index
+                        let playerIndex = $index
                       ) {
-                        <div [formGroupName]="setIndex">
-                          <mat-form-field floatLabel="always" class="full">
-                            <mat-label>Set {{ setIndex + 1 }}</mat-label>
-                            <mat-icon matTextPrefix>looks_one</mat-icon>
-                            <input
-                              #inputForm
-                              matInput
-                              placeholder="Equipo {{ teamIndex + 1 }} Set {{
-                                setIndex + 1
-                              }}"
-                              formControlName="set"
-                              type="number"
-                              maxlength="2"
-                              required
-                            />
-                          </mat-form-field>
-                        </div>
+                        <mat-slide-toggle formControlName="player">{{
+                          player
+                        }}</mat-slide-toggle>
                       }
                     </div>
                   </div>
-                }
-              </div>
-              <!--
+                  <!-- SETS -->
+                  <div formArrayName="sets" class="flex-input full">
+                    @for (
+                      set of sets(teamIndex).controls;
+                      track $index;
+                      let setIndex = $index
+                    ) {
+                      <mat-form-field
+                        floatLabel="always"
+                        class="full"
+                        [formGroupName]="setIndex"
+                      >
+                        <mat-label>Set {{ setIndex + 1 }}</mat-label>
+                        <mat-icon matTextPrefix>looks_one</mat-icon>
+                        <input
+                          #inputForm
+                          matInput
+                          placeholder="Equipo {{ teamIndex + 1 }} Set {{
+                            setIndex + 1
+                          }}"
+                          formControlName="set"
+                          type="number"
+                          maxlength="2"
+                          required
+                        />
+                      </mat-form-field>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+            <!--
               @for (
                 teamStat of game.teamStats;
                 track $index;
@@ -211,7 +229,7 @@
                     track $index;
                     let playerIndex = $index
                   ) {
-                    <!--@for(player of players; track $index; let playerIndex = $index) { --
+                    @for(player of players; track $index; let playerIndex = $index) { --
                     @if (playerIndex < teamStat.players.length) {
                       <mat-slide-toggle
                         formControlName="team{{ teamIndex + 1 }}Player{{
@@ -232,7 +250,6 @@
                 <br />
               }
                 -->
-            </div>
           </mat-card-content>
         </mat-card>
       </main>

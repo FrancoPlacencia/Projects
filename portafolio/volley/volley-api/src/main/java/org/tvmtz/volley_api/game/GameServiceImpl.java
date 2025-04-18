@@ -15,6 +15,7 @@ import org.tvmtz.volley_api.util.AppConstants;
 import org.tvmtz.volley_api.util.AppUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -164,22 +165,25 @@ public class GameServiceImpl implements GameService {
                         teamNumber == 1 ? game.getTeam1().getTeamId() : game.getTeam2().getTeamId(), game.getGameId(), game.getStage()))
                 .build();
         List<SetStat> setStats = new ArrayList<>();
-        Integer[] teamPoints = {
-                game.getTeam1Set1Pts(),
-                game.getTeam1Set2Pts(),
-                game.getTeam1Set3Pts(),
-                game.getTeam1Set4Pts(),
-                game.getTeam1Set5Pts()
-        };
-        Integer[] vsPoints = {
-                game.getTeam2Set1Pts(),
-                game.getTeam2Set2Pts(),
-                game.getTeam2Set3Pts(),
-                game.getTeam2Set4Pts(),
-                game.getTeam2Set5Pts()
-        };
-        for (int i = 0; i < teamPoints.length; i++) {
-            SetStat setStat = buildSetStat(i, teamPoints[i], vsPoints[i], teamNumber, game.getByDefault());
+
+        List<Integer> teamPoints = new ArrayList<>();
+        teamPoints.add(game.getTeam1Set1Pts());
+        teamPoints.add(game.getTeam1Set2Pts());
+        teamPoints.add(game.getTeam1Set3Pts());
+        teamPoints.add(game.getTeam1Set4Pts());
+        teamPoints.add(game.getTeam1Set5Pts());
+        
+        List<Integer> vsPoints = new ArrayList<>();
+        vsPoints.add(game.getTeam2Set1Pts());
+        vsPoints.add(game.getTeam2Set2Pts());
+        vsPoints.add(game.getTeam2Set3Pts());
+        vsPoints.add(game.getTeam2Set4Pts());
+        vsPoints.add(game.getTeam2Set5Pts());
+
+        teamPoints.removeAll(Collections.singleton(null));
+        vsPoints.removeAll(Collections.singleton(null));
+        for (int i = 0; i < teamPoints.size(); i++) {
+            SetStat setStat = buildSetStat(i, teamPoints.get(i), vsPoints.get(i), teamNumber, game.getByDefault());
             if (setStat != null) {
                 setStats.add(setStat);
             }
@@ -223,7 +227,6 @@ public class GameServiceImpl implements GameService {
                     state = "TIE";
                 }
             }
-
         }
         return state;
     }

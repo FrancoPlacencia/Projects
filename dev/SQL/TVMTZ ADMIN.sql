@@ -1,18 +1,15 @@
-CALL usp_get_week_template(4, @template)
+CALL usp_get_week_template(7, @template)
 
 -- =============================================================================
 -- MIXTO 
--- =============================================================================
 CALL usp_get_category_template('MIXTO',@template);
 
 -- =============================================================================
 -- VARONIL 
--- =============================================================================
 CALL usp_get_category_template('VARONIL',@template);
 
 -- =============================================================================
 -- FEMENIL 
--- =============================================================================
 CALL usp_get_category_template('FEMENIL',@template);
 
 
@@ -55,11 +52,18 @@ SELECT * FROM games
 
 SELECT * 
 FROM games
-WHERE tournament_id = 3 AND category = 'FEMENIL'
-AND game_date BETWEEN '2025-03-19 00:00:01' AND '2025-03-20 00:00:01'
+WHERE tournament_id = 2
+AND week_number = 18
+
+AND game_date BETWEEN '2025-04-23 00:00:00' AND '2025-04-24 00:00:01'
 
 SELECT COUNT(*)
 FROM teams
 WHERE tournament_id = 3
 AND category = 'MIXTO'
 AND stage = 'REGULAR';
+
+
+SELECT tournament_id
+FROM tournaments
+WHERE is_active = true

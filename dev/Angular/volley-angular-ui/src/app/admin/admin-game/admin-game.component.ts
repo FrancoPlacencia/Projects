@@ -101,7 +101,6 @@ export class AdminGameComponent implements OnInit {
   public errorMessage: string = '';
 
   // Form Data
-
   public setsNumber = 5;
 
   public teamsArray: number[] = [1, 2];
@@ -220,7 +219,6 @@ export class AdminGameComponent implements OnInit {
 
   public addTeam() {
     this.teams.push(this.newTeam());
-    this.subscribeTeams();
   }
 
   public removeTeam(teamIndex: number) {
@@ -228,10 +226,6 @@ export class AdminGameComponent implements OnInit {
   }
 
   // TEAM SET ARRAY
-  public teamSets(teamIndex: number): FormArray {
-    return this.teams.at(teamIndex).get('sets') as FormArray;
-  }
-
   public sets(teamIndex: number) {
     return this.teams.at(teamIndex).get('sets') as FormArray;
   }
@@ -244,11 +238,11 @@ export class AdminGameComponent implements OnInit {
   }
 
   public addSet(teamIndex: number) {
-    this.teamSets(teamIndex).push(this.newSets());
+    this.sets(teamIndex).push(this.newSets(), { emitEvent: false });
   }
 
   public removeSets(teamIndex: number, setIndex: number) {
-    this.teamSets(teamIndex).removeAt(setIndex);
+    this.sets(teamIndex).removeAt(setIndex);
   }
 
   // TEAM PLAYERS ARRAY
@@ -264,11 +258,13 @@ export class AdminGameComponent implements OnInit {
   }
 
   public addPlayer(teamIndex: number) {
-    this.players(teamIndex).push(this.newPlayer());
+    this.players(teamIndex).push(this.newPlayer(), { emitEvent: false });
   }
 
-  public removePlayer(teamIndex: number, setIndex: number) {
-    this.players(teamIndex).removeAt(setIndex);
+  public clearPlayers(teamIndex: number) {
+    while (this.players(teamIndex).length !== 0) {
+      this.players(teamIndex).removeAt(0, { emitEvent: false });
+    }
   }
 
   ngOnInit(): void {
@@ -283,6 +279,7 @@ export class AdminGameComponent implements OnInit {
     this.isNew = true;
 
     resetFormGroup(this.gameForm);
+    this.buildTeamStats(false);
     this.getGames();
 
     //this.formGroup.get('gameTime')?.setValue('');
@@ -293,11 +290,17 @@ export class AdminGameComponent implements OnInit {
     this.gameForm.markAllAsTouched();
     if (this.gameForm.status === 'VALID') {
       this.isProcessing = startProcessing(this.gameForm, this.dialog);
-      this.isNew ? this.createGame() : this.updateGame();
+      if (this.isNew) {
+        this.createGame();
+      } else {
+        this.updateGame();
+      }
+      // this.isNew ? this.createGame() : this.updateGame();
     }
   }
 
   public edit(game: Game): void {
+    console.log('Edit ', game);
     this.inputForm.nativeElement.focus();
     this.isNew = false;
 
@@ -312,14 +315,27 @@ export class AdminGameComponent implements OnInit {
       this.game.weekNumber = this.weekNumber;
     }
 
-    // let dateT = new Date(game.gameDate);
-    this.game.gameDate = new Date(game.gameDate);
+    const tmpDate = new Date(game.gameDate);
+    // this.game.gameDate = new Date(game.gameDate);
     this.gameForm.get('category')?.setValue(game.category);
-    this.gameForm.get('gameTime')?.setValue(this.game.gameDate);
-    this.gameForm.get('gameDate')?.setValue(this.game.gameDate);
+    this.gameForm.get('gameTime')?.setValue(tmpDate);
+    this.gameForm.get('gameDate')?.setValue(tmpDate);
     this.gameForm.get('gamePlace')?.setValue(game.gamePlace);
     this.gameForm.get('byDefault')?.setValue(game.byDefault);
 
+    this.teams.controls.forEach((formControl, i) => {
+      const teamStat: TeamStat = game.teamStats[i];
+      formControl.get('name')?.setValue(teamStat.teamId);
+
+      this.sets(i).controls.forEach((formControlSets, j) => {
+        let setStat: SetStat = teamStat.setStats[j];
+        if (!setStat) {
+          setStat = emptySetStat(j + 1);
+        }
+        formControlSets.get('set')?.setValue(setStat.points);
+      });
+    });
+    /*
     for (let i = 0; i < game.teamStats.length; i++) {
       let teamStat: TeamStat = game.teamStats[i];
       this.gameForm.get('team' + (i + 1))?.setValue(teamStat.teamId);
@@ -341,6 +357,7 @@ export class AdminGameComponent implements OnInit {
           ?.setValue(teamStat.players[p].gamePlayed);
       }
     }
+    */
   }
 
   public delete(game: Game): void {
@@ -383,13 +400,7 @@ export class AdminGameComponent implements OnInit {
         this.stageText = 'Regular';
         break;
     }
-
-    for (let i = 0; i < this.teams.controls.length; i++) {
-      for (let j = 0; j < this.stageSets; j++) {
-        this.addSet(i);
-        this.game.teamStats[i].setStats.push(emptySetStat(j + 1));
-      }
-    }
+    this.buildTeamStats(true);
   }
 
   private createGame(): void {
@@ -457,6 +468,7 @@ export class AdminGameComponent implements OnInit {
   }
 
   private updateGame(): void {
+    console.log('updateGame ', this.game);
     this.gamesService.putGame(this.game).subscribe({
       next: (result: CommonResponse) => {
         this.isProcessing = endProcessing(this.gameForm, this.dialog);
@@ -536,7 +548,7 @@ export class AdminGameComponent implements OnInit {
 
   private enableFields(): void {
     this.teams.controls.forEach((formControl) => {
-      formControl.enable();
+      formControl.enable({ emitEvent: false });
     });
     /*
     this.game.teamStats.forEach((teamStats, i) => {
@@ -587,8 +599,6 @@ export class AdminGameComponent implements OnInit {
       .valueChanges.subscribe((selectedValue: Date) => {
         this.game.gameDate.setHours(selectedValue.getHours());
         this.game.gameDate.setMinutes(selectedValue.getMinutes());
-        //this.dateStart.set('hour', selectedValue.getHours());
-        //this.dateStart.set('minute', dayjs(selectedValue).get('minute'));
       });
     this.gameForm.get('gamePlace')!.valueChanges.subscribe((selectedValue) => {
       this.game.gamePlace = selectedValue;
@@ -599,33 +609,45 @@ export class AdminGameComponent implements OnInit {
     });
 
     this.teams.controls.forEach((formControl, i) => {
-      console.log('foreach ', i);
       formControl.valueChanges.subscribe((formValue) => {
-        console.log('SUBSCRIBE TEAMS ', formValue);
         this.game.teamStats[i].players = this.setPlayersByCategory(
           formValue.name,
         );
         this.game.teamStats[i].teamId = formValue.name;
         this.sets(i).controls.forEach((formControlSets, j) => {
           formControlSets.valueChanges.subscribe((setValue) => {
-            console.log(setValue);
             this.game.teamStats[i].setStats[j].points = setValue.set;
           });
         });
 
-        this.players(i).controls.forEach((formControlPlayers, j) => {
-          formControlPlayers.valueChanges.subscribe((setValue) => {
-            console.log(setValue);
-            this.game.teamStats[i].players[j].playerId = setValue.set;
-          });
+        // CLEAR The players before adding new ones
+        this.clearPlayers(i);
+        /*
+        this.game.teamStats[i].players.forEach((player) => {
+          this.addPlayer(i);
         });
-
+        console.log(this.players(i));
+        /*
+          this.players(i).controls.forEach((formControlPlayers, j) => {
+            formControlPlayers.valueChanges.subscribe((setValue) => {
+              console.log(setValue);
+              // this.game.teamStats[i].players[j].playerId = setValue.set;
+            });
+          });
+*/
         //this.enablePlayers(this.game.teamStats[i], i);
       });
     });
   }
 
-  private subscribeTeams() {
-    console.log('i');
+  private buildTeamStats(init: boolean) {
+    for (let i = 0; i < this.teams.controls.length; i++) {
+      for (let j = 0; j < this.stageSets; j++) {
+        if (init) {
+          this.addSet(i);
+        }
+        this.game.teamStats[i].setStats.push(emptySetStat(j + 1));
+      }
+    }
   }
 }

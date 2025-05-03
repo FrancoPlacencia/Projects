@@ -4,8 +4,9 @@
       <header>
         <h1>
           <mat-icon>sports_volleyball</mat-icon>&nbsp;Jornada {{ weekNumber }}
-          {{ gameForm.valid }}<br />
         </h1>
+        <span>{{ gameForm.valid }}</span>
+        <span>{{ gameForm.value | json }}</span>
         <div>
           <button mat-flat-button class="week-button" (click)="tournament()">
             <mat-icon>emoji_events</mat-icon>Torneos
@@ -31,8 +32,6 @@
           }
         </div>
       </header>
-      TEAM OPTIONS {{ teamOptions | json }}<br />
-      GAME {{ game.teamStats | json }}
       <main>
         <mat-card class="box full">
           <mat-card-content>
@@ -89,13 +88,6 @@
                   <mat-error>Especifica el Lugar.</mat-error>
                 }
               </mat-form-field>
-              <!-- DEFAULT -->
-              <mat-slide-toggle formControlName="byDefault"
-                >Default</mat-slide-toggle
-              >
-              @if (gameForm!.controls["byDefault"].errors?.["required"]) {
-                <mat-error>Default is required.</mat-error>
-              }
             </div>
             <div formArrayName="teams">
               @for (
@@ -103,31 +95,18 @@
                 track $index;
                 let teamIndex = $index
               ) {
-                <div [formGroupName]="teamIndex" class="team-area full">
+                <div [formGroupName]="teamIndex">
                   <!-- TEAM -->
-                  <div class="flex-input">
-                    <mat-form-field class="full">
-                      <mat-label>Equipo {{ teamIndex + 1 }}</mat-label>
-                      <mat-select formControlName="name">
-                        @for (teamOption of teamOptions; track $index) {
-                          <mat-option [value]="teamOption.teamId">{{
-                            teamOption.name
-                          }}</mat-option>
-                        } @empty {}
-                      </mat-select>
-                    </mat-form-field>
-                    <div formArrayName="players" class="full">
-                      @for (
-                        player of players(teamIndex).controls;
-                        track $index;
-                        let playerIndex = $index
-                      ) {
-                        <mat-slide-toggle formControlName="player">{{
-                          player
-                        }}</mat-slide-toggle>
-                      }
-                    </div>
-                  </div>
+                  <mat-form-field class="full">
+                    <mat-label>Equipo {{ teamIndex + 1 }}</mat-label>
+                    <mat-select formControlName="name">
+                      @for (teamOption of teamOptions; track $index) {
+                        <mat-option [value]="teamOption.teamId">{{
+                          teamOption.name
+                        }}</mat-option>
+                      } @empty {}
+                    </mat-select>
+                  </mat-form-field>
                   <!-- SETS -->
                   <div formArrayName="sets" class="flex-input full">
                     @for (
@@ -156,7 +135,33 @@
                       </mat-form-field>
                     }
                   </div>
+                  <div formArrayName="players" class="full">
+                    @for (
+                      player of players(teamIndex).controls;
+                      track $index;
+                      let playerIndex = $index
+                    ) {
+                      <mat-slide-toggle formControlName="player">
+                        {{
+                          game.teamStats[teamIndex].players[playerIndex].number
+                        }}
+                        -
+                        {{
+                          game.teamStats[teamIndex].players[playerIndex].name
+                        }}
+                      </mat-slide-toggle>
+                    }
+                  </div>
                 </div>
+              }
+            </div>
+            <div>
+              <!-- DEFAULT -->
+              <mat-slide-toggle formControlName="byDefault"
+                >Default</mat-slide-toggle
+              >
+              @if (gameForm!.controls["byDefault"].errors?.["required"]) {
+                <mat-error>Default is required.</mat-error>
               }
             </div>
             <!--

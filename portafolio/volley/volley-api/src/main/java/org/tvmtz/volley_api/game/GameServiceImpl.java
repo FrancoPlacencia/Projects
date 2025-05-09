@@ -151,8 +151,7 @@ public class GameServiceImpl implements GameService {
         }
         return new ResponseEntity<>(gamesDTOs, HttpStatus.OK);
     }
-
-
+    
     private TeamStat buildTeamStat(Game game, Integer teamNumber) {
         TeamStat teamStat = TeamStat.builder()
                 .teamId(teamNumber == 1 ? game.getTeam1().getTeamId() : game.getTeam2().getTeamId())

@@ -14,7 +14,7 @@ import { DialogMessage } from '../common/model/dialog-message.model';
  */
 export function startProcessing(
   formGroup: FormGroup | undefined,
-  dialog: MatDialog
+  dialog: MatDialog,
 ): boolean {
   if (formGroup) {
     formGroup.disable();
@@ -24,8 +24,8 @@ export function startProcessing(
     new DialogMessage(
       DialogMessageTypes.LOADING,
       DialogMessageTypes.LOADING_TITLE,
-      DialogMessageTypes.LOADING_REQUEST_MESSAGE
-    ).getDialogJson()
+      DialogMessageTypes.LOADING_REQUEST_MESSAGE,
+    ).getDialogJson(),
   );
   return true;
 }
@@ -40,7 +40,7 @@ export function startProcessing(
  */
 export function endProcessing(
   formGroup: FormGroup | undefined,
-  dialog: MatDialog
+  dialog: MatDialog,
 ): boolean {
   if (formGroup) {
     formGroup.enable();
@@ -54,7 +54,7 @@ export function endProcessing(
  * @param formGroup
  */
 export function resetFormGroup(formGroup: FormGroup): void {
-  formGroup.markAsPending();
-  formGroup.markAsPristine();
-  formGroup.reset();
+  //formGroup.markAsPending();
+  //formGroup.markAsPristine();
+  formGroup.reset({ emitEvent: false });
 }

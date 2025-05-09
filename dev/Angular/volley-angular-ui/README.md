@@ -41,11 +41,17 @@ ng add @angular/material
 ng add @angular-eslint/schematics
 npm install prettier --save-dev
 npm install prettier-eslint eslint-config-prettier eslint-plugin-prettier
-npm i @angular/material-moment-adapter
-npm i angular-moment
+npm install @angular/material-moment-adapter
+npm install angular-moment
+npm install material-symbols
 
 # To update the angular dependencies
 ng update @angular/cli @angular/core @angular/material --allow-dirty
+
+# Check for outdated dependencies
+npm outdated
+npm update [package_name]
+
 
 # Short commands
 ng generate => ng g

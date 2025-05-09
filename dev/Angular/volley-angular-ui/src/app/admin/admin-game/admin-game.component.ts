@@ -3,11 +3,15 @@ import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { TeamService } from '../../services/team.service';
 import { TournamentService } from '../../services/tournament.service';
 import {
+  AbstractControl,
   FormArray,
   FormBuilder,
   FormGroup,
+  FormGroupDirective,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -31,6 +35,8 @@ import {
   MatNativeDateModule,
   provideNativeDateAdapter,
 } from '@angular/material/core';
+
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { GameService } from '../../services/game.service';
 import { Game } from '../../model/game.model';
@@ -42,6 +48,7 @@ import { SetStat } from '../../model/set-stats.model';
 import { Player } from '../../model/player.model';
 import {
   emptyGame,
+  emptyPlayer,
   emptySetStat,
   emptyTournament,
 } from '../../util/empty-model-util';
@@ -82,12 +89,21 @@ import { navigateToTournament } from '../../util/navigate-util';
     MatNativeDateModule,
     MatTimepickerModule,
     MatExpansionModule,
+    MatCheckboxModule,
     WeekComponent,
   ],
   templateUrl: './admin-game.component.html',
   styleUrl: './admin-game.component.scss',
 })
-export class AdminGameComponent implements OnInit {
+export class AdminGameComponent {
+  // INJECTIONS
+  private formBuilder: FormBuilder = inject(FormBuilder);
+  private teamService: TeamService = inject(TeamService);
+  private gamesService: GameService = inject(GameService);
+  private dialog: MatDialog = inject(MatDialog);
+  private router: Router = inject(Router);
+  private route: ActivatedRoute = inject(ActivatedRoute);
+
   public tournamentId: number = 0;
   public weekNumber: number = 0;
   public tournamentName!: string;
@@ -97,17 +113,15 @@ export class AdminGameComponent implements OnInit {
   public isProcessing: boolean = false;
   public isNew: boolean = true;
 
+  private defaultDate = new Date(new Date().setHours(17, 30, 0));
+
   // Table Data
   public errorMessage: string = '';
 
   // Form Data
   public setsNumber = 5;
 
-  public teamsArray: number[] = [1, 2];
-  public setsArray: number[] = [1, 2, 3];
-  public playersArray: number[] = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-  ];
+  private lastTeamUpdated: number[] = [0, 0];
 
   public categoryRequired = true;
 
@@ -135,155 +149,104 @@ export class AdminGameComponent implements OnInit {
   public playoff = false;
   public stageText = '';
 
-  private formBuilder: FormBuilder = inject(FormBuilder);
-
   public gameForm: FormGroup = this.formBuilder.group({
     category: [undefined, Validators.required],
-    gameDate: [new Date(new Date().setHours(17, 30, 0)), Validators.required],
-    gameTime: [new Date(new Date().setHours(17, 30, 0)), Validators.required],
+    gameDate: [undefined, Validators.required],
+    gameTime: [undefined, Validators.required],
     gamePlace: [undefined, Validators.required],
-    byDefault: [false, Validators.required],
-
+    byDefault: [undefined, Validators.required],
     teams: this.formBuilder.array([this.newTeam(), this.newTeam()]),
   });
 
-  constructor(
-    private teamService: TeamService,
-    private gamesService: GameService,
-    private dialog: MatDialog,
-
-    private router: Router,
-    private route: ActivatedRoute,
-  ) {
-    // Get data from URL
+  constructor() {
     this.route.queryParamMap.subscribe((params) => {
-      this.tournamentId = Number(params.get('id')!);
+      this.tournamentId = Number(params.get('id') ?? 0);
       this.weekNumber = Number(params.get('weekNumber') ?? 0);
       this.stage = params.get('stage') ?? 'REGULAR';
-
       this.setStage();
-
       this.formSubscribe();
 
+      this.reset();
       this.getTeams();
-
       this.getGames();
     });
-
-    /*
-    for (let i = 0; i < this.game.teamStats.length; i++) {
-      // TEAMS
-      this.formGroup
-        .get('team' + (i + 1))!
-        .valueChanges.subscribe((selectedValue) => {
-          this.game.teamStats[i].players =
-            this.setPlayersByCategory(selectedValue);
-          this.game.teamStats[i].teamId = selectedValue;
-          this.enablePlayers(this.game.teamStats[i], i);
-        });
-      // SETS
-      for (let j = 0; j < this.game.teamStats[i].setStats.length; j++) {
-        this.formGroup
-          .get('team' + (i + 1) + 'Set' + (j + 1))!
-          .valueChanges.subscribe((selectedValue) => {
-            this.game.teamStats[i].setStats[j].points = selectedValue;
-          });
-      }
-      // PLAYERS
-      for (let p = 0; p < 20; p++) {
-        this.formGroup
-          .get('team' + (i + 1) + 'Player' + (p + 1))!
-          .valueChanges.subscribe((selectedValue) => {
-            if (p < this.game.teamStats[i].players.length) {
-              this.game.teamStats[i].players[p].gamePlayed = selectedValue;
-            }
-          });
-      }
-    }
-      */
   }
 
-  // TEAM ARRAY
   public get teams() {
     return this.gameForm.controls['teams'] as FormArray;
   }
-
-  public newTeam() {
-    const tmpTeam: FormGroup = this.formBuilder.group({
-      name: [{ value: '', disabled: true }, Validators.required],
-      sets: this.formBuilder.array([]),
-      players: this.formBuilder.array([]),
-    });
-    return tmpTeam;
+  public sets(teamIndex: number) {
+    return this.teams.at(teamIndex).get('sets') as FormArray;
+  }
+  public players(teamIndex: number): FormArray {
+    return this.teams.at(teamIndex).get('players') as FormArray;
   }
 
   public addTeam() {
     this.teams.push(this.newTeam());
   }
-
-  public removeTeam(teamIndex: number) {
-    this.teams.removeAt(teamIndex);
+  public addSet(teamIndex: number) {
+    this.sets(teamIndex).push(this.newSet(), { emitEvent: false });
+  }
+  public addPlayer(teamIndex: number) {
+    this.players(teamIndex).push(this.newPlayer(), { emitEvent: false });
   }
 
-  // TEAM SET ARRAY
-  public sets(teamIndex: number) {
-    return this.teams.at(teamIndex).get('sets') as FormArray;
+  public newTeam() {
+    const tmpTeam: FormGroup = this.formBuilder.group({
+      name: [
+        { value: undefined, disabled: true },
+        [Validators.required, this.teamsValidator()],
+      ],
+      sets: this.formBuilder.array([]),
+      players: this.formBuilder.array([]),
+    });
+    return tmpTeam;
   }
-
-  public newSets() {
+  public newSet() {
     const tmpSet: FormGroup = this.formBuilder.group({
       set: [{ value: 0, disabled: true }, Validators.required],
     });
     return tmpSet;
   }
-
-  public addSet(teamIndex: number) {
-    this.sets(teamIndex).push(this.newSets(), { emitEvent: false });
-  }
-
-  public removeSets(teamIndex: number, setIndex: number) {
-    this.sets(teamIndex).removeAt(setIndex);
-  }
-
-  // TEAM PLAYERS ARRAY
-  public players(teamIndex: number): FormArray {
-    return this.teams.at(teamIndex).get('players') as FormArray;
-  }
-
   public newPlayer() {
     const tmpPlayer: FormGroup = this.formBuilder.group({
-      player: [{ value: false, disabled: true }, Validators.required],
+      player: [false, Validators.required],
     });
     return tmpPlayer;
   }
 
-  public addPlayer(teamIndex: number) {
-    this.players(teamIndex).push(this.newPlayer(), { emitEvent: false });
+  public removeTeam(teamIndex: number) {
+    this.teams.removeAt(teamIndex);
   }
-
   public clearPlayers(teamIndex: number) {
     while (this.players(teamIndex).length !== 0) {
       this.players(teamIndex).removeAt(0, { emitEvent: false });
     }
   }
 
-  ngOnInit(): void {
-    console.log('initiated');
-  }
-
   public reset(): void {
+    resetFormGroup(this.gameForm);
+    this.disableFields();
+
+    // Reset the variables
     this.game = emptyGame();
+    this.buildTeamStats(false);
+
     this.game.tournamentId = this.tournamentId;
 
     this.gameId = this.game.gameId;
     this.isNew = true;
 
-    resetFormGroup(this.gameForm);
-    this.buildTeamStats(false);
-    this.getGames();
-
-    //this.formGroup.get('gameTime')?.setValue('');
-    //this.formGroup.get('gameDate')?.setValue('');
+    this.teams.controls.forEach((teamFormControl, i) => {
+      this.sets(i).controls.forEach((setFormControl) => {
+        setFormControl.get('set')?.setValue(0, { emitEvent: false });
+      });
+      this.clearPlayers(i);
+    });
+    this.gameForm.get('gameTime')!.setValue(this.defaultDate);
+    this.gameForm.get('gameDate')!.setValue(this.defaultDate);
+    this.gameForm.get('byDefault')!.setValue(false);
   }
 
   public submit(): void {
@@ -333,6 +296,14 @@ export class AdminGameComponent implements OnInit {
           setStat = emptySetStat(j + 1);
         }
         formControlSets.get('set')?.setValue(setStat.points);
+      });
+
+      this.players(i).controls.forEach((formControlPlayers, j) => {
+        let playerOption: PlayerOption = teamStat.players[j];
+        if (!playerOption) {
+          playerOption = emptyPlayer();
+        }
+        formControlPlayers.get('player')?.setValue(playerOption.gamePlayed);
       });
     });
     /*
@@ -403,25 +374,6 @@ export class AdminGameComponent implements OnInit {
     this.buildTeamStats(true);
   }
 
-  private createGame(): void {
-    console.log(this.game);
-    this.game.tournamentId = this.tournamentId;
-    this.game.weekNumber = this.weekNumber;
-    if (!this.playoff) {
-      this.gamesService.postGame(this.game).subscribe({
-        next: (result: CommonResponse) => {
-          this.isProcessing = endProcessing(this.gameForm, this.dialog);
-          openDialog(this.dialog, DialogMessageTypes.SUCCESS, result.response);
-          this.reset();
-        },
-        error: (e: any) => {
-          this.isProcessing = endProcessing(this.gameForm, this.dialog);
-          openErrorDialog(this.dialog, e.status, e.error);
-        },
-      });
-    }
-  }
-
   private getGames(): void {
     this.gamesMatrix = [];
     if (this.playoff) {
@@ -467,6 +419,26 @@ export class AdminGameComponent implements OnInit {
     });
   }
 
+  private createGame(): void {
+    console.log('createGame', this.game);
+    this.game.tournamentId = this.tournamentId;
+    this.game.weekNumber = this.weekNumber;
+    if (!this.playoff) {
+      this.gamesService.postGame(this.game).subscribe({
+        next: (result: CommonResponse) => {
+          this.isProcessing = endProcessing(this.gameForm, this.dialog);
+          openDialog(this.dialog, DialogMessageTypes.SUCCESS, result.response);
+          this.reset();
+          this.getGames();
+        },
+        error: (e: any) => {
+          this.isProcessing = endProcessing(this.gameForm, this.dialog);
+          openErrorDialog(this.dialog, e.status, e.error);
+        },
+      });
+    }
+  }
+
   private updateGame(): void {
     console.log('updateGame ', this.game);
     this.gamesService.putGame(this.game).subscribe({
@@ -474,6 +446,7 @@ export class AdminGameComponent implements OnInit {
         this.isProcessing = endProcessing(this.gameForm, this.dialog);
         openDialog(this.dialog, DialogMessageTypes.SUCCESS, result.response);
         this.reset();
+        this.getGames();
       },
       error: (e: any) => {
         this.isProcessing = endProcessing(this.gameForm, this.dialog);
@@ -524,47 +497,18 @@ export class AdminGameComponent implements OnInit {
   }
 
   private updateCategoryOption(): void {
-    console.log(
-      'updateCategoryOption',
-      this.game.category,
-      this.teamOptionsMap,
-    );
     this.teamOptions = this.teamOptionsMap.get(this.game.category)! ?? [];
-  }
-
-  private disableFields(): void {
-    this.teamsArray.forEach((team: number) => {
-      this.gameForm.get('team' + team)!.disable();
-
-      this.setsArray.forEach((set: number) => {
-        this.gameForm.get('team' + team + 'Set' + set)?.disable();
-      });
-
-      this.playersArray.forEach((player: number) => {
-        this.gameForm.get('team' + team + 'Player' + player)?.disable();
-      });
-    });
   }
 
   private enableFields(): void {
     this.teams.controls.forEach((formControl) => {
       formControl.enable({ emitEvent: false });
     });
-    /*
-    this.game.teamStats.forEach((teamStats, i) => {
-      // TEAM
-      this.gameForm.get('team' + (i + 1))!.enable();
-      // SETS
-      teamStats.setStats.forEach((setStat, j) => {
-        this.gameForm.get('team' + (i + 1) + 'Set' + (j + 1))!.enable();
-      });
-    });
-    */
   }
 
-  private enablePlayers(teamStat: TeamStat, i: number): void {
-    teamStat.players.forEach((player, p) => {
-      this.gameForm.get('team' + (i + 1) + 'Player' + (p + 1))!.enable();
+  private disableFields(): void {
+    this.teams.controls.forEach((formControl) => {
+      formControl.disable({ emitEvent: false });
     });
   }
 
@@ -608,34 +552,37 @@ export class AdminGameComponent implements OnInit {
       this.game.byDefault = selectedValue;
     });
 
-    this.teams.controls.forEach((formControl, i) => {
-      formControl.valueChanges.subscribe((formValue) => {
-        this.game.teamStats[i].players = this.setPlayersByCategory(
-          formValue.name,
-        );
-        this.game.teamStats[i].teamId = formValue.name;
-        this.sets(i).controls.forEach((formControlSets, j) => {
-          formControlSets.valueChanges.subscribe((setValue) => {
-            this.game.teamStats[i].setStats[j].points = setValue.set;
-          });
-        });
+    this.teams.controls.forEach((teamFormControl, i) => {
+      teamFormControl.valueChanges.subscribe((formValue) => {
+        console.log(teamFormControl);
+        if (this.lastTeamUpdated[i] !== formValue.name) {
+          this.lastTeamUpdated[i] = formValue.name;
+          this.game.teamStats[i].teamId = formValue.name;
 
-        // CLEAR The players before adding new ones
-        this.clearPlayers(i);
-        /*
-        this.game.teamStats[i].players.forEach((player) => {
-          this.addPlayer(i);
-        });
-        console.log(this.players(i));
-        /*
-          this.players(i).controls.forEach((formControlPlayers, j) => {
-            formControlPlayers.valueChanges.subscribe((setValue) => {
-              console.log(setValue);
-              // this.game.teamStats[i].players[j].playerId = setValue.set;
+          // SETs
+          this.sets(i).controls.forEach((formControlSets, j) => {
+            formControlSets.valueChanges.subscribe((setValue) => {
+              this.game.teamStats[i].setStats[j].points = setValue.set;
             });
           });
-*/
-        //this.enablePlayers(this.game.teamStats[i], i);
+
+          // Clear the players before adding new ones
+          this.clearPlayers(i);
+          // Load players to the model
+          this.game.teamStats[i].players = this.setPlayersByCategory(
+            formValue.name,
+          );
+          // Add players to the array
+          this.game.teamStats[i].players.forEach(() => {
+            this.addPlayer(i);
+          });
+
+          this.players(i).controls.forEach((formControlPlayers, j) => {
+            formControlPlayers.valueChanges.subscribe((playerValue) => {
+              this.game.teamStats[i].players[j].gamePlayed = playerValue.player;
+            });
+          });
+        }
       });
     });
   }
@@ -649,5 +596,22 @@ export class AdminGameComponent implements OnInit {
         this.game.teamStats[i].setStats.push(emptySetStat(j + 1));
       }
     }
+  }
+
+  public teamsValidator(): ValidatorFn {
+    return (): ValidationErrors | null => {
+      const teamsIds = new Set();
+      if (this.teams) {
+        this.teams.controls.forEach((teamFormControl) => {
+          teamsIds.add(teamFormControl.get('name')?.value);
+        });
+        this.teams.controls.forEach((teamFormControl) => {
+          teamFormControl
+            .get('name')
+            ?.setErrors(teamsIds.size < 2 ? { duplicated: true } : null);
+        });
+      }
+      return null;
+    };
   }
 }

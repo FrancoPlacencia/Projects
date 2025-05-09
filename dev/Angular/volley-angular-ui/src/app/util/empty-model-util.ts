@@ -9,7 +9,7 @@ import { Standing } from '../model/standing.model';
 import { TeamOption } from '../model/team-option.model';
 
 export function emptyTournament(): Tournament {
-  let tournament: Tournament = {
+  const tournament: Tournament = {
     name: '',
     year: 0,
     description: '',
@@ -28,7 +28,7 @@ export function emptyTournament(): Tournament {
 }
 
 export function emptyTournamentApp(): TournamentApp {
-  let tournamentApp: TournamentApp = {
+  const tournamentApp: TournamentApp = {
     tournament: emptyTournament(),
     standings: new Map<string, Standing[]>(),
     weeks: new Map<number, Map<string, Game[]>>(),
@@ -39,7 +39,7 @@ export function emptyTournamentApp(): TournamentApp {
 }
 
 export function emptyTeam(): Team {
-  let team: Team = {
+  const team: Team = {
     teamNumber: 0,
     name: '',
     initials: '',
@@ -58,12 +58,6 @@ export function emptyTeam(): Team {
 }
 
 export function emptyTeamStats(): TeamStat {
-  /*
-  let setStats: SetStat[] = [];
-  for (let i = 0; i < 5; i++) {
-    setStats[i] = emptySetStat(i + 1);
-  }
-    */
   const teamStat: TeamStat = {
     teamId: 0,
     teamName: '',
@@ -78,7 +72,7 @@ export function emptyTeamStats(): TeamStat {
 }
 
 export function emptyGame(): Game {
-  let game: Game = {
+  const game: Game = {
     tournamentId: 0,
     category: '',
     stage: 'REGULAR',
@@ -92,7 +86,7 @@ export function emptyGame(): Game {
 }
 
 export function emptySetStat(setNumber: number): SetStat {
-  let setStat: SetStat = {
+  const setStat: SetStat = {
     setNumber: setNumber,
     state: '',
     points: 0,
@@ -101,7 +95,7 @@ export function emptySetStat(setNumber: number): SetStat {
 }
 
 export function emptyPlayer(): Player {
-  let player: Player = {
+  const player: Player = {
     teamId: 0,
     name: '',
     lastName: '',

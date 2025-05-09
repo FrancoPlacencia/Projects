@@ -5,8 +5,6 @@
         <h1>
           <mat-icon>sports_volleyball</mat-icon>&nbsp;Jornada {{ weekNumber }}
         </h1>
-        <span>{{ gameForm.valid }}</span>
-        <span>{{ gameForm.value | json }}</span>
         <div>
           <button mat-flat-button class="week-button" (click)="tournament()">
             <mat-icon>emoji_events</mat-icon>Torneos
@@ -19,7 +17,7 @@
             type="button"
             (click)="reset()"
           >
-            <mat-icon>restart_alt</mat-icon>Limpiar campos
+            <mat-icon>cleaning_services</mat-icon>Limpiar campos
           </button>
           @if (isNew) {
             <button mat-flat-button class="success-button" type="submit">
@@ -106,6 +104,12 @@
                         }}</mat-option>
                       } @empty {}
                     </mat-select>
+                    @if (team.get("name")?.errors?.["required"]) {
+                      <mat-error>Selecciona un equipo</mat-error>
+                    }
+                    @if (team.get("name")?.errors?.["duplicated"]) {
+                      <mat-error>Los equipos son iguales.</mat-error>
+                    }
                   </mat-form-field>
                   <!-- SETS -->
                   <div formArrayName="sets" class="flex-input full">
@@ -135,21 +139,41 @@
                       </mat-form-field>
                     }
                   </div>
-                  <div formArrayName="players" class="full">
+                  <div formArrayName="players" class="flex-input full">
                     @for (
                       player of players(teamIndex).controls;
                       track $index;
                       let playerIndex = $index
                     ) {
-                      <mat-slide-toggle formControlName="player">
-                        {{
-                          game.teamStats[teamIndex].players[playerIndex].number
-                        }}
-                        -
-                        {{
-                          game.teamStats[teamIndex].players[playerIndex].name
-                        }}
-                      </mat-slide-toggle>
+                      <!--
+                      <div
+                        [formGroupName]="playerIndex"
+                        class="flex-input full"
+                      >
+                        <mat-slide-toggle formControlName="player">
+                          {{
+                            game.teamStats[teamIndex].players[playerIndex]
+                              .number
+                          }}
+                          -
+                          {{
+                            game.teamStats[teamIndex].players[playerIndex].name
+                          }}
+                        </mat-slide-toggle>
+                      </div>
+                      -->
+                      <section [formGroupName]="playerIndex">
+                        <mat-checkbox formControlName="player"
+                          >{{
+                            game.teamStats[teamIndex].players[playerIndex]
+                              .number
+                          }}
+                          -
+                          {{
+                            game.teamStats[teamIndex].players[playerIndex].name
+                          }}</mat-checkbox
+                        >
+                      </section>
                     }
                   </div>
                 </div>

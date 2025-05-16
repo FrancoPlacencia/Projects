@@ -24,3 +24,6 @@ server:
     # include-message: never
 app:
   content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+jwt:
+  private.key: classpath:app.key
+  public.key: classpath:app.pub

@@ -122,6 +122,7 @@ export class AdminGameComponent {
   public setsNumber = 5;
 
   private lastTeamUpdated: number[] = [0, 0];
+  private shouldClearPlayer = true;
 
   public categoryRequired = true;
 
@@ -155,10 +156,12 @@ export class AdminGameComponent {
     gameTime: [undefined, Validators.required],
     gamePlace: [undefined, Validators.required],
     byDefault: [undefined, Validators.required],
-    teams: this.formBuilder.array([this.newTeam(), this.newTeam()]),
+    teams: this.formBuilder.array([]),
   });
 
   constructor() {
+    this.addTeam();
+    this.addTeam();
     this.route.queryParamMap.subscribe((params) => {
       this.tournamentId = Number(params.get('id') ?? 0);
       this.weekNumber = Number(params.get('weekNumber') ?? 0);
@@ -183,37 +186,34 @@ export class AdminGameComponent {
   }
 
   public addTeam() {
-    this.teams.push(this.newTeam());
+    this.teams.push(
+      this.formBuilder.group({
+        name: [
+          { value: undefined, disabled: true },
+          [Validators.required, this.teamsValidator()],
+        ],
+        sets: this.formBuilder.array([]),
+        players: this.formBuilder.array([]),
+      }),
+    );
   }
   public addSet(teamIndex: number) {
-    this.sets(teamIndex).push(this.newSet(), { emitEvent: false });
+    this.sets(teamIndex).push(
+      this.formBuilder.group({
+        set: [{ value: 0, disabled: true }, Validators.required],
+      }),
+      { emitEvent: false },
+    );
   }
   public addPlayer(teamIndex: number) {
-    this.players(teamIndex).push(this.newPlayer(), { emitEvent: false });
-  }
-
-  public newTeam() {
-    const tmpTeam: FormGroup = this.formBuilder.group({
-      name: [
-        { value: undefined, disabled: true },
-        [Validators.required, this.teamsValidator()],
-      ],
-      sets: this.formBuilder.array([]),
-      players: this.formBuilder.array([]),
-    });
-    return tmpTeam;
-  }
-  public newSet() {
-    const tmpSet: FormGroup = this.formBuilder.group({
-      set: [{ value: 0, disabled: true }, Validators.required],
-    });
-    return tmpSet;
-  }
-  public newPlayer() {
-    const tmpPlayer: FormGroup = this.formBuilder.group({
-      player: [false, Validators.required],
-    });
-    return tmpPlayer;
+    this.players(teamIndex).push(
+      this.formBuilder.group({
+        player: [{ value: false }],
+      }),
+      {
+        emitEvent: false,
+      },
+    );
   }
 
   public removeTeam(teamIndex: number) {
@@ -223,6 +223,24 @@ export class AdminGameComponent {
     while (this.players(teamIndex).length !== 0) {
       this.players(teamIndex).removeAt(0, { emitEvent: false });
     }
+    // console.log('clearPlayers', this.players(0), this.players(1));
+  }
+
+  public selectedPlayers(game: Game, clearPlayers: boolean) {
+    this.teams.controls.forEach((formControl, i) => {
+      const teamStat: TeamStat = game.teamStats[i];
+
+      this.players(i).controls.forEach((formControlPlayers, j) => {
+        let playerOption: PlayerOption = teamStat.players[j];
+        if (!playerOption || clearPlayers) {
+          playerOption = this.convertToPlayerOptions(emptyPlayer());
+        }
+        formControlPlayers
+          .get('player')
+          ?.setValue(playerOption.gamePlayed, { emitEvent: false });
+      });
+      console.log('after ', i, teamStat.players);
+    });
   }
 
   public reset(): void {
@@ -269,66 +287,71 @@ export class AdminGameComponent {
 
     this.gameId = game.gameId;
     this.game.gameId = game.gameId;
-    this.game.category = game.category;
-    this.game.stage = game.stage;
     this.game.tournamentId = this.tournamentId;
     if (this.playoff) {
       this.game.weekNumber = game.weekNumber;
     } else {
       this.game.weekNumber = this.weekNumber;
     }
-
-    const tmpDate = new Date(game.gameDate);
-    // this.game.gameDate = new Date(game.gameDate);
     this.gameForm.get('category')?.setValue(game.category);
+    this.game.stage = game.stage;
+    const tmpDate = new Date(game.gameDate);
     this.gameForm.get('gameTime')?.setValue(tmpDate);
     this.gameForm.get('gameDate')?.setValue(tmpDate);
     this.gameForm.get('gamePlace')?.setValue(game.gamePlace);
     this.gameForm.get('byDefault')?.setValue(game.byDefault);
 
+    // CLEAR Sets and Players
+    game.teamStats.forEach((teamStat: TeamStat, i) => {
+      this.game.teamStats[i].setStats = [];
+      this.game.teamStats[i].players = [];
+      teamStat.setStats.forEach((set: SetStat) => {
+        this.game.teamStats[i].setStats.push({
+          setNumber: set.setNumber,
+          state: set.state,
+          points: set.points,
+        });
+      });
+      teamStat.players.forEach((player: PlayerOption) => {
+        this.game.teamStats[i].players.push({
+          playerId: player.playerId,
+          number: player.number,
+          name: player.name,
+          gamePlayed: player.gamePlayed,
+        });
+      });
+    });
+
     this.teams.controls.forEach((formControl, i) => {
       const teamStat: TeamStat = game.teamStats[i];
+
+      /*
+      teamStat.setStats.forEach((setStats: SetStat, j) => {
+        this.game.teamStats[i].setStats[j] = setStats;
+      });
+      teamStat.players.forEach((player: PlayerOption, j) => {
+        this.game.teamStats[i].players[j] = player;
+      });
+      */
+
+      this.shouldClearPlayer = false;
+
       formControl.get('name')?.setValue(teamStat.teamId);
 
+      /*
       this.sets(i).controls.forEach((formControlSets, j) => {
         let setStat: SetStat = teamStat.setStats[j];
         if (!setStat) {
           setStat = emptySetStat(j + 1);
         }
-        formControlSets.get('set')?.setValue(setStat.points);
+        formControlSets
+          .get('set')
+          ?.setValue(setStat.points, { emitEvent: false });
       });
 
-      this.players(i).controls.forEach((formControlPlayers, j) => {
-        let playerOption: PlayerOption = teamStat.players[j];
-        if (!playerOption) {
-          playerOption = emptyPlayer();
-        }
-        formControlPlayers.get('player')?.setValue(playerOption.gamePlayed);
-      });
+      this.selectedPlayers(game, false);
+      */
     });
-    /*
-    for (let i = 0; i < game.teamStats.length; i++) {
-      let teamStat: TeamStat = game.teamStats[i];
-      this.gameForm.get('team' + (i + 1))?.setValue(teamStat.teamId);
-
-      for (let j = 0; j < this.setsArray.length; j++) {
-        if (j >= teamStat.setStats.length) {
-          this.gameForm.get('team' + (i + 1) + 'Set' + (j + 1))?.setValue(0);
-        } else {
-          let setStat: SetStat = teamStat.setStats[j];
-          this.gameForm
-            .get('team' + (i + 1) + 'Set' + (j + 1))
-            ?.setValue(setStat.points);
-        }
-      }
-
-      for (let p = 0; p < teamStat.players.length; p++) {
-        this.gameForm
-          .get('team' + (i + 1) + 'Player' + (p + 1))
-          ?.setValue(teamStat.players[p].gamePlayed);
-      }
-    }
-    */
   }
 
   public delete(game: Game): void {
@@ -474,7 +497,7 @@ export class AdminGameComponent {
       playerId: player.playerId,
       name: player.name + ' ' + player.lastName,
       number: player.number,
-      gamePlayed: player.gamePlayed,
+      gamePlayed: player.gamePlayed ?? false,
     };
     return playerOption;
   }
@@ -554,7 +577,6 @@ export class AdminGameComponent {
 
     this.teams.controls.forEach((teamFormControl, i) => {
       teamFormControl.valueChanges.subscribe((formValue) => {
-        console.log(teamFormControl);
         if (this.lastTeamUpdated[i] !== formValue.name) {
           this.lastTeamUpdated[i] = formValue.name;
           this.game.teamStats[i].teamId = formValue.name;
@@ -569,19 +591,58 @@ export class AdminGameComponent {
           // Clear the players before adding new ones
           this.clearPlayers(i);
           // Load players to the model
-          this.game.teamStats[i].players = this.setPlayersByCategory(
-            formValue.name,
-          );
+          if (this.shouldClearPlayer) {
+            this.game.teamStats[i].players = this.setPlayersByCategory(
+              formValue.name,
+            );
+          }
           // Add players to the array
-          this.game.teamStats[i].players.forEach(() => {
+          this.game.teamStats[i].players.forEach((player: PlayerOption, p) => {
+            //console.log('player added', i, player, p);
             this.addPlayer(i);
           });
 
           this.players(i).controls.forEach((formControlPlayers, j) => {
+            (formControlPlayers as FormGroup).controls['player'].setValue(
+              this.shouldClearPlayer
+                ? false
+                : this.game.teamStats[i].players[j].gamePlayed,
+              { emitEvent: false },
+            );
+          });
+
+          console.log(
+            'team ',
+            i,
+            'players ',
+            this.shouldClearPlayer,
+            this.setPlayersByCategory(formValue.name),
+            this.players(i).controls,
+          );
+
+          this.players(i).controls.forEach((formControlPlayers, j) => {
+            /*
+            console.log('players on game', i, this.game.teamStats[i].players);
+            console.log('players on form', i, formControlPlayers);
+            formControlPlayers.get('player')!.setValue(
+              {
+                player: this.game.teamStats[i].players[j].gamePlayed,
+              },
+              { emitEvent: false },
+            );
+            formControlPlayers.setValue(
+              {
+                player: this.game.teamStats[i].players[j].gamePlayed,
+              },
+              { emitEvent: false },
+            );
+            */
             formControlPlayers.valueChanges.subscribe((playerValue) => {
               this.game.teamStats[i].players[j].gamePlayed = playerValue.player;
             });
           });
+          this.shouldClearPlayer = true;
+          this.gameForm.updateValueAndValidity();
         }
       });
     });

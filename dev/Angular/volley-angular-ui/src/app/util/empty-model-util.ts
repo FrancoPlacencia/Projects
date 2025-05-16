@@ -7,6 +7,7 @@ import { Player } from '../model/player.model';
 import { TournamentApp } from '../model/tournament-app.model';
 import { Standing } from '../model/standing.model';
 import { TeamOption } from '../model/team-option.model';
+import { PlayerOption } from '../model/player-option.model';
 
 export function emptyTournament(): Tournament {
   const tournament: Tournament = {

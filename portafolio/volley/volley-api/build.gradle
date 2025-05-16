@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.4'
     id 'io.spring.dependency-management' version '1.1.6'
+    id 'jacoco'
 }
 
 group = 'org.tvmtz'
@@ -28,6 +29,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 
     implementation 'org.modelmapper:modelmapper:3.1.1'
 
@@ -37,21 +39,58 @@ dependencies {
     // runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
     // runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
 
-
-    compileOnly 'org.projectlombok:lombok'
-
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    // TEST
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation("org.mockito:mockito-core:5.17.0")
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+test {
+    // report is always generated after tests run
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    // tests are required to run before generating the report
+    dependsOn test
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+}
+// Configuring JaCoCo plugin settings
+jacoco {
+    toolVersion = "0.8.13"
+    reportsDirectory = layout.buildDirectory.dir("reports/jacoco")
+}
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.5
+            }
+        }
+        rule {
+            enabled = false
+            element = 'CLASS'
+            includes = ['org.gradle.*']
+            limit {
+                counter = 'LINE'
+                value = 'TOTALCOUNT'
+                maximum = 0.3
+            }
+        }
+    }
+}
 tasks.named('test') {
     useJUnitPlatform()
 }

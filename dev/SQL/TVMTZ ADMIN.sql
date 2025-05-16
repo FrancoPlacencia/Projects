@@ -1,4 +1,4 @@
-CALL usp_get_week_template(7, @template)
+CALL usp_get_week_template(10, @template)
 
 -- =============================================================================
 -- MIXTO 
@@ -57,7 +57,7 @@ AND week_number = 18
 
 AND game_date BETWEEN '2025-04-23 00:00:00' AND '2025-04-24 00:00:01'
 
-SELECT COUNT(*)
+SELECT *
 FROM teams
 WHERE tournament_id = 3
 AND category = 'MIXTO'
@@ -66,4 +66,7 @@ AND stage = 'REGULAR';
 
 SELECT tournament_id
 FROM tournaments
-WHERE is_active = true
+WHERE is_active = TRUE
+
+
+SELECT * FROM users u 

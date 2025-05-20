@@ -119,12 +119,16 @@ public class AuthServiceImpl implements AuthService {
                     HttpStatus.OK
             );
         } catch (BadCredentialsException badCredentialsException) {
-            log.info("ERROR trying to authenticate the user");
             User user = userRepository.findByEmail(request.getEmail()).orElse(null);
             if (user != null) {
                 incrementAttempts(user);
                 if (user.getIsLocked()) {
-                    throw new LockedException("User its locked. Please contact an Admin to unlock your user account.");
+                    return new ResponseEntity<>(
+                            CommonResponse.builder()
+                                    .response("User its locked. Please contact an Admin to unlock your user account.")
+                                    .build(),
+                            HttpStatus.LOCKED
+                    );
                 }
             }
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -140,9 +144,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ResponseEntity<CommonResponse> register(RegisterRequestDTO request) {
-        log.info("signup request {}", request);
         CommonResponse commonResponse;
         List<String> errors = new ArrayList<>();
+
         // Validate mandatory fields
         if (AppUtil.isNullOrEmptyString(request.getEmail())) {
             errors.add("Missing Email");
@@ -162,6 +166,16 @@ public class AuthServiceImpl implements AuthService {
                     .errors(errors)
                     .build();
             return new ResponseEntity<>(commonResponse, HttpStatus.BAD_REQUEST);
+        }
+
+        // validate email
+        if (!request.getEmail().matches(EMAIL_PATTERN)) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
+        // validate password
+        if (!request.getPassword().matches(PASSWORD_PATTERN)) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
         try {
             User user = User.builder()
@@ -193,17 +207,7 @@ public class AuthServiceImpl implements AuthService {
                     .build();
 
 
-            /*
-            // validate email
-            if (!request.getEmail().matches(EMAIL_PATTERN)) {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-            }
 
-            // validate password
-            if (!request.getPassword().matches(PASSWORD_PATTERN)) {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-            }
-            */
             User dbUser = userRepository.findByEmail(user.getEmail()).orElse(null);
             if (dbUser != null) {
                 return new ResponseEntity<>(null, HttpStatus.CONFLICT);

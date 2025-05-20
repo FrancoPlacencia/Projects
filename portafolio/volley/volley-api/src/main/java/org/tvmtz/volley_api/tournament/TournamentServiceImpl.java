@@ -3,6 +3,7 @@ package org.tvmtz.volley_api.tournament;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import org.tvmtz.volley_api.util.AppUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Locale;
 
 @Slf4j
 @Service
@@ -27,18 +28,27 @@ public class TournamentServiceImpl implements TournamentService {
     @Autowired
     ModelMapper modelMapper;
 
+    @Autowired
+    MessageSource messageSource;
+
     @Override
-    public ResponseEntity<CommonResponse> createTournament(TournamentDTO tournamentDto) {
+    public ResponseEntity<CommonResponse> createTournament(TournamentDTO tournamentDto, Locale locale) {
         CommonResponse commonResponse;
         Tournament tournament = modelMapper.map(tournamentDto, Tournament.class);
         // ALREADY EXISTS
         if (tournamentExists(tournament)) {
-            commonResponse = CommonResponse.builder().response(AppConstants.TOURNAMENT + " " + AppConstants.ALREADY_EXISTS).build();
+            commonResponse = CommonResponse.builder().response(
+                    messageSource.getMessage("tournament.already_exists", null, locale)
+                    // AppConstants.TOURNAMENT + " " + AppConstants.ALREADY_EXISTS
+            ).build();
             return new ResponseEntity<>(commonResponse, HttpStatus.CONFLICT);
         }
         // CREATE
         tournamentRepository.save(tournament);
-        commonResponse = CommonResponse.builder().response(AppConstants.TOURNAMENT + " " + AppConstants.CREATED).build();
+        commonResponse = CommonResponse.builder().response(
+                messageSource.getMessage("tournament.created", null, locale)
+                // AppConstants.TOURNAMENT + " " + AppConstants.CREATED
+        ).build();
         return new ResponseEntity<>(commonResponse, HttpStatus.CREATED);
     }
 
@@ -135,9 +145,6 @@ public class TournamentServiceImpl implements TournamentService {
 
     private boolean tournamentExists(Tournament tournament) {
         Tournament dbTournament = tournamentRepository.findByNameAndYear(tournament.getName(), tournament.getYear()).orElse(null);
-        if (dbTournament == null) {
-            return false;
-        }
-        return !Objects.equals(tournament.getTournamentId(), dbTournament.getTournamentId());
+        return dbTournament != null && tournament.getTournamentId() == dbTournament.getTournamentId();
     }
 }

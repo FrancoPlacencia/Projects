@@ -68,12 +68,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // ALLOW ALL FOR TESTING .requestMatchers("/api/auth/**").permitAll()
+        // anyRequest().authenticated()
         String matcher = "**";
 
         return http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/auth/**").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .httpBasic(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)

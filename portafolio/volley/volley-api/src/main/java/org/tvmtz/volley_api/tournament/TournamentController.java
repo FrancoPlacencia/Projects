@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.tvmtz.volley_api.common.CommonResponse;
 
 import java.util.List;
+import java.util.Locale;
 
 @Slf4j
 @RestController
@@ -19,8 +20,8 @@ public class TournamentController {
 
     // CREATE
     @PostMapping("/admin/tournament")
-    public ResponseEntity<CommonResponse> createTournament(@Valid @RequestBody TournamentDTO tournament) {
-        return tournamentService.createTournament(tournament);
+    public ResponseEntity<CommonResponse> createTournament(@Valid @RequestBody TournamentDTO tournament, @RequestHeader(name = "Accept-Language", required = false) Locale locale) {
+        return tournamentService.createTournament(tournament, locale);
     }
 
     // READ

@@ -10,6 +10,7 @@ import { AdminTournamentComponent } from './admin/admin-tournament/admin-tournam
 import { AdminTeamComponent } from './admin/admin-team/admin-team.component';
 import { AdminPlayerComponent } from './admin/admin-player/admin-player.component';
 import { LandingComponent } from './components/landing/landing.component';
+import { GraphComponent } from './graph/graph.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'app/landing', pathMatch: 'full' },
@@ -24,6 +25,7 @@ export const routes: Routes = [
       { path: 'team', component: TeamComponent },
       { path: 'game', component: GameComponent },
       { path: 'player', component: PlayerComponent },
+      { path: 'graph', component: GraphComponent },
     ],
   },
 

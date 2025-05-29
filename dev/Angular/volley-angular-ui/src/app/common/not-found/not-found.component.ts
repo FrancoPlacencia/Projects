@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-not-found',
-  imports: [],
+  imports: [MatCardModule, MatDividerModule],
   templateUrl: './not-found.component.html',
-  styleUrl: './not-found.component.scss'
+  styleUrl: './not-found.component.scss',
 })
-export class NotFoundComponent {
-
-}
+export class NotFoundComponent {}

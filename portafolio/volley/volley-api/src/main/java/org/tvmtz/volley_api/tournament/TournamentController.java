@@ -3,6 +3,8 @@ package org.tvmtz.volley_api.tournament;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.tvmtz.volley_api.common.CommonResponse;
@@ -17,11 +19,13 @@ public class TournamentController {
 
     @Autowired
     TournamentService tournamentService;
+    @Autowired
+    MessageSource messageSource;
 
-    // CREATE
+    // CREATE , @RequestHeader(name = "Accept-Language", required = false) Locale locale
     @PostMapping("/admin/tournament")
-    public ResponseEntity<CommonResponse> createTournament(@Valid @RequestBody TournamentDTO tournament, @RequestHeader(name = "Accept-Language", required = false) Locale locale) {
-        return tournamentService.createTournament(tournament, locale);
+    public ResponseEntity<CommonResponse> createTournament(@Valid @RequestBody TournamentDTO tournament) {
+        return tournamentService.createTournament(tournament);
     }
 
     // READ
@@ -50,6 +54,12 @@ public class TournamentController {
     @DeleteMapping("/admin/tournament")
     public ResponseEntity<CommonResponse> deleteTournament(@RequestParam Integer id) {
         return tournamentService.deleteTournament(id);
+    }
+
+    @GetMapping("/hello")
+    public String hello() {
+        Locale locale = LocaleContextHolder.getLocale();
+        return messageSource.getMessage("hello", null, locale);
     }
 
 }

@@ -9,13 +9,13 @@ spring:
         format_sql: true
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/tvmtz_dev
+    url: jdbc:mariadb://localhost:3306/tvmtz_stg
     username: root
     password: M4r1@Db_R0ot_P4$sw0rd
   application:
     name: volley.api
   messages:
-    basename: classpath:i18n/messages
+    basename: i18n/messages
     always-use-message-format: false
     cache-duration:
     encoding: UTF-8

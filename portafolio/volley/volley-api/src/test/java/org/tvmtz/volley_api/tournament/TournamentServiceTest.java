@@ -12,36 +12,30 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.tvmtz.volley_api.common.CommonResponse;
+import org.tvmtz.volley_api.util.LocaleMessageUtil;
 
-import java.util.Locale;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class TournamentServiceTest {
-
+    @Mock
+    MessageSource messageSource;
     @InjectMocks
     private TournamentServiceImpl tournamentService;
-
     @Mock
     private TournamentRepository tournamentRepository;
-
     @Mock
     private ModelMapper modelMapper;
-
     @Mock
-    private MessageSource messageSource;
-
-    @Mock
-    private Locale locale;
-
+    private LocaleMessageUtil localeMessageUtil;
     private TournamentDTO tournamentDTO;
 
     private Tournament tournament;
@@ -49,21 +43,39 @@ public class TournamentServiceTest {
     @Test
     @Order(1)
     @DisplayName("TOURNAMENT - CREATE [CONFLICT]")
-    void tournamentCreateConflictTest(){
-        Locale locale = LocaleContextHolder.getLocale();
+    void tournamentCreateConflictTest() {
+        String key = "tournament.already_exists";
         when(modelMapper.map(tournamentDTO, Tournament.class)).thenReturn(tournament);
         when(tournamentRepository.findByNameAndYear(tournamentDTO.getName(), tournamentDTO.getYear())).thenReturn(Optional.of(tournament));
-        ResponseEntity<CommonResponse> response = tournamentService.createTournament(tournamentDTO, locale);
+        when(localeMessageUtil.getMessage(key)).thenReturn(key);
+        ResponseEntity<CommonResponse> response = tournamentService.createTournament(tournamentDTO);
 
         assertNotNull(response);
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
         assertNotNull(response.getBody());
         assertNotNull(response.getBody().getResponse());
-        assertEquals(messageSource.getMessage("tournament.already_exists", null, Locale.US), response.getBody().getResponse());
+        assertEquals(response.getBody().getResponse(), key);
+    }
+
+    @Test
+    @Order(2)
+    @DisplayName("TOURNAMENT - CREATE [CREATED]")
+    void tournamentCreateTest() {
+        String key = "tournament.created";
+        when(modelMapper.map(tournamentDTO, Tournament.class)).thenReturn(tournament);
+        when(tournamentRepository.findByNameAndYear(tournamentDTO.getName(), tournamentDTO.getYear())).thenReturn(Optional.empty());
+        when(localeMessageUtil.getMessage(key)).thenReturn(key);
+        ResponseEntity<CommonResponse> response = tournamentService.createTournament(tournamentDTO);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertNotNull(response.getBody().getResponse());
+        assertEquals(response.getBody().getResponse(), key);
     }
 
     @BeforeEach
-    void setup(){
+    void setup() {
         tournamentDTO = TournamentDTO.builder()
                 .tournamentId(1)
                 .name("Name Tournament Test")

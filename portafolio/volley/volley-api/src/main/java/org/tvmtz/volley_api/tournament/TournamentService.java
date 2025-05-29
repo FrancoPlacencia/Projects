@@ -4,11 +4,10 @@ import org.springframework.http.ResponseEntity;
 import org.tvmtz.volley_api.common.CommonResponse;
 
 import java.util.List;
-import java.util.Locale;
 
 public interface TournamentService {
 
-    ResponseEntity<CommonResponse> createTournament(TournamentDTO tournament, Locale locale);
+    ResponseEntity<CommonResponse> createTournament(TournamentDTO tournament);
 
     ResponseEntity<List<TournamentDTO>> getTournaments();
 

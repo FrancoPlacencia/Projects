@@ -112,6 +112,9 @@ ng generate service player --skip-tests
 ng generate
 
 ng generate component landing --skip-tests
+
+ng generate component graph --skip-tests
+npm install apexcharts ng-apexcharts --save 
 ```
 
 ### Admin Models

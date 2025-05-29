@@ -3,7 +3,6 @@ package org.tvmtz.volley_api.tournament;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,10 +10,10 @@ import org.tvmtz.volley_api.common.CommonResponse;
 import org.tvmtz.volley_api.game.GameRepository;
 import org.tvmtz.volley_api.util.AppConstants;
 import org.tvmtz.volley_api.util.AppUtil;
+import org.tvmtz.volley_api.util.LocaleMessageUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @Slf4j
 @Service
@@ -29,16 +28,16 @@ public class TournamentServiceImpl implements TournamentService {
     ModelMapper modelMapper;
 
     @Autowired
-    MessageSource messageSource;
+    LocaleMessageUtil localeMessageUtil;
 
     @Override
-    public ResponseEntity<CommonResponse> createTournament(TournamentDTO tournamentDto, Locale locale) {
+    public ResponseEntity<CommonResponse> createTournament(TournamentDTO tournamentDto) {
         CommonResponse commonResponse;
         Tournament tournament = modelMapper.map(tournamentDto, Tournament.class);
         // ALREADY EXISTS
         if (tournamentExists(tournament)) {
             commonResponse = CommonResponse.builder().response(
-                    messageSource.getMessage("tournament.already_exists", null, locale)
+                    localeMessageUtil.getMessage("tournament.already_exists")
                     // AppConstants.TOURNAMENT + " " + AppConstants.ALREADY_EXISTS
             ).build();
             return new ResponseEntity<>(commonResponse, HttpStatus.CONFLICT);
@@ -46,7 +45,7 @@ public class TournamentServiceImpl implements TournamentService {
         // CREATE
         tournamentRepository.save(tournament);
         commonResponse = CommonResponse.builder().response(
-                messageSource.getMessage("tournament.created", null, locale)
+                localeMessageUtil.getMessage("tournament.created")
                 // AppConstants.TOURNAMENT + " " + AppConstants.CREATED
         ).build();
         return new ResponseEntity<>(commonResponse, HttpStatus.CREATED);

@@ -48,8 +48,7 @@
                 "input": "src/global-styles/theme-colors.scss",
                 "bundleName": "theme-colors"
               }
-            ],
-            "scripts": ["node_modules/apexcharts/dist/apexcharts.min.js"]
+            ]
           },
           "configurations": {
             "production": {
